@@ -1,0 +1,21 @@
+<!--pages/Sentence/Sentence.wxml-->
+
+<view class="sentenceBox">
+    <my-search bind:breakTo="senBreak" values="{{searchData}}"></my-search>
+    <!-- 内容列表 -->
+    <nodata wx:if="{{nodataFlag}}"></nodata>
+   
+    <view class="contentBox"  bindtap="goMessage"> 
+        <block wx:for="{{sentenceData}}" wx:key="{{index}}">
+          <view class="list" id="{{item.id}}">
+              <view id="{{item.id}}">
+                <text class="yuan"></text>
+                <view class="yuju" id="{{item.id}}">{{item.content}}</view>
+              </view>
+              <view class="time" id="{{item.id}}">{{item.createdDate}}</view>
+          </view>
+        </block>
+    </view>
+    <!-- 新建 -->
+    <view class="fixedImage" bindtap="newSentence">+</view>
+</view>

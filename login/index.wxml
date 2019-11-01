@@ -1,0 +1,42 @@
+<!--login/index.wxml-->
+<view class="loginBox">
+    <image src="/image/login/log.png" mode='widthFix'></image>
+    <view class="postBox">
+         <image src="/image/login/text.png" mode='widthFix'></image>
+
+          <!-- 单位 -->
+         <view class="listInput">
+            <image src="/image/login/danwei.png" mode='widthFix'></image>
+            <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}" range-key='name'>
+                <text wx:if="{{!array[index]}}" style="color:gray">请选择单位</text>
+                <text  style="color:#000">{{array[index].name}}</text>
+                <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
+            </picker>
+         </view>
+
+        <!-- 账号 -->
+          <view class="listInput">
+            <image src="/image/login/geren.png" mode='widthFix'></image>
+            <input class="weui-input" type="text" placeholder="请输入账号" bindinput="updateName" data-name="username" value="{{username}}"/>
+          </view>
+
+
+          <!-- 密码 -->
+          <view class="listInput">
+            <image src="/image/login/mima.png" mode='widthFix'></image>
+            <input class="weui-input" password type="text" placeholder="请输入密码"  bindinput="updateName" data-name="password" value="{{password}}"/>
+         </view>
+
+          <!-- 记住密码 -->
+         <view class="checkbox">
+              <checkbox-group bindchange="checkboxChange">
+                  <label class="checkbox">
+                    <checkbox value="true" checked="{{checked}}"/><text>记住密码</text>
+                  </label>
+              </checkbox-group>
+         </view>
+
+          <!-- 登录 -->
+         <view class="buttonBox" bindtap='brekPage'>登录</view>
+    </view>
+</view>

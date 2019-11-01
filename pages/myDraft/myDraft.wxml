@@ -1,0 +1,35 @@
+<!--pages/myDraft/myDraft.wxml-->
+<view class="myDraft">
+   <view class="selectTab" bindtap='activeBox'>
+        <text data-id="wengao" class="{{textActive == true ? 'textActives' : ''}}">文稿</text>
+        <text data-id="yuju" class="{{textActive == false ? 'textActives' : ''}}">常用语句</text>
+   </view>
+    
+    <scroll-view class="cyyj" scroll-y="true">
+      
+      <!-- 文稿 -->
+      <view class="scrollContent wengao" wx:if="{{textActive}}">
+          <manuscript timeFlag="{{true}}" myWengao="{{false}}"></manuscript>
+      </view>
+      
+      <!-- 常用语句 -->
+      <view class='scrollContent changyong' wx:if="{{!textActive}}" bindtap="goEditor">
+            <view class="tips" wx:if="{{sentenceData.length<=0}}">暂无数据</view>
+            <block wx:for="{{sentenceData}}" wx:key="{{index}}">  
+              <view class="list">
+                  <view>
+                    <text class="yuan"></text>
+                    <view class="yuju">{{item.content}}</view>
+                  </view>  
+                  <view class="time">{{item.createdDate}}</view>
+                  <view class="operation">
+                      <text class="iconfont icon-icon-edit" data-typeId="{{item.typeId}}" data-name="editorText"  data-id="{{item.id}}" data-cont="{{item.content}}">编辑</text>
+                      <text class="iconfont icon-icon7" data-name="delete"  data-id="{{item.id}}">删除</text>
+                  </view>
+              </view>
+            </block>
+            
+      </view>
+      
+   </scroll-view>
+</view>

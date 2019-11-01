@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/user/user",
+    "pages/myDraft/myDraft",
+    "pages/Sentence/Sentence",
+    "pages/index/index",
+
+    "login/index",
+    "pages/sentenceEditor/sentenceEditor",
+    "pages/search/search",
+    "pages/details/details",
+    
+    "pages/success/success",
+    "pages/manEntry/manEntry",
+
+    "pages/userEdit/userEdit",
+    "pages/manuscript/manuscript",
+    "pages/retrieval/retrieval"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+
+  "tabBar": {
+    "color":"#cdcdcd",
+    "selectedColor":"#4d80f0",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "文稿库",
+        "iconPath":"./image/wn.png",
+        "selectedIconPath":"./image/wc.png"
+      },
+      {
+        "pagePath": "pages/Sentence/Sentence",
+        "text": "常用语句库",
+        "iconPath": "./image/zn.png",
+        "selectedIconPath": "./image/zc.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "个人中心",
+        "iconPath": "./image/un.png",
+        "selectedIconPath": "./image/uc.png"
+      }
+    ]
+  }
+}

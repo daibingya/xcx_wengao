@@ -1,0 +1,133 @@
+/* components/manuComponts/manuComponts.wxss */
+/* 列表内容 */
+.textListBox{
+  width:100%;
+}
+.textListBox .textList{
+  width:100%;
+  height:auto;
+  background: #fff;
+  padding:0 20rpx 20rpx;
+  box-sizing: border-box;
+  margin-bottom:20rpx;
+}
+.textListBox .textList .textTitle{
+  padding:20rpx 0;
+  width:100%;
+  font-size: 30rpx;
+}
+.textListBox .textList  .textCont{
+  padding:15rpx 15rpx;
+  line-height: 44rpx;
+  font-size:28rpx;
+  color:#999999;
+  display: block;
+  position: relative;
+  border-top: 1px solid #e1e1e1;
+}
+checkbox-group{
+  position: absolute;
+  right:0rpx;
+  bottom:10rpx;
+}
+.textListBox .textList .textTitle .circular{
+  width:20rpx;
+  height:20rpx;
+  display: inline-block;
+  vertical-align: middle;
+  background: #4d81f1;
+  border-radius:50%;
+  margin-right:10rpx;
+}
+
+.timeBox{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.timeBox .time{
+  display: flex;
+  font-size:26rpx;
+  color:#999999;
+  align-items: center;
+}
+.timeBox .time image{
+  width:25rpx;
+  height:25rpx;
+  margin-right:10rpx
+}
+.timeBox .caozuo{
+  display: flex;
+}
+.timeBox .caozuo text{
+  font-size:26rpx;
+  width:120rpx;
+  text-align:center;
+}
+.icon-icon-edit{
+  color:#959cf7
+}
+.icon-shanchu{
+  color:#ecac6c;
+}
+.icon-fenxiang{
+  color:#e57971;
+}
+
+ /* iconfont */
+@font-face {
+  font-family: 'iconfont';  /* project id 1468276 */
+  src: url('//at.alicdn.com/t/font_1468276_us5zsi4prwn.eot');
+  src: url('//at.alicdn.com/t/font_1468276_us5zsi4prwn.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1468276_us5zsi4prwn.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1468276_us5zsi4prwn.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1468276_us5zsi4prwn.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1468276_us5zsi4prwn.svg#iconfont') format('svg');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-delete:before {
+  content: "\e638";
+}
+
+.icon-iconset0212:before {
+  content: "\e66f";
+}
+
+.icon-icon-edit:before {
+  content: "\e671";
+}
+
+.icon-icon7:before {
+  content: "\e667";
+}
+
+.icon-shanchu:before {
+  content: "\e630";
+}
+
+.icon-bianji:before {
+  content: "\e696";
+}
+
+.icon-bianji1:before {
+  content: "\e666";
+}
+
+.icon-bianji2:before {
+  content: "\e63f";
+}
+.icon-fenxiang:before {
+  content: "\e61f";
+}
+
+.icon-fenxiang1:before {
+  content: "\e628";
+}

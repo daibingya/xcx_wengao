@@ -1,0 +1,89 @@
+<!--pages/user/user.wxml-->
+<view class="user_content">
+    <view class="imageBack">
+      <!-- 背景图 -->
+      <image  src="/image/user_image/user_bg.png"></image>
+      <!-- 悬浮用框 -->
+      <view class="postBox">
+
+          <image wx:if="{{!userdata.avatar}}" bindtap='openCamera' class="userImage_Box" src="{{user_url}}" mode='aspectFill'></image>
+          <image wx:else bindtap='openCamera' class="userImage_Box" src="{{userdata.avatar}}" mode='aspectFill'></image>
+          
+          <view class="userNameBox">
+             <text class="name">{{userdata.name}}</text>
+             <image class="userEditor" src="/image/user_image/editor.png" mode="widthFix" bindtap='navJump' data-id="name"></image>
+          </view>
+          <view class="userMesage">
+              <view class="left">
+                  <view>
+                    <image mode="widthFix" src="/image/user_image/shenfen.png"></image>
+                    <text>账号信息：</text>
+                  </view>
+                  <text class="lastText">{{userdata.account}}</text>
+              </view>
+              <view class="left">
+                  <view>
+                    <image mode="widthFix" src="/image/user_image/job.png"></image>
+                    <text>角色名称：</text>
+                  </view>
+                  <text class="lastText">{{userdata.roleName}}</text>
+              </view>
+          </view>
+      </view>
+   </view>
+   
+   <!-- 列表栏目 -->
+      <view  class="listContet">
+        <view class="listNode">
+            <view class="listText">
+                <view class="dashedLine" bindtap='navJump' data-id="phone">
+                    <view class="leftCont">
+                      <image mode='widthFix' src="/image/user_image/iphone.png"></image>
+                      <text class="listTitle">联系电话</text>
+                    </view>
+                    <text class="listNum">{{userdata.phone}}</text>
+                </view>
+            </view>
+          
+            <view class="listText">
+                <view class="dashedLine">
+                    <view class="leftCont">
+                      <image mode='widthFix' src="/image/user_image/company.png"></image>
+                      <text class="listTitle">所在单位</text>
+                    </view>
+                    <text class="listNum">{{userdata.orgName}}</text>
+                </view>
+            </view>
+
+            <view class="listText">
+                <view class="dashedLine" bindtap='myManuscript'>
+                    <view class="leftCont">
+                      <image mode='widthFix' src="/image/user_image/draft.png"></image>
+                      <text class="listTitle">我的文稿</text>
+                    </view>
+                    <image class="returnImages" mode="widthFix" src="/image/user_image/return.png"></image>
+                </view>
+            </view>
+
+            <view class="listText">
+                <view class="dashedLine" bindtap="myDraft">
+                    <view class="leftCont">
+                      <image mode='widthFix' src="/image/user_image/Manuscript.png"></image>
+                      <text class="listTitle">我的草稿</text>
+                    </view>
+                    <image class="returnImages" mode="widthFix" src="/image/user_image/return.png"></image>
+                </view>
+            </view>
+
+            <view class="listText">
+                <view class="dashedLine" bindtap='navJump' data-id="password">
+                    <view class="leftCont">
+                      <image mode='widthFix' src="/image/user_image/editPasword.png"></image>
+                      <text class="listTitle">修改密码</text>
+                    </view>
+                    <image class="returnImages" mode="widthFix" src="/image/user_image/return.png"></image>
+                </view>
+            </view>
+        </view>
+      </view>
+</view>

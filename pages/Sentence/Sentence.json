@@ -1,0 +1,8 @@
+{
+  "enablePullDownRefresh": true,
+  "navigationBarTitleText": "常用语句库",
+  "usingComponents":{
+    "my-search":"/components/searchComponts/searchComponts",
+    "nodata":"/components/nodataComponts/nodataComponts"
+  }
+}

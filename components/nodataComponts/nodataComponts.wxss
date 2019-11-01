@@ -1,0 +1,14 @@
+/* components/nodataComponts/nodataComponts.wxss */
+.nodataBox{
+  padding-top:200rpx;
+}
+.nodataBox .tips{
+  text-align: center;
+}
+.nodataBox .tips image{
+  width:260rpx;
+}
+.nodataBox .tips .textTip{
+  font-size:28rpx;
+  color:rgb(117, 117, 117)
+}

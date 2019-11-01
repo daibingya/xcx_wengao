@@ -1,0 +1,121 @@
+/**index.wxss**/
+.container{
+  width:100%;
+  height:100%;
+  padding:20rpx;
+  box-sizing: border-box;
+}
+/* 搜索栏目 */
+.container .inputBox{
+  width:100%;
+  height:80rpx;
+  background: #fff;
+  border-radius:4px;
+  line-height: 80rpx;
+}
+.container .back{
+  width:100%;
+  background: #edf2f3;
+  padding:20rpx;
+  box-sizing:border-box;
+  position: fixed;
+  left:0;
+  top:0;
+  right:0;z-index:999
+}
+.container .inputBox .mark{
+  width:90%;
+  position:absolute;
+  z-index:9;
+  height:100%;
+  left:0;
+  top:0;
+  background: rgba(0,0,0,0);
+}
+.container .inputBox input{
+  width:90%;
+  height:100%;
+  padding-left:20rpx;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+}
+.container image.iconfong{
+  width:40rpx;
+  display: inline-block;
+  vertical-align: middle;
+}
+.scrollBox{
+  margin-top:100rpx;
+}
+/* 列表内容 */
+.textListBox{
+  width:100%;
+}
+.textListBox .textList{
+  width:100%;
+  height:auto;
+  background: #fff;
+  padding:0 20rpx;
+  box-sizing: border-box;
+  margin-bottom:20rpx
+}
+.textListBox .textList .textTitle{
+  padding:20rpx 0;
+  width:100%;
+  font-size: 30rpx;
+}
+.textListBox .textList  .textCont{
+  padding:25rpx 15rpx;
+  line-height: 44rpx;
+  font-size:28rpx;
+  color:#999999;
+  border-top: 1px solid #e1e1e1;
+  position:relative;
+}
+
+.textListBox .textList .textTitle .circular{
+  width:20rpx;
+  height:20rpx;
+  display: inline-block;
+  vertical-align: middle;
+  background: #4d81f1;
+  border-radius:50%;
+  margin-right:10rpx;
+}
+.checkSelect{
+  display: inline-block;
+  vertical-align: top;
+  width:calc(100% - 90%);
+  height:100%;
+  text-align: center;
+}
+
+/*checkbox*/
+checkbox .wx-checkbox-input{ /*未选中状态*/
+  border-radius: 3rpx;
+  height: 32rpx;
+  width: 32rpx;
+  margin-top: -4rpx;
+} 
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+  border-radius: 3rpx;
+  height: 32rpx;
+  width: 32rpx;
+  line-height: 32rpx;
+  margin-top: -4rpx;
+  border: none;
+  background: #0958db;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+   border-radius: 3rpx;/* 圆角 */
+   width: 32rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   height: 32rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   line-height: 32rpx;
+   text-align: center;
+   font-size:28rpx; /* 对勾大小 */
+   color:#fff; /* 对勾颜色 白色 */
+   background: #0958db;
+   transform:translate(-50%, -50%) scale(1);
+   -webkit-transform:translate(-50%, -50%) scale(1);
+}

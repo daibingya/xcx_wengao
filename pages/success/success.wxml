@@ -1,0 +1,7 @@
+<!--pages/success/success.wxml-->
+<view class="successBox">
+  <image src="/image/user_image/success.png" mode="widthFix"></image>
+  <view class="resizeOk">修改成功</view>
+
+  <button class="returnLogin" bindtap='returnLogins'>返回登录</button>
+</view>

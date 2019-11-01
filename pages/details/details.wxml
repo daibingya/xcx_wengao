@@ -1,0 +1,16 @@
+<!--pages/details/details.wxml-->
+<view class="detailsBox">
+    <view class="list">
+      <text>录入单位：</text><text>{{detailsData.orgName}}</text>
+    </view>
+    <view class="list">
+      <text>录入时间：</text><text>{{detailsData.createdDate}}</text>
+    </view>
+    <view class="list">
+      <text>语句类型：</text><text>{{detailsData.typeName}}</text>
+    </view>
+    <view class="list">
+      <text>常用语句：</text>
+      <view class="cotentBox">{{detailsData.content}}</view>
+    </view>
+</view>

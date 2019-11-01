@@ -1,0 +1,8 @@
+<!--pages/manuscript/manuscript.wxml-->
+<view class="manuscriptBox">
+    <!-- 搜索栏 -->
+    <my-search></my-search>
+
+    <manuscript timeFlag="{{true}}" shareFlag="{{true}}" checkFlag="{{false}}"></manuscript>
+
+</view>

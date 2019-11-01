@@ -1,0 +1,25 @@
+<!--pages/sentenceEditor/sentenceEditor.wxml-->
+
+<!--pages/details/details.wxml-->
+<view class="detailsBox">
+    <view class="list">
+      <text>录入时间：</text><text>{{time}}</text>
+    </view>
+    <view class="list">
+      <text>语句类型：</text>
+       <picker range='{{selectClass}}' bindchange='pickerChange' range-key="name" value="{{index}}">
+          <text class="selectJb" wx:if="{{!selectClass[index].id}}">选择类型</text>
+          <text>{{selectClass[index].name}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+    <view class="list">
+      <text>常用语句：</text>
+      <textarea maxlength="-1" class="textareaBox" bindinput="inputconso"  placeholder="开始输入..." data-id="textAeat" value="{{textAeat}}"></textarea>
+    </view>
+</view>
+
+<view class="flexBox">
+    <view class="cancel" data-id="saveCg" bindtap="saveSentence">保存到草稿</view>
+    <view class="Determine" data-id="save" bindtap="saveSentence">保存</view>
+</view> 

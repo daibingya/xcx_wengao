@@ -1,0 +1,8 @@
+/* pages/manuscript/manuscript.wxss */
+.manuscriptBox{
+  padding:20rpx 30rpx;
+  width:100%;
+  height:auto;
+  box-sizing:border-box;
+}
+

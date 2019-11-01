@@ -1,0 +1,64 @@
+<!--pages/manEntry/manEntry.wxml-->
+<view class="entryBox">
+    
+    <!-- 文稿名称 -->
+    <view class="entryList">
+      <text>文稿名称</text>
+      <input placeholder='请输入文稿名称'></input>
+    </view>
+
+    <!-- 内容摘要 -->
+    <view class="conImport">
+      <view>内容摘要</view>
+      <view class="textareaBox">
+          <textarea placeholder='请输入内容摘要' maxlength='-1'></textarea>
+          <view class="operation"><text class="add">+</text><text class="reduce">-</text></view>
+      </view>
+    </view>
+
+
+    <!-- 文稿级别 -->
+    <view class="entryList">
+      <text>文稿级别</text>
+      <picker range='{{myJibie}}' bindchange='pickerChange' value="">
+          <text class="selectJb">选择级别</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+    <!-- 文稿类型 -->
+    <view class="entryList">
+      <text>文稿类型</text>
+      <picker range='{{myJibie}}' bindchange='pickerChange' value="">
+          <text class="selectJb">选择类型</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+    <!-- 发布时间 -->
+    <view class="entryList">
+      <text>发布时间</text>
+      <picker range='{{myJibie}}' bindchange='pickerChange' value="">
+          <text class="selectJb">选择时间</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+    <!-- 文稿出处 -->
+    <view class="entryList">
+      <text>文稿出处</text>
+      <input placeholder='请输入文稿出处'></input>
+    </view>
+
+    <!-- 文稿附件 -->
+    <view class="entryList">
+      <text>文稿附件</text>
+      <input placeholder='请选择文稿附件'></input>
+    </view>
+
+    <!-- 正文 -->
+    <view class="conImport">
+      <view>正文</view>
+      <editor placeholder="请输入或导入图片，文本"></editor>
+    </view>
+</view>

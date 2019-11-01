@@ -1,0 +1,80 @@
+/* pages/myDraft/myDraft.wxss */
+page{
+  height:100%;
+}
+.myDraft{
+  width:100%;
+  height:100%;
+  padding:20rpx 30rpx;
+  box-sizing:border-box;
+}
+.selectTab{
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom:20rpx;
+}
+.selectTab>text{
+  width: 100%;
+  height:80rpx;
+  text-align: center;
+  color:rgb(49, 49, 49);
+  line-height:80rpx;
+  background-color:#fff;
+  font-size: 34rpx;
+  position: relative;
+}
+.selectTab>text:first-child{
+  border-radius:4rpx 0 0 4rpx;
+}
+.selectTab>text:last-child{
+  border-radius:0 4rpx 4rpx 0;
+}
+.selectTab>text:first-child:after{
+  content:"";
+  width:1rpx;
+  height:70%;
+  position: absolute;
+  top:0;
+  bottom:0;
+  margin:auto;
+  right:0;
+  background-color:#ededed
+}
+.selectTab>text.textActives{
+  color:#4d80f0;
+}
+.cyyj{
+  width:100%;
+  height: calc(100% - 100rpx);
+}
+.scrollContent{
+  width:100%;
+  margin-top:20rpx;
+}
+
+.list .time{
+  float: left;
+}
+.operation{
+  float: right;
+}
+.operation>text{
+  width:120rpx;
+  text-align:center;
+  line-height: 40rpx;
+  font-size: 26rpx;
+}
+
+.operation .icon-icon-edit{
+  color:#959cf7
+}
+.operation .icon-icon7{
+  color:#ecac6c
+}
+
+.tips{
+  text-align: center;
+  padding-top:50rpx;
+  color:#6e6e6e;
+}

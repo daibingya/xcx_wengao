@@ -1,0 +1,30 @@
+<!--pages/userEdit/userEdit.wxml-->
+<view class="editorBox">
+    <!-- 修改姓名 -->
+    <view class="editName"  wx:if="{{id=='name'}}">
+      <view class="listInput">
+        <input class="weui-input" type="text" bindinput='bindKeyInput' auto-focus placeholder="请输入修改的姓名"  value="{{value}}" />
+      </view>
+      <text class="tips">提示：非必要情况下不建议修改</text>
+    </view>
+
+    <!-- 修改电话 -->
+    <view class="editName"  wx:if="{{id=='phone'}}">
+      <view class="listInput">
+        <input class="weui-input" type="number" bindinput='bindKeyInput' auto-focus placeholder="请输入修改的电话" value="{{value}}" />
+      </view>
+    </view>
+
+    <!-- 修改密码 -->
+    <view class="editName"  wx:if="{{id=='password'}}">
+      <view class="listInput">
+        <text class="originalPass">原密码</text><input class="weui-input" type="text" auto-focus placeholder="请输入原始的密码"  password bindinput='sizePass' data-id="orPass" value="{{originalPassword}}"/>
+      </view>
+      <view class="listInput">
+        <text class="newPassword">新密码</text><input class="weui-input" type="text" placeholder="请输入新的密码" bindinput='sizePass'  password data-id="newPass"  value="{{newPassword}}"/>
+        <text class="newPassword">确认密码</text><input class="weui-input" type="text" placeholder="请输入确认密码" bindinput='sizePass'  password data-id="okPass"  value="{{okPassword}}"/>
+      </view>
+       <text class="tips">提示：密码格式为，只能以数字开头，并且只能包含数字，字母，下划线长度为6-18位</text>
+    </view>
+    <button class="preservation" bindtap="preservation">提交</button>
+</view>

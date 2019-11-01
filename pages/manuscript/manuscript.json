@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的文稿",
+  "usingComponents":{
+    "my-search":"/components/searchComponts/searchComponts",
+    "manuscript":"/components/manuComponts/manuComponts"
+  }
+}

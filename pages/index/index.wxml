@@ -1,0 +1,22 @@
+<!--index.wxml-->
+<view class="container">
+    <!-- 搜索栏 -->
+    <view class="back">
+      <view class="inputBox">
+        <input placeholder='请输入关键字进行搜索'></input>
+        <view class="mark" bindtap='jumpTo'></view>
+        <view class="checkSelect" bindtap="selectCheck" data-flag='false'>
+          <image class="iconfong" mode="widthFix" src='../../image/write.png'></image>
+        </view>
+      </view>
+    </view>
+
+    <!-- 文本列表 -->
+    <view class="scrollBox">
+        <!-- 时间开关            分享开关                           复选框开关-->
+        <manuscript timeFlag="{{false}}"  shareFlag="{{false}}" checkFlag="{{checkFlag}}"></manuscript>
+    </view>
+
+     <!-- 新建 -->
+    <view class="fixedImage" bindtap='newPages'>+</view>
+</view>

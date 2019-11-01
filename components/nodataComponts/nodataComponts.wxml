@@ -1,0 +1,7 @@
+<!--components/nodataComponts/nodataComponts.wxml-->
+<view class="nodataBox">
+    <view class="tips">
+        <image src="/image/nosearch.png" mode="widthFix"></image>
+        <view class="textTip">暂无搜索结果</view>
+    </view>
+</view>

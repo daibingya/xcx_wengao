@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "manuscript":"/components/manuComponts/manuComponts"
+  },
+  "navigationBarTitleText": "我的草稿"
+}

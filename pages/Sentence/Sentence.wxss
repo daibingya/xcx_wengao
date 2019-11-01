@@ -1,0 +1,52 @@
+/* pages/Sentence/Sentence.wxss */
+page{
+  height:100%;
+}
+.sentenceBox{
+  width:100%;
+  height:100%;
+  padding:20rpx;
+  box-sizing: border-box;
+}
+.sentenceBox .inputBox{
+  width:100%;
+  height:80rpx;
+  background: #fff;
+  border-radius:4px;
+  line-height: 80rpx;
+  padding-left:20rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+.sentenceBox .inputBox input{
+  width:100%;
+  height:100%;
+  display: inline-block;
+  vertical-align: top;
+}
+.sentenceBox .inputBox .hiddenMark{
+  position: absolute;
+  left:0;
+  right:0;
+  top:0;
+  margin:auto;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0);
+  z-index: 9;
+}
+.sentenceBox .contentBox{
+  width:100%;
+  margin-top:100rpx;
+}
+.sentenceBox .tips{
+  margin-top: 200rpx;
+  text-align: center;
+}
+.sentenceBox .tips image{
+  width:260rpx;
+}
+.sentenceBox .tips .textTip{
+  font-size:28rpx;
+  color:rgb(117, 117, 117)
+}

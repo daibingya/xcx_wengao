@@ -1,0 +1,9 @@
+<!--components/search/search.wxml-->
+<view class="search">
+    <!-- 搜索栏 -->
+    <view class="inputBox">
+        <input placeholder='请输入关键字进行搜索' value="{{values.keyword}}"></input>
+        <view class="hiddenMark" bindtap='breakTosearch'></view>
+    </view>
+    <slot></slot>
+</view>
