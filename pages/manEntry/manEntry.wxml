@@ -3,34 +3,38 @@
     
     <!-- 文稿名称 -->
     <view class="entryList">
-      <text>文稿名称</text>
-      <input placeholder='请输入文稿名称'></input>
+      <text class="name">文稿名称</text>
+      <input placeholder='请输入文稿名称' bindinput="inputTitle"></input>
     </view>
 
     <!-- 内容摘要 -->
     <view class="conImport">
       <view>内容摘要</view>
       <view class="textareaBox">
-          <textarea placeholder='请输入内容摘要' maxlength='-1'></textarea>
-          <view class="operation"><text class="add">+</text><text class="reduce">-</text></view>
+          <block wx:for="{{textCont}}" wx:key="{{index}}">
+              <textarea bindinput="changeInputText" data-id='{{item}}' placeholder='请输入内容摘要' maxlength='-1'></textarea>
+          </block>
+          <view class="operation"><text class="add" bindtap="addFun">+</text><text class="reduce" bindtap="reduceFun">-</text></view>
       </view>
     </view>
 
 
     <!-- 文稿级别 -->
     <view class="entryList">
-      <text>文稿级别</text>
-      <picker range='{{myJibie}}' bindchange='pickerChange' value="">
-          <text class="selectJb">选择级别</text>
+      <text class="name">文稿级别</text>
+      <picker range='{{level}}' range-key="name" bindchange='pickerlevelChange' value="{{index}}">
+          <text class="selectJb" wx:if="{{!levelData}}">请选择文稿级别</text>
+          <text class="selectJb" style="color:#000">{{levelData}}</text>
           <image class="xiala" src="/image/login/xiala.png"></image>
       </picker>
     </view>
 
     <!-- 文稿类型 -->
     <view class="entryList">
-      <text>文稿类型</text>
-      <picker range='{{myJibie}}' bindchange='pickerChange' value="">
-          <text class="selectJb">选择类型</text>
+      <text class="name">文稿类型</text>
+      <picker range='{{clAss}}' range-key="name" bindchange='pickerTypeChange' value="{{index}}">
+          <text class="selectJb" wx:if="{{!classData}}">请选择文稿类型</text>
+          <text class="selectJb" style="color:#000">{{classData}}</text>
           <image class="xiala" src="/image/login/xiala.png"></image>
       </picker>
     </view>
@@ -38,8 +42,19 @@
     <!-- 发布时间 -->
     <view class="entryList">
       <text>发布时间</text>
-      <picker range='{{myJibie}}' bindchange='pickerChange' value="">
-          <text class="selectJb">选择时间</text>
+      <picker mode="date" start="{{startTime}}" end="{{endTime}}" bindchange='pickerTimeChange' value="">
+          <text class="selectJb" wx:if="{{!inputTime}}">请选择发布时间</text>
+          <text class="selectJb" style="color:#000">{{inputTime}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+    <!-- 可见范围 -->
+    <view class="entryList">
+      <text class="name">可见范围</text>
+      <picker range='{{rangesd}}' range-key="name" bindchange='pickerRangeChange' value="{{index}}">
+          <text class="selectJb" wx:if="{{!rangeData}}">请选择可见范围</text>
+          <text class="selectJb" style="color:#000">{{rangeData}}</text>
           <image class="xiala" src="/image/login/xiala.png"></image>
       </picker>
     </view>
@@ -47,7 +62,7 @@
     <!-- 文稿出处 -->
     <view class="entryList">
       <text>文稿出处</text>
-      <input placeholder='请输入文稿出处'></input>
+      <input placeholder='请输入文稿出处' bindinput="sourceChange"></input>
     </view>
 
     <!-- 文稿附件 -->
@@ -59,6 +74,11 @@
     <!-- 正文 -->
     <view class="conImport">
       <view>正文</view>
-      <editor placeholder="请输入或导入图片，文本"></editor>
+      <editor bindinput="editorInput" placeholder="请输入文本"></editor>
     </view>
+
+    <view class="flexBox">
+        <view class="cancel" bindtap="Savecaogao">保存到草稿箱</view>
+        <view class="Determine" bindtap="sendManuscript">提交</view>
+    </view> 
 </view>

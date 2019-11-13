@@ -8,7 +8,7 @@ Page({
    */
   data: {
     //普通选择器：（普通数组）
-    array: ['机关单位', '政法单位', '森林防火单位','公务员','其他'] ,
+    array: [] ,
     username:"",
     password:"",
     checked:false
@@ -23,19 +23,26 @@ Page({
   //单位选择：
   bindPickerChange: function (e) {
     this.setData({
-      index: e.detail.value
+      orgId: this.data.array[e.detail.value].id
     })
-    console.log(e.detail.value)
+    for(let i=0;i<this.data.array.length;i++){
+      if(this.data.array[i].id==this.data.orgId){
+        this.setData({
+          index:i
+        })
+      }
+    }
   },
   // 记住密码：
   checkboxChange: function (e) {
     // 存储密码
+    console.log(this.data.orgId)
     if(e.detail.value[0]){
       wx.setStorageSync("user", {
         "username":this.data.username,
         // "password":this.data.password,
         "checked":"true",
-        "index":this.data.index
+        "orgId": this.data.orgId
       })
     }else{
       try{
@@ -50,37 +57,43 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that=this;
     wx.hideHomeButton();
     // 获取单位
     var _this=this;
-    wx.request({
-      url: ip+'/api/organization/',
-      method: 'GET',
-      success:function(res){
-        console.log(res);
-        _this.setData({
-          array: res.data.data
-        })
-      },fail:function(error){
-        console.log(error.errMsg)
-      }
-    })
-
-    // 查看是否需要获取密码
-    try{
+    new Promise((resolve,reject)=>{
+      wx.request({
+        url: ip + '/api/organization/',
+        method: 'GET',
+        success: function (res) {
+          _this.setData({
+            array: res.data.data
+          })
+          resolve();
+        }, fail: function (error) {
+          console.log(error.errMsg)
+        }
+      })
+    }).then(val=>{
+      //查看是否需要获取密码
       let user = wx.getStorageSync("user");
-      if(user){
+      if (user) {
+        let index = 0;
+        for (let i = 0; i < that.data.array.length; i++) {
+          if (that.data.array[i].id == user.orgId) {
+            index = i
+            break;
+          }
+        }
         _this.setData({
-          username:user.username,
+          username: user.username,
           // password:user.password,
-          checked:user.checked,
-          index: user.index
+          checked: user.checked,
+          index: index
         })
-      }else{
+      } else {
       }
-    }catch(e){
-      console.log(e);
-    }
+    },error=>{})
   },
   // 登录跳转
   brekPage:function(){
@@ -94,15 +107,14 @@ Page({
       data:{
         username:this.data.username,
         password:this.data.password,
-        orgId:this.data.index     //单位
+        orgId: this.data.array[this.data.index].id     //单位
       },
       success:function(res){
-        console.log(_this.data);
         if (res.statusCode==200){
           // 登录成功跳转地址
+          console.log(res)
           if(res.data.code == 200 ){
             //存储Token
-            console.log(res.data.data.accessToken)
             new Promise((resolve,reject)=>{
               wx.setStorage({
                 key: 'token',
@@ -123,7 +135,7 @@ Page({
           }else{
             wx.showModal({
               title: '登录失败',
-              content: '账号、密码或单位错误'
+              content: res.data.message
             })
           }
         }else{

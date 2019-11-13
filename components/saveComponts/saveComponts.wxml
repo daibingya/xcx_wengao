@@ -1,0 +1,13 @@
+<!--components/saveComponts/saveComponts.wxml-->
+<cover-view class="mask {{indexFlag?'indexClass':''}}" catchtouchmove="preventD" catchtap="preventD">
+    <cover-view class="flexFixed" catchtap="conSon">
+        <cover-view class="saveMan" catchtap="conSon">
+            <cover-image mode="widthFix" src="/image/wd.png"></cover-image>
+            <cover-view data-saveId='1' catchtap="conWen">保存到文稿</cover-view>
+        </cover-view>
+        <cover-view class="saveCaogao" catchtap="conSon">
+            <cover-image mode="widthFix" src="/image/cg.png"></cover-image>
+            <cover-view data-saveId='0' catchtap="conSon">保存到草稿</cover-view>
+        </cover-view>
+    </cover-view>
+</cover-view>

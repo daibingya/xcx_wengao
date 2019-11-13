@@ -138,6 +138,7 @@ Page({
 
             wx.hideLoading();
           } else {
+            wx.hideLoading();
             wx.showModal({
               title: '请求失败',
               content: res.data.msg,

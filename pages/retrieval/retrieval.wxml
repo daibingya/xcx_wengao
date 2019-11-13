@@ -2,7 +2,7 @@
 <view class="searchBox">
     <!-- 搜索栏 -->
     <view class="inputBox">
-      <input bindfocus='breakTosearch' placeholder='请输入关键字进行搜索'></input>
+      <input bindinput="keywordsChange" placeholder='请输入关键字进行搜索'></input>
     </view>
 
     <!-- 精准检索 -->
@@ -11,9 +11,9 @@
     <!-- 发布时间 -->
     <view class="listInput">
       <image src="/image/login/time.png" mode='widthFix'></image>
-      <picker mode="date" start="2015-09-01" end="2017-09-01" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-          <text wx:if="{{!array[index]}}" style="color:gray">请选择发布时间</text>
-          <text  style="color:#000">{{array[index]}}</text>
+      <picker mode="date" start="{{startTime}}" end="{{endTime}}" bindchange="bindSendChange" value="{{index}}" range="{{array}}">
+          <text wx:if="{{!sendTime}}" style="color:gray">请选择发布时间</text>
+          <text  style="color:#000">{{sendTime}}</text>
           <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
       </picker>
     </view>
@@ -21,9 +21,9 @@
      <!-- 录入时间 -->
     <view class="listInput">
       <image src="/image/login/time.png" mode='widthFix'></image>
-      <picker mode="date" start="2015-09-01" end="2017-09-01" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-          <text wx:if="{{!array[index]}}" style="color:gray">请选择录入时间</text>
-          <text  style="color:#000">{{array[index]}}</text>
+      <picker mode="date" start="{{startTime}}" end="{{endTime}}" bindchange="bindInputChange" value="{{index}}">
+          <text wx:if="{{!inputTime}}" style="color:gray">请选择录入时间</text>
+          <text  style="color:#000">{{inputTime}}</text>
           <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
       </picker>
     </view>
@@ -31,9 +31,9 @@
     <!-- 文稿级别 -->
     <view class="listInput">
       <image src="/image/login/class.png" mode='widthFix'></image>
-      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-          <text wx:if="{{!array[index]}}" style="color:gray">请选择文稿级别</text>
-          <text  style="color:#000">{{array[index]}}</text>
+      <picker bindchange="bindlevelChange" value="{{index}}" range-key="name" range="{{level}}">
+          <text wx:if="{{!levelData}}" style="color:gray">请选择文稿级别</text>
+          <text  style="color:#000">{{levelData}}</text>
           <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
       </picker>
     </view>
@@ -41,9 +41,9 @@
     <!-- 单位 -->
     <view class="listInput">
       <image src="/image/login/danwei.png" mode='widthFix'></image>
-      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-          <text wx:if="{{!array[index]}}" style="color:gray">请选择录入单位</text>
-          <text  style="color:#000">{{array[index]}}</text>
+      <picker bindchange="bindCompanyChage" value="{{index}}" range-key="name" range="{{company}}">
+          <text wx:if="{{!comData}}" style="color:gray">请选择录入单位</text>
+          <text  style="color:#000">{{comData}}</text>
           <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
       </picker>
     </view>
@@ -51,15 +51,15 @@
     <!-- 类型 -->
     <view class="listInput">
       <image src="/image/login/danwei.png" mode='widthFix'></image>
-      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-          <text wx:if="{{!array[index]}}" style="color:gray">请选择类型</text>
-          <text  style="color:#000">{{array[index]}}</text>
+      <picker bindchange="bindClassChange" value="{{index}}" range-key="name" range="{{clAss}}">
+          <text wx:if="{{!classData}}" style="color:gray">请选择类型</text>
+          <text  style="color:#000">{{classData}}</text>
           <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
       </picker>
     </view>
 
     <view class="flexBox">
         <view class="cancel">取消</view>
-        <view class="Determine">查询</view>
+        <view class="Determine" bindtap="searchManuscript">查询</view>
     </view> 
 </view>

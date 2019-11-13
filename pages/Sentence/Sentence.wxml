@@ -2,9 +2,9 @@
 
 <view class="sentenceBox">
     <my-search bind:breakTo="senBreak" values="{{searchData}}"></my-search>
-    <!-- 内容列表 -->
+    <!-- 无内容 -->
     <nodata wx:if="{{nodataFlag}}"></nodata>
-   
+    <!-- 内容列表 -->
     <view class="contentBox"  bindtap="goMessage"> 
         <block wx:for="{{sentenceData}}" wx:key="{{index}}">
           <view class="list" id="{{item.id}}">

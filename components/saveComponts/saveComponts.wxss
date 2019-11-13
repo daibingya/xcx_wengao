@@ -1,0 +1,40 @@
+/* components/saveComponts/saveComponts.wxss */
+.mask{
+  position:fixed;
+  width:100vw;
+  height:100vh;
+  background-color:rgba(0,0,0,.2);
+  top:0;
+  left:0;
+  z-index:-10;
+  display: none;
+}
+.flexFixed{
+  color:#333333;
+  text-align: center;
+  font-size:28rpx;
+  line-height: 38rpx;
+  position: absolute;
+  left:30rpx;
+  right:30rpx;
+  background-color:#fff;
+  border-radius:4rpx;
+  height:180rpx;
+  bottom:50rpx;
+  padding-top:20rpx;
+}
+.flexFixed .saveMan,.saveCaogao{
+  padding:20rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flexFixed cover-image{
+  width:30rpx;
+  height:30rpx;
+  margin-right:10rpx;
+}
+cover-view.indexClass{
+  z-index: 99999999;
+  display: block;
+}

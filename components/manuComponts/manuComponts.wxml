@@ -1,153 +1,32 @@
-<!--components/manuComponts/manuComponts.wxml-->
-
 <view class="textListBox">
-    
     <!-- 列表 start -->
-    <view class="textList">
-        
-        <view class="textTitle">
-            <text class="circular"></text><text class="text">关于促进全民健身和体育消费</text>
-        </view>
-
-        <view class="textCont">
-            <text>  1体育产业在满足人民日益增长的美好生活需要方面发挥着不可替代的作用。在新形势下，要以习近平新时代中国特色社会主义思想为指导。</text>
-            <checkbox-group wx:if="{{needCheck}}">
-              <label class="checkbox">
-                <checkbox value="{{item.name}}" checked="{{false}}"/>
-              </label>
-            </checkbox-group> 
-        </view>
-        
-        <view class="textCont">
-            <text>  1体育产业在满足人民日益增长的美好生活需要方面发挥着不可替代的作用。在新形势下，要以习近平新时代中国特色社会主义思想为指导。</text>
-            <checkbox-group wx:if="{{needCheck}}">
-              <label class="checkbox">
-                <checkbox value="{{item.name}}" checked="{{false}}"/>
-              </label>
-            </checkbox-group> 
-        </view>
-        <view class="textCont">
-            <text>  1体育产业在满足人民日益增长的美好生活需要方面发挥着不可替代的作用。在新形势下，要以习近平新时代中国特色社会主义思想为指导。</text>
-            <checkbox-group wx:if="{{needCheck}}">
-              <label class="checkbox">
-                <checkbox value="{{item.name}}" checked="{{false}}"/>
-              </label>
-            </checkbox-group> 
-        </view>
-
-        <view class="timeBox" wx:if="{{timeFlag}}">
-            <view class="time">
-              <image src="/image/time.png" mode="widthFix"></image>
-              <text>2019-8-20</text>
+    <block wx:for="{{dataArray}}" wx:key="{{index}}">
+        <view class="textList">
+            <view class="textTitle" bindtap="lookMessage" data-sid="{{item.id}}">
+                <text class="circular"></text><text class="text">{{item.title}}</text>
             </view>
-            <view class="caozuo">
-              <text class="iconfont icon-icon-edit">编辑</text>
-              <text class="iconfont icon-shanchu">删除</text>
-              <text class="iconfont icon-fenxiang" wx:if="{{myWengao}}">分享</text>
-            </view> 
+            <block wx:for="{{item.remark}}" wx:for-item="value" wx:key="{{key}}">
+                <view class="textCont">
+                    <checkbox-group class="{{checkFlag?'noMargin':''}}" bindchange="changeBox" data-id="{{item.id}}"  data-text="{{value.content}}"  data-sid="{{value.id}}">
+                      <label class="checkbox" >
+                        <checkbox value="{{item.id}}" checked="{{checkAllSelt}}"/>
+                      </label>
+                    </checkbox-group> 
+                    <text class="{{checkFlag?'hasMargin':''}}" bindtap="lookMessage" data-sid="{{item.id}}">{{value.content}}</text>
+                </view>
+            </block>
+            <view class="timeBox" wx:if="{{timeFlag}}">
+                <view class="time">
+                  <image src="/image/time.png" mode="widthFix"></image>
+                  <text>2019-8-20</text>
+                </view>
+                <view class="caozuo">
+                  <text class="iconfont icon-icon-edit">编辑</text>
+                  <text class="iconfont icon-shanchu">删除</text>
+                  <text class="iconfont icon-fenxiang" wx:if="{{shareFlag}}">分享</text>
+                </view> 
+            </view>
         </view>
-    </view>
+    </block>
     <!-- 列表 end -->
-
-
-    <view class="textList">
-        <view class="textTitle">
-            <text class="circular"></text><text class="text">关于促进全民健身和体育消费</text>
-        </view>
-        <view class="textCont">
-            <text>  1体育产业在满足人民日益增长的美好生活需要方面发挥着不可替代的作用。在新形势下，要以习近平新时代中国特色社会主义思想为指导。</text>
-            <checkbox-group wx:if="{{needCheck}}">
-              <label class="checkbox">
-                <checkbox value="{{item.name}}" checked="{{false}}"/>
-              </label>
-            </checkbox-group> 
-        </view>
-        <view class="timeBox" wx:if="{{timeFlag}}">
-            <view class="time">
-              <image src="/image/time.png" mode="widthFix"></image>
-              <text>2019-8-20</text>
-            </view>
-            <view class="caozuo">
-              <text class="iconfont icon-icon-edit">编辑</text>
-              <text class="iconfont icon-shanchu">删除</text>
-              <text class="iconfont icon-fenxiang" wx:if="{{myWengao}}">分享</text>
-            </view> 
-        </view>
-    </view>
-
-    <view class="textList">
-        <view class="textTitle">
-            <text class="circular"></text><text class="text">关于促进全民健身和体育消费</text>
-        </view>
-        <view class="textCont">
-            <text>  1体育产业在满足人民日益增长的美好生活需要方面发挥着不可替代的作用。在新形势下，要以习近平新时代中国特色社会主义思想为指导。</text>
-            <checkbox-group wx:if="{{needCheck}}">
-              <label class="checkbox">
-                <checkbox value="{{item.name}}" checked="{{false}}"/>
-              </label>
-            </checkbox-group> 
-        </view>
-        <view class="timeBox" wx:if="{{timeFlag}}">
-            <view class="time">
-              <image src="/image/time.png" mode="widthFix"></image>
-              <text>2019-8-20</text>
-            </view>
-            <view class="caozuo">
-              <text class="iconfont icon-icon-edit">编辑</text>
-              <text class="iconfont icon-shanchu">删除</text>
-              <text class="iconfont icon-fenxiang" wx:if="{{myWengao}}">分享</text>
-            </view> 
-        </view>
-    </view>
-    
-    <view class="textList">
-        <view class="textTitle">
-            <text class="circular"></text><text class="text">关于促进全民健身和体育消费</text>
-        </view>
-        <view class="textCont">
-            <text>  1体育产业在满足人民日益增长的美好生活需要方面发挥着不可替代的作用。在新形势下，要以习近平新时代中国特色社会主义思想为指导。</text>
-            <checkbox-group wx:if="{{needCheck}}">
-              <label class="checkbox">
-                <checkbox value="{{item.name}}" checked="{{false}}"/>
-              </label>
-            </checkbox-group> 
-        </view>
-        <view class="timeBox" wx:if="{{timeFlag}}">
-            <view class="time">
-              <image src="/image/time.png" mode="widthFix"></image>
-              <text>2019-8-20</text>
-            </view>
-            <view class="caozuo">
-              <text class="iconfont icon-icon-edit">编辑</text>
-              <text class="iconfont icon-shanchu">删除</text>
-              <text class="iconfont icon-fenxiang" wx:if="{{myWengao}}">分享</text>
-            </view> 
-        </view>
-    </view>
-    
-    <view class="textList">
-        <view class="textTitle">
-            <text class="circular"></text><text class="text">关于促进全民健身和体育消费</text>
-        </view>
-        <view class="textCont">
-            <text>  1体育产业在满足人民日益增长的美好生活需要方面发挥着不可替代的作用。在新形势下，要以习近平新时代中国特色社会主义思想为指导。</text>
-            <checkbox-group wx:if="{{needCheck}}">
-              <label class="checkbox">
-                <checkbox value="{{item.name}}" checked="{{false}}"/>
-              </label>
-            </checkbox-group> 
-        </view>
-        <view class="timeBox" wx:if="{{timeFlag}}">
-            <view class="time">
-              <image src="/image/time.png" mode="widthFix"></image>
-              <text>2019-8-20</text>
-            </view>
-            <view class="caozuo">
-              <text class="iconfont icon-icon-edit">编辑</text>
-              <text class="iconfont icon-shanchu">删除</text>
-              <text class="iconfont icon-fenxiang" wx:if="{{myWengao}}">分享</text>
-            </view> 
-        </view>
-    </view>
-    
 </view>

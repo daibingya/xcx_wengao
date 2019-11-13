@@ -1,21 +1,22 @@
 {
   "pages": [
+ 
+    "pages/index/index",
+      "pages/generation/generation",
+    "pages/preview/preview",
     "pages/user/user",
+    "pages/manDetails/manDetails",
+    "pages/manEntry/manEntry",
+    "pages/retrieval/retrieval",
+    "login/index",
     "pages/myDraft/myDraft",
     "pages/Sentence/Sentence",
-    "pages/index/index",
-
-    "login/index",
     "pages/sentenceEditor/sentenceEditor",
     "pages/search/search",
     "pages/details/details",
-    
     "pages/success/success",
-    "pages/manEntry/manEntry",
-
     "pages/userEdit/userEdit",
-    "pages/manuscript/manuscript",
-    "pages/retrieval/retrieval"
+    "pages/manuscript/manuscript"
   ],
   "window": {
     "backgroundTextStyle": "light",

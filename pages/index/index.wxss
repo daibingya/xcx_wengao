@@ -12,11 +12,12 @@
   background: #fff;
   border-radius:4px;
   line-height: 80rpx;
+  position: relative;
 }
 .container .back{
   width:100%;
   background: #edf2f3;
-  padding:20rpx;
+  padding:20rpx 20rpx 0;
   box-sizing:border-box;
   position: fixed;
   left:0;
@@ -24,7 +25,7 @@
   right:0;z-index:999
 }
 .container .inputBox .mark{
-  width:90%;
+  width:100%;
   position:absolute;
   z-index:9;
   height:100%;
@@ -33,7 +34,7 @@
   background: rgba(0,0,0,0);
 }
 .container .inputBox input{
-  width:90%;
+  width:100%;
   height:100%;
   padding-left:20rpx;
   box-sizing: border-box;
@@ -41,12 +42,12 @@
   vertical-align: top;
 }
 .container image.iconfong{
-  width:40rpx;
+  width:30rpx;
   display: inline-block;
   vertical-align: middle;
 }
 .scrollBox{
-  margin-top:100rpx;
+  margin-top:165rpx;
 }
 /* 列表内容 */
 .textListBox{
@@ -90,32 +91,60 @@
   height:100%;
   text-align: center;
 }
-
-/*checkbox*/
-checkbox .wx-checkbox-input{ /*未选中状态*/
-  border-radius: 3rpx;
-  height: 32rpx;
-  width: 32rpx;
-  margin-top: -4rpx;
-} 
-checkbox .wx-checkbox-input.wx-checkbox-input-checked{
-  border-radius: 3rpx;
-  height: 32rpx;
-  width: 32rpx;
-  line-height: 32rpx;
-  margin-top: -4rpx;
-  border: none;
-  background: #0958db;
+.Administration{
+  display: flex;
+  justify-content: space-between;
+  width:100%;
+  box-sizing:border-box;
+  font-size:30rpx;
+  padding: 20rpx 10rpx;
 }
+.Administration .adminFlex{
+  display:flex;
+}
+.Administration .adminFlex .allLelection{
+  margin:0 10rpx;
+}
+.Administration .blueText{
+  color:#4d80f0;
+}
+.Administration .smallText{
+  font-size:26rpx;
+  color:#999999;
+}
+.Administration image{
+  margin-right:5rpx;
+}
+.Administration .generate{
+  color:#4d80f0;
+}
+/* 复选框的设定 */
+/* 重写 checkbox 样式 */
+/* 未选中的 背景样式 */
+checkbox .wx-checkbox-input{
+  border-radius: 50%;/* 圆角 */
+  width: 38rpx; /* 背景的宽 */
+  height: 38rpx; /* 背景的高 */
+}
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+  border: 1rpx solid #4d81f1;
+  background: #4d81f1;
+}
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
 checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
-   border-radius: 3rpx;/* 圆角 */
-   width: 32rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
-   height: 32rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
-   line-height: 32rpx;
-   text-align: center;
-   font-size:28rpx; /* 对勾大小 */
-   color:#fff; /* 对勾颜色 白色 */
-   background: #0958db;
-   transform:translate(-50%, -50%) scale(1);
-   -webkit-transform:translate(-50%, -50%) scale(1);
+  border-radius: 50%;/* 圆角 */
+  width: 38rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 38rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+  line-height: 38rpx;
+  text-align: center;
+  font-size:30rpx; /* 对勾大小 30rpx */
+  color:#fff; /* 对勾颜色 白色 */
+  background: transparent;
+  transform:translate(-50%, -50%) scale(1);
+  -webkit-transform:translate(-50%, -50%) scale(1);
+}
+.allLelection checkbox-group{
+  position: static;
+  display: inline-block;
 }

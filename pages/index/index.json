@@ -2,6 +2,7 @@
   "navigationBarTitleText":"文稿库",
   "enablePullDownRefresh": true,
   "usingComponents":{
-    "manuscript":"/components/manuComponts/manuComponts"
+    "manuscript":"/components/manuComponts/manuComponts",
+    "nodata": "/components/nodataComponts/nodataComponts"
   }
 }

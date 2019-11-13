@@ -18,10 +18,56 @@ Page({
       url: '/pages/manEntry/manEntry',
     })
   },
+  // 全选
+  changeSelect:function(e){
+    if(e.detail.value.length!=0){
+      this.setData({
+        checkAllFlag:true
+      })
+    }else{
+      this.setData({
+        checkAllFlag: false
+      })
+    }
+  },
+  // 打开询问模态框
+  alertModel:function(){
+    var that=this;
+    if (!this.data.sendData || this.data.sendData.length <= 0) {
+      wx.showToast({
+        title: '无文稿内容，请先选择',
+        icon: 'none',
+        duration: 500
+      })
+    }else{
+      wx.showModal({
+        title: '生成文稿',
+        content: '是否将所选内容生成文稿？',
+        success(res) {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '/pages/generation/generation',
+              success: function (res) {
+                console.clear();
+                console.log(res);
+                res.eventChannel.emit('acceptDataFromOpenerPage', { data: that.data.sendData })
+              }
+            })
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    }
+  },
   // 下拉刷新
   onPullDownRefresh: function () {
-    console.log("下拉了");
     wx.showNavigationBarLoading();
+    this.setData({
+      keywords:'',
+      checkFlag:false
+    })
+    this.loadingData(true);
   },
   //事件处理函数
   bindViewTap: function() {
@@ -37,47 +83,97 @@ Page({
   },
   // 选择框显示隐藏
   selectCheck:function(e){
-    console.log(e);
-
     this.setData({
-      checkFlag:true
+      checkFlag:!this.data.checkFlag
     })
-    console.log(this.data.checkFlag)
-  },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
+    if(!this.data.checkFlag){
+      this.setData({ 
+        checkAllFlag: false,
+        checked:false 
       })
     }
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
+  changeSelectBox:function(e){
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+      checked:e.detail
     })
+  },
+  // 加载数据
+  loadingData: function (down, up, searchCondition){
+    let that=this;
+    wx.showLoading({
+      title: '正在加载...',
+    });
+    new Promise((resolve, reject) => {
+      wx.getStorage({
+        key: 'token',
+        success: function (res) {
+          resolve(res.data)
+        },
+      })
+    }).then(token => {
+      wx.request({
+        url: ip + '/api/document/list',
+        header: {
+          "content-type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        method: "POST",
+        data: {
+          "current": 1,
+          "size": 10,
+          "searchCondition": {
+            "title": searchCondition ? searchCondition.title:'',
+            "orgid": searchCondition ? searchCondition.orgid : '',
+            "level": searchCondition ? searchCondition.level : '',
+            "type": searchCondition ? searchCondition.type : '',
+            "createdDate": searchCondition ? searchCondition.createdDate : '',
+            "pubTime": searchCondition ? searchCondition.pubTime : ''
+          }
+        },
+        success: function (res) {
+          if (res.data.code == 200) {
+            that.setData({
+              documentArray: res.data.data.records
+            })
+            if(down){
+              wx.showToast({
+                title: '刷新成功'
+              })
+              wx.stopPullDownRefresh();
+              wx.hideNavigationBarLoading();
+            }
+          }else{
+            wx.showModal({
+              title: '加载失败',
+              content: res.data.msg,
+              success:function(v){
+                wx.redirectTo({
+                  url: '/login/index'
+                })
+              }
+            })
+          }
+          wx.hideLoading();
+        }, fail: function (error) {
+          wx.hideLoading();
+          wx.showModal({
+            title: '加载失败',
+            content: error.errMsg,
+          })
+        }
+      })
+    }, error => { console.log(error)})
+  },
+  // 用于生成文稿的数据
+  shengcheng:function(e){
+    this.setData({
+      sendData:e.detail
+    })
+    console.log(e.detail)
+  },
+  onLoad: function () {
+    let that=this;
+    this.loadingData();
   }
 })

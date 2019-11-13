@@ -1,0 +1,25 @@
+<!--pages/manDetails/manDetails.wxml-->
+<view class="manDetailsBox">
+  <view class="title">{{contData.title}}</view>
+  <view class="information">
+      <view class="left">
+        <view>发布时间：{{contData.pubTime}}</view>
+        <view>文稿类型：{{contData.typeName}}</view>
+        <view>录入时间：{{contData.createdDate}}</view>
+      </view>
+      <view class="right">
+        <view>文稿级别：{{contData.levelName}}</view>
+        <view>文稿出处：{{contData.source}}</view>
+      </view>
+  </view>
+  <view class="content">
+        {{contData.content}}
+  </view>
+
+  <view class="Enclosure">
+    <view><text>附件：</text><text>1.png</text></view>
+    <view><image src="/image/down.png" mode="widthFix"></image></view>
+  </view>
+
+  <view class="shera">分享</view>
+</view>

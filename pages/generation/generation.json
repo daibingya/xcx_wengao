@@ -1,0 +1,7 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "文稿生成",
+  "usingComponents": {
+    "save": "/components/saveComponts/saveComponts"
+  }
+}

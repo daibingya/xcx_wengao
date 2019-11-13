@@ -77,17 +77,17 @@ Page({
       wx.showLoading({
         title: '加载中...',
       });
-      new Promise((resolve,reject)=>{
-        wx.getStorage({
-          key: 'token',
-          success: function(res) {
-            that.setData({
-              token:res.data
-            });
-            resolve(res.data);
-          },
-        })
-      }).then(token=>{
+      // new Promise((resolve,reject)=>{
+      //   wx.getStorage({
+      //     key: 'token',
+      //     success: function(res) {
+      //       that.setData({
+      //         token:res.data
+      //       });
+      //       resolve(res.data);
+      //     },
+      //   })
+      // }).then(token=>{
         wx.request({
           url: ip+'/api/statement/mydraft',
           method:"POST",
@@ -114,22 +114,66 @@ Page({
             wx.hideLoading();
           }
         })
-      },error=>{
-        wx.showModal({
-          title: '请求错误',
-          content: error.errMsg,
-        })
-      })
+      // },error=>{
+      //   wx.showModal({
+      //     title: '请求错误',
+      //     content: error.errMsg,
+      //   })
+      // })
   },
   // 加载文稿
   manuScript:function(){
-
+    let that=this;
+    wx.showLoading({
+      title: '正在加载...',
+    })
+    new Promise((resolve, reject) => {
+      wx.getStorage({
+        key: 'token',
+        success: function (res) {
+          that.setData({
+            token: res.data
+          });
+          resolve(res.data);
+        },
+      })
+    }).then(token => {
+      console.log(token)
+      wx.request({
+        url: ip + '/api/mydocument/list',
+        method: "POST",
+        header: {
+          "Authorization": "Bearer " + token
+        },
+        data: {
+          "current": 1,
+          "size": 10,
+          "searchCondition": {
+            "keyword":""
+          }
+        },
+        success: function (res) {
+          console.log(res)
+          if (res.data.code == 200) {
+            that.setData({
+              mydocumentData: res.data.data.records
+            })
+          };
+          wx.hideLoading();
+        }
+      })
+    }, error => {
+      wx.showModal({
+        title: '请求错误',
+        content: error.errMsg,
+      })
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.manuScript();
   },
 
   /**

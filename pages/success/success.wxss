@@ -4,12 +4,15 @@ page{
 }
 .successBox{
   text-align: center;
-  padding-top:50rpx;
+  padding-top:80rpx;
   font-size:30rpx;
 }
 .successBox .resizeOk{
   font-size:28rpx;
   margin-top:30rpx;
+}
+.successBox image{
+  width:370rpx;
 }
 .successBox .returnLogin{
   position: fixed;

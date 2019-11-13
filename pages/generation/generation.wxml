@@ -1,0 +1,24 @@
+<!--pages/generation/generation.wxml-->
+<!--pages/manEntry/manEntry.wxml-->
+<view class="entryBox">
+    
+    <!-- 文稿名称 -->
+    <view class="entryList">
+      <text>文稿标题</text>
+      <input placeholder='请输入文稿标题' bindinput="titleChange"></input>
+    </view>
+
+    <!-- 正文 -->
+    <view class="conImport">
+      <view>正文</view>
+      <textarea style="text-indent:25rpx" placeholder="请输入正文" maxlength="-1" bindinput="textareaChange" value="{{textAreat}}"></textarea>
+    </view>
+
+    <!-- 底部的选择 -->
+    <view class="Position">
+        <cover-button class="cancel" bindtap="previewMan">预览</cover-button>
+        <cover-button class="Determine" bindtap="sendManuscript">保存</cover-button>
+    </view>
+
+    <save showFlag="{{indexFlag}}" sendCont="{{sendCont}}"></save>
+</view>

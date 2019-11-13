@@ -20,15 +20,32 @@
   padding:15rpx 15rpx;
   line-height: 44rpx;
   font-size:28rpx;
-  color:#999999;
+  color:#646464;
   display: block;
   position: relative;
+  overflow: hidden;
   border-top: 1px solid #e1e1e1;
 }
+
 checkbox-group{
   position: absolute;
-  right:0rpx;
-  bottom:10rpx;
+  top:10rpx;
+  left:-50px;
+  transition:all .33s;
+}
+checkbox-group.noMargin{
+  left:0;
+}
+text.hasMargin{
+  margin-left:36rpx;
+}
+.textListBox .textList  .textCont text{
+  transition:margin .33s;
+  display:block;
+}
+.textListBox .textList .textTitle{
+  display: flex;
+  align-items: center;
 }
 .textListBox .textList .textTitle .circular{
   width:20rpx;
@@ -39,7 +56,12 @@ checkbox-group{
   border-radius:50%;
   margin-right:10rpx;
 }
-
+.textListBox .textList .textTitle .text{
+  flex:1;
+  overflow: hidden;        /* 超出隐藏，配合的必须有*/
+	text-overflow:ellipsis; /* 超出变为省略号*/
+	white-space: nowrap; /* 让文字不换行*/
+}
 .timeBox{
   width: 100%;
   display: flex;
