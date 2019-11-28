@@ -35,22 +35,14 @@ Page({
   },
   // 记住密码：
   checkboxChange: function (e) {
-    // 存储密码
-    console.log(this.data.orgId)
     if(e.detail.value[0]){
-      wx.setStorageSync("user", {
-        "username":this.data.username,
-        // "password":this.data.password,
-        "checked":"true",
-        "orgId": this.data.orgId
+      this.setData({
+        remember: true
       })
     }else{
-      try{
-        //清理存储;
-        wx.removeStorageSync("user")
-      }catch(e){
-        console.log(e.errMsg)
-      }
+      this.setData({
+        remember: false
+      })
     }
   },  
   /**
@@ -77,6 +69,7 @@ Page({
     }).then(val=>{
       //查看是否需要获取密码
       let user = wx.getStorageSync("user");
+      console.log(user);
       if (user) {
         let index = 0;
         for (let i = 0; i < that.data.array.length; i++) {
@@ -87,17 +80,34 @@ Page({
         }
         _this.setData({
           username: user.username,
-          // password:user.password,
           checked: user.checked,
-          index: index
+          index: index,
+          remember:true
         })
       } else {
+        _this.setData({
+          remember: false
+        })
       }
     },error=>{})
   },
   // 登录跳转
   brekPage:function(){
     var _this=this;
+    if(this.data.remember){
+      wx.setStorageSync("user", {
+        "username": this.data.username,
+        "checked": "true",
+        "orgId": this.data.orgId
+      })
+    }else{
+      try {
+        //清理存储;
+        wx.removeStorageSync("user")
+      } catch (e) {
+        console.log(e.errMsg)
+      }
+    }
     wx.request({
       url: ip+'/api/login',
       header:{

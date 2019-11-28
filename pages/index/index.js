@@ -10,6 +10,8 @@ Page({
     shareFlag:false,
     checkFlag:false,
     hasUserInfo: false,
+    manIndex:1,
+    searchData:'',
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
   // 新建文稿
@@ -49,8 +51,8 @@ Page({
               url: '/pages/generation/generation',
               success: function (res) {
                 console.clear();
-                console.log(res);
-                res.eventChannel.emit('acceptDataFromOpenerPage', { data: that.data.sendData })
+                console.log(that.data.sendData);
+                res.eventChannel.emit('sendContent', { data: {name:"",array:that.data.sendData}})
               }
             })
           } else if (res.cancel) {
@@ -65,9 +67,18 @@ Page({
     wx.showNavigationBarLoading();
     this.setData({
       keywords:'',
-      checkFlag:false
+      checkFlag:false,
+      checkAllFlag:false,
+      manIndex:1,
+      searchData:''
     })
-    this.loadingData(true);
+    this.loadingData(true,false,false);
+  },
+  /**
+  * 页面上拉触底事件的处理函数
+  */
+  onReachBottom: function () {
+    this.loadingData(false, true, this.data.searchData);
   },
   //事件处理函数
   bindViewTap: function() {
@@ -104,6 +115,7 @@ Page({
     wx.showLoading({
       title: '正在加载...',
     });
+    up && ++that.data.manIndex
     new Promise((resolve, reject) => {
       wx.getStorage({
         key: 'token',
@@ -120,8 +132,8 @@ Page({
         },
         method: "POST",
         data: {
-          "current": 1,
-          "size": 10,
+          "current": that.data.manIndex,
+          "size": 5,
           "searchCondition": {
             "title": searchCondition ? searchCondition.title:'',
             "orgid": searchCondition ? searchCondition.orgid : '',
@@ -132,16 +144,26 @@ Page({
           }
         },
         success: function (res) {
+          wx.hideLoading();
           if (res.data.code == 200) {
+            if(up && res.data.data.records.length<=0){
+              wx.showToast({
+                title: '我也是有底线的',
+                image:"/image/nofined.png"
+              })
+            }
             that.setData({
-              documentArray: res.data.data.records
+              documentArray: up ? that.data.documentArray.concat(...res.data.data.records) : res.data.data.records
             })
             if(down){
-              wx.showToast({
-                title: '刷新成功'
+              wx.stopPullDownRefresh({
+                success: function () {
+                  wx.showToast({
+                    title: '刷新成功',
+                  })
+                  wx.hideNavigationBarLoading();
+                }
               })
-              wx.stopPullDownRefresh();
-              wx.hideNavigationBarLoading();
             }
           }else{
             wx.showModal({
@@ -154,23 +176,21 @@ Page({
               }
             })
           }
-          wx.hideLoading();
         }, fail: function (error) {
           wx.hideLoading();
           wx.showModal({
-            title: '加载失败',
-            content: error.errMsg,
+            title: "网络问题",
+            content: "无网络或服务关闭",
           })
         }
       })
     }, error => { console.log(error)})
   },
-  // 用于生成文稿的数据
+  // 左侧复选框选中的内容（用于生成文稿的数据）
   shengcheng:function(e){
     this.setData({
       sendData:e.detail
     })
-    console.log(e.detail)
   },
   onLoad: function () {
     let that=this;

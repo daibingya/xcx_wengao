@@ -1,8 +1,7 @@
 <!--pages/manuscript/manuscript.wxml-->
 <view class="manuscriptBox">
     <!-- 搜索栏 -->
-    <my-search></my-search>
-
-    <manuscript timeFlag="{{true}}" shareFlag="{{true}}" checkFlag="{{false}}"></manuscript>
-
+    <my-search bind:breakTo="searchWxml" values="{{searchData}}"></my-search>
+    <manuscript timeFlag="{{true}}" shareFlag="{{true}}" checkFlag="{{false}}" dataArray="{{mydocument}}" types="myMan"></manuscript>
+    <nodata wx:if="{{mydocument.length<=0}}"></nodata>
 </view>

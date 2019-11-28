@@ -84,6 +84,16 @@
                     <image class="returnImages" mode="widthFix" src="/image/user_image/return.png"></image>
                 </view>
             </view>
+
+            <view class="listText">
+                <view class="dashedLine" bindtap='userSwitch'>
+                    <view class="leftCont">
+                      <image mode='widthFix' src="/image/user_image/userSwitch.png"></image>
+                      <text class="listTitle">切换账号</text>
+                    </view>
+                    <image class="returnImages" mode="widthFix" src="/image/user_image/return.png"></image>
+                </view>
+            </view>
         </view>
       </view>
 </view>

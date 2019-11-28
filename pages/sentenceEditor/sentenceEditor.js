@@ -2,7 +2,6 @@
 var app=getApp();
 var ip=app.globalData.ip;
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -10,7 +9,6 @@ Page({
     textAeat:'',
     editorId:''
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -31,7 +29,6 @@ Page({
   onLoad: function (options) {
     let that=this;
     const eventChannel = this.getOpenerEventChannel();
-    
     //  时间设定
     var timestamp = Date.parse(new Date());
     var date = new Date(timestamp);
@@ -44,7 +41,6 @@ Page({
     this.setData({
       time: Y + '-' + M + '-' + D
     })
-
     new Promise((resolve, reject) => {
       wx.getStorage({
         key: 'token',
@@ -82,8 +78,7 @@ Page({
       })
     }, function () { console.log("失败") }).then(function(value){
         // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
-        eventChannel.on('acceptDataFromOpenerPage', function (data) {
-
+      eventChannel.on('changyong', function (data) {
           wx.setNavigationBarTitle({
             title: '编辑'
           });
@@ -105,12 +100,6 @@ Page({
             })
         })
     })
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
   },
   // 保存到草稿/保存
   saveSentence:function(e){
@@ -137,7 +126,6 @@ Page({
     wx.request({
        url: ip+'/api/statement/save',
        method:"POST",
-       
        header:{"Authorization":"Bearer "+this.data.token},
        data:{
          "id":id,
@@ -153,18 +141,19 @@ Page({
               success:function(){
                 // 草稿箱的编辑
                 let pages = getCurrentPages();
-                let prevPage = pages[pages.length - 1];     //-2为上一级页面  
+                let prevPage = pages[pages.length - 2];
                 if(that.data.editorId){
-                  console.log("保存到草稿箱：")
-                  console.log(prevPage);
+                  prevPage.data.sentenceIndex=1;
                   prevPage.sentEnce();
                 }else{
-                  prevPage.lodingData();
+                  //重新加载
+                  prevPage.data.page=1;
+                  prevPage.lodingData(false,false,false);
                 }
+                wx.navigateBack({
+                  delta: 1
+                })
               }
-            })
-            wx.navigateBack({
-              delta:1
             })
          }else{
            wx.showModal({

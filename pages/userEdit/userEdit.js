@@ -36,7 +36,7 @@ Page({
     });
     let key=option.id;
     const eventChannel = this.getOpenerEventChannel();
-    eventChannel.on("acceptDataFromOpenerPage", function (data) {
+    eventChannel.on("userEdit", function (data) {
         that.setData({
           value:data.data,
           oldvalue:data.data

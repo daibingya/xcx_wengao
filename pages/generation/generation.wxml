@@ -5,7 +5,7 @@
     <!-- 文稿名称 -->
     <view class="entryList">
       <text>文稿标题</text>
-      <input placeholder='请输入文稿标题' bindinput="titleChange"></input>
+      <input placeholder='请输入文稿标题' bindinput="titleChange" value="{{title}}"></input>
     </view>
 
     <!-- 正文 -->

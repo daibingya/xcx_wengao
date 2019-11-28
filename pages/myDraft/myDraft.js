@@ -2,18 +2,40 @@
 var app=getApp();
 var ip=app.globalData.ip;
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-      textActive:true
+      textActive:true,
+      node:'',
+      manIndex:1,
+      sentenceIndex:1
+  },
+  goMessages: function (e) {
+    let that = this;
+    if (e.target.dataset.id) {
+      wx.showLoading({
+        title: '加载中...',
+      })
+      wx.request({
+        url: ip + '/api/statement/detail/' + e.target.dataset.id,
+        header: {
+          "Authorization": "Bearer " + that.data.token
+        },
+        method: 'GET',
+        success: function (value) {
+          wx.navigateTo({
+            url: '/pages/details/details',
+            success: function (res) {
+              res.eventChannel.emit('sendSentence', { data: value.data.data })
+              wx.hideLoading();
+            }
+          })
+        }
+      })
+    }
   },
   // 操作
   goEditor:function(e){
     let that=this;
     let name = e.target.dataset.name;
-  
     if (name =="editorText"){
       // 编辑
       let id=e.target.dataset.id;
@@ -24,7 +46,7 @@ Page({
         url: "/pages/sentenceEditor/sentenceEditor",
         success: function (res) {
           // 通过eventChannel向被打开页面传送数据
-          res.eventChannel.emit('acceptDataFromOpenerPage', { data: {
+          res.eventChannel.emit('changyong', { data: {
             id:id,
             cont: cont,
             typeId: typeId
@@ -62,71 +84,84 @@ Page({
         }
       })
     }
-   
   },
+  // TAB切换
   activeBox:function(e){
-    e.target.dataset.id == "wengao" && this.setData({ textActive: true }) && this.manuScript();
-    if(e.target.dataset.id == "yuju"){
-      this.setData({ textActive: false })
-      this.sentEnce();
-    };
+    if (this.data.node != e.target.dataset.id){
+        if (e.target.dataset.id == "wengao"){
+          this.setData({ textActive: true ,manIndex:1})
+          this.manuScript(false,false,false)
+        };
+        if(e.target.dataset.id == "yuju"){
+          this.setData({ textActive: false, sentenceIndex: 1 })
+          this.sentEnce(false,false,false)
+        };
+    }
+    this.setData({
+      node: e.target.dataset.id
+    })
   },
   // 加载常用语句
-  sentEnce:function(){
+  sentEnce:function(down,up,searchData){
       let that=this;
       wx.showLoading({
         title: '加载中...',
       });
-      // new Promise((resolve,reject)=>{
-      //   wx.getStorage({
-      //     key: 'token',
-      //     success: function(res) {
-      //       that.setData({
-      //         token:res.data
-      //       });
-      //       resolve(res.data);
-      //     },
-      //   })
-      // }).then(token=>{
-        wx.request({
-          url: ip+'/api/statement/mydraft',
-          method:"POST",
-          header:{
-            "Authorization": "Bearer "+token
-          },
-          data:{
-            "size": 20,
-            "current":1,
-            "searchCondition": {
-              "orgId":"",
-              "startDate": "",
-              "endDate": "",
-              "keyword": "" //关键字查询
-            }
-          },
-          success:function(res){
-            console.log(res.data.data.records)
-            if(res.data.code==200){
-              that.setData({
-                sentenceData:res.data.data.records
-              })
-            };
-            wx.hideLoading();
+      up && ++that.data.sentenceIndex
+      wx.request({
+        url: ip+'/api/statement/mydraft',
+        method:"POST",
+        header:{
+          "Authorization": "Bearer "+that.data.token
+        },
+        data:{
+          "size": 20,
+          "current":that.data.sentenceIndex,
+          "searchCondition": {
+            "orgId":"",
+            "startDate": "",
+            "endDate": "",
+            "keyword": "" //关键字查询
           }
-        })
-      // },error=>{
-      //   wx.showModal({
-      //     title: '请求错误',
-      //     content: error.errMsg,
-      //   })
-      // })
+        },
+        success:function(res){
+          wx.hideLoading();
+          if(res.data.code==200){
+            that.setData({
+              sentenceData:up ? that.data.sentenceData.concat(...res.data.data.records):res.data.data.records
+            })
+            if (down) {
+              wx.stopPullDownRefresh({
+                success: function () {
+                  wx.showToast({
+                    title: '刷新成功',
+                  })
+                  wx.hideNavigationBarLoading();
+                }
+              })
+            }
+            if (up && res.data.data.records.length <= 0) {
+              wx.showToast({
+                title: '我是有底线的',
+                image: "/image/nofined.png"
+              })
+            }
+          }else{
+            wx.showModal({
+              title: '请求错误',
+              content: res.data.msg,
+            })
+          };
+        }
+      })
   },
   // 加载文稿
-  manuScript:function(){
+  manuScript:function(down,up,searchData){
     let that=this;
     wx.showLoading({
       title: '正在加载...',
     })
+    up && ++that.data.manIndex
     new Promise((resolve, reject) => {
       wx.getStorage({
         key: 'token',
@@ -138,28 +173,44 @@ Page({
         },
       })
     }).then(token => {
-      console.log(token)
       wx.request({
-        url: ip + '/api/mydocument/list',
+        url: ip + '/api/document/mydraft',
         method: "POST",
         header: {
           "Authorization": "Bearer " + token
         },
         data: {
-          "current": 1,
-          "size": 10,
-          "searchCondition": {
-            "keyword":""
-          }
+          "current": that.data.manIndex,
+          "size": 10
         },
         success: function (res) {
-          console.log(res)
+          wx.hideLoading();
           if (res.data.code == 200) {
             that.setData({
-              mydocumentData: res.data.data.records
+              mydocumentData: up ? that.data.mydocumentData.concat(res.data.data.records) : res.data.data.records,
+            });
+            if (down) {
+              wx.stopPullDownRefresh({
+                success: function () {
+                  wx.showToast({
+                    title: '刷新成功',
+                  })
+                  wx.hideNavigationBarLoading();
+                }
+              })
+            }
+          }else{
+            wx.showModal({
+              title: '请求错误',
+              content: res.data.msg,
             })
           };
-          wx.hideLoading();
+          if (up && res.data.data.records.length <= 0) {
+            wx.showToast({
+              title: '我是有底线的',
+              image: "/image/nofined.png"
+            })
+          }
         }
       })
     }, error => {
@@ -173,55 +224,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.manuScript();
+    this.manuScript(false,false,false);
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    if (this.data.textActive){
+      // 加载文稿
+      this.data.manIndex=1;
+      this.manuScript(true,false,false)
+    }else{
+      // 加载常用语句
+      this.data.sentenceIndex=1;
+      this.sentEnce(true,false,false)
+    }
   },
-
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    // 草稿->文稿
+    if(this.data.textActive){
+        this.manuScript(false,true,false);
+    }else{
+    // 草稿->常用语句
+      this.sentEnce(false,true,false)
+    };
   }
 })

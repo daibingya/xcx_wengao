@@ -11,14 +11,8 @@ Component({
     }
   },
   data: {
-    // 这里是一些组件内部数据
-    someData: {},
-    name:'搜索'
   },
   methods: {
-    // 这里是一个自定义方法
-    customMethod: function () { },
-
     // 跳转搜索页面
     breakTosearch: function (evt) {
       this.triggerEvent("breakTo",{

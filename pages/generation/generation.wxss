@@ -63,9 +63,9 @@ page{
 }
 .Position cover-button{
   width:48%;
-  height:100rpx;
+  height:90rpx;
   text-align: center;
-  line-height:100rpx;
+  line-height:90rpx;
   border-radius: 4rpx;
 }
 .Determine{
@@ -74,5 +74,5 @@ page{
 }
 .cancel{
   background-color:#f0f0f0;
-  color:#333;
+  color:#666;
 }

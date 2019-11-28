@@ -8,11 +8,20 @@ page{
   padding:20rpx 30rpx;
   box-sizing:border-box;
 }
-.selectTab{
+.fixedTab{
   width:100%;
+  height:auto;
+  position: fixed;
+  z-index:99999;
+  top:0;
+  left:0;
+  padding:20rpx 30rpx;
+  background-color:#edf2f3;
+  box-sizing:border-box;
+}
+.selectTab{
   display: flex;
   justify-content: space-between;
-  margin-bottom:20rpx;
 }
 .selectTab>text{
   width: 100%;
@@ -46,13 +55,13 @@ page{
 }
 .cyyj{
   width:100%;
-  height: calc(100% - 100rpx);
+}
+.changyong{
+  margin-top: 100rpx;
 }
 .scrollContent{
   width:100%;
-  margin-top:20rpx;
 }
-
 .list .time{
   float: left;
 }
@@ -65,14 +74,12 @@ page{
   line-height: 40rpx;
   font-size: 26rpx;
 }
-
 .operation .icon-icon-edit{
   color:#959cf7
 }
 .operation .icon-icon7{
   color:#ecac6c
 }
-
 .tips{
   text-align: center;
   padding-top:50rpx;

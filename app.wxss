@@ -3,6 +3,13 @@
 page{
   background: #edf2f3;
 }
+image{
+  width:40rpx;
+  height:40rpx;
+}
+button::after {
+   border: none;
+}
 /* 隐藏滚动条 */
 ::-webkit-scrollbar {
     width: 0;
@@ -56,12 +63,14 @@ page{
   width:100%;
   margin-bottom:20rpx;
   padding:20rpx;
+  padding-bottom:10rpx;
   box-sizing: border-box;
   border-radius:4rpx;
   background: #fff;
 }
 .list>view{
   display: flex;
+  margin-bottom: 15rpx;
   justify-content: space-between;
 }
 .list>view .yuan{

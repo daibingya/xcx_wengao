@@ -2,6 +2,7 @@
 <view class="container">
     <!-- 搜索栏 -->
     <view class="back">
+      
       <view class="inputBox">
         <input placeholder='请输入关键字进行搜索' value="{{keywords}}"></input>
         <view class="mark" bindtap='jumpTo'></view>
@@ -9,15 +10,17 @@
       <view class="Administration">
         <view class="adminFlex">
           <view class="allLelection" wx:if="{{checkFlag}}">
-            <checkbox-group bindchange="changeSelect">
-              <label class="checkbox">
-                <checkbox value="{{item.name}}" checked="{{checked}}"/>
-              </label>
-            </checkbox-group> 
-            <text>全选</text>
+              <checkbox-group bindchange="changeSelect">
+                <label class="checkbox">
+                  <checkbox value="{{item.name}}" checked="{{checked}}"/>
+                </label>
+              </checkbox-group> 
+              <text>全选</text>
           </view>
           <view class="adminText" bindtap="selectCheck" data-flag='{{checkFlag}}'>
-            <text class="blueText" wx:if="{{!checkFlag}}">管理</text><text class="blueText" wx:else>取消</text><text class="smallText" wx:if="{{!checkFlag}}">（用于生成文稿）</text>
+              <text class="blueText" wx:if="{{!checkFlag}}">管理</text>
+              <text class="blueText" wx:else>取消</text>
+              <text class="smallText" wx:if="{{!checkFlag}}">（用于生成文稿）</text>
           </view>
         </view>
         <view class="generate" wx:if="{{checkFlag}}" bindtap="alertModel">
@@ -29,7 +32,7 @@
     <!-- 文本列表 -->
     <view class="scrollBox">
                   <!-- 时间开关                数据传递                     分享开关                复选框开关-->
-      <manuscript timeFlag="{{timeFlag}}" dataArray="{{documentArray}}"  shareFlag="{{false}}" checkFlag="{{checkFlag}}" checkAllFlag="{{checkAllFlag}}" bind:myevent="changeSelectBox" bind:mySendData="shengcheng"></manuscript>
+      <manuscript timeFlag="{{timeFlag}}" dataArray="{{documentArray}}"  shareFlag="{{false}}" checkFlag="{{checkFlag}}" checkAllFlag="{{checkAllFlag}}" bind:myevent="changeSelectBox" bind:mySendData="shengcheng" types="library"></manuscript>
       <nodata wx:if="{{documentArray.length<=0}}"></nodata>
     </view>
      <!-- 新建 -->

@@ -13,6 +13,7 @@ Component({
     }
   },
   data: {
+    clickFlag:true
   },
   observers: {
     // 控制全选列表
@@ -32,21 +33,27 @@ Component({
   },
   methods: {
     conWen:function(){
-      // 发布状态 status=1
-      this.setData({
-        status:1
-      })
-      this.senData();
-    },
-    // 保存到草稿 status=0;
-    conSon:function(){
+    // 保存到文稿 status=0
       this.setData({
         status:0
       })
       this.senData();
     },
+    // 保存到草稿 status=1
+    conSon:function(){
+      this.setData({
+        status:1
+      })
+      this.senData();
+    },
     senData:function(){
       let that = this;
+      if(!that.data.clickFlag){
+        return
+      }
+      this.setData({
+        clickFlag:false
+      })
       let datas = this.data.shouData;
       new Promise((resolve, reject) => {
         wx.getStorage({
@@ -67,6 +74,7 @@ Component({
             "Authorization": "Bearer " + token
           },
           data: {
+            "id" : datas.id ? datas.id:"",
             "title": datas.title,
             "content": datas.content,
             "status": that.data.status,
@@ -82,8 +90,16 @@ Component({
                   });
                   var pages = getCurrentPages();
                   var prevPage = pages[pages.length - 2];  //上一个页面
-                  prevPage.setData({
-                    checkFlag:false
+                  if(!datas.id){
+                    prevPage.setData({
+                      checkFlag:false,
+                      checkAllFlag:false
+                    })
+                  }else{
+                    prevPage.manuScript ? prevPage.manuScript(false, false, false) : prevPage.loadingData(false,false,false)
+                  }
+                  that.setData({
+                    clickFlag:true
                   })
                 }
               })

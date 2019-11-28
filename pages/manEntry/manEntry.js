@@ -129,7 +129,7 @@ Page({
         "typeId": data.classId ? data.classId:'',
         "levelId": data.levelId ? data.levelId:'',
         "remark": data.dataArray ? data.dataArray:'',
-        "status": status?status:0, //0草稿  1发布
+        "status": status?status:0, //0发布  1草稿
         "publishTime": data.inputTime ? data.inputTime:'',
         "memo": null,
         "source": data.source ? data.source:'',
@@ -143,6 +143,7 @@ Page({
             success:function(){
               var pages = getCurrentPages(); // 获取页面栈
               var prevPage = pages[pages.length - 2]; // 上一个页面
+              prevPage.data.manIndex=1;
               prevPage.loadingData(false, false);
               wx.navigateBack({
                 delta: 1

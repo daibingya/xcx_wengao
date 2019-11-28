@@ -31,11 +31,10 @@ Page({
   search:function(){
     var pages = getCurrentPages();
     var prevPage = pages[pages.length - 2];
-
     prevPage.setData({
-      page:1
+      page:1,
+      searchData: this.data.searchArry 
     })
-
     prevPage.lodingData(false, false, this.data.searchArry);
     const eventChannel = this.getOpenerEventChannel()
     eventChannel.emit('someEvent', { data: this.data.searchArry });

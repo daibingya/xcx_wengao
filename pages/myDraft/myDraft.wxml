@@ -1,25 +1,27 @@
 <!--pages/myDraft/myDraft.wxml-->
 <view class="myDraft">
-   <view class="selectTab" bindtap='activeBox'>
-        <text data-id="wengao" class="{{textActive == true ? 'textActives' : ''}}">文稿</text>
-        <text data-id="yuju" class="{{textActive == false ? 'textActives' : ''}}">常用语句</text>
+   <view class="fixedTab">
+      <view class="selectTab" bindtap='activeBox'>
+            <text data-id="wengao" class="{{textActive == true ? 'textActives' : ''}}">文稿</text>
+            <text data-id="yuju" class="{{textActive == false ? 'textActives' : ''}}">常用语句</text>
+      </view>
    </view>
     
-    <scroll-view class="cyyj" scroll-y="true">
-      
+    <view class="cyyj">
       <!-- 文稿 -->
       <view class="scrollContent wengao" wx:if="{{textActive}}">
-          <manuscript timeFlag="{{true}}" myWengao="{{false}}"></manuscript>
+          <manuscript timeFlag="{{true}}" myWengao="{{false}}" dataArray="{{mydocumentData}}" types="dm"></manuscript>
+          <nodata wx-if="{{mydocumentData.length<=0}}"></nodata>
       </view>
       
       <!-- 常用语句 -->
       <view class='scrollContent changyong' wx:if="{{!textActive}}" bindtap="goEditor">
-            <view class="tips" wx:if="{{sentenceData.length<=0}}">暂无数据</view>
+            <nodata wx-if="{{sentenceData.length<=0}}"></nodata>
             <block wx:for="{{sentenceData}}" wx:key="{{index}}">  
               <view class="list">
                   <view>
                     <text class="yuan"></text>
-                    <view class="yuju">{{item.content}}</view>
+                    <view class="yuju" bindtap="goMessages" data-id="{{item.id}}">{{item.content}}</view>
                   </view>  
                   <view class="time">{{item.createdDate}}</view>
                   <view class="operation">
@@ -28,8 +30,6 @@
                   </view>
               </view>
             </block>
-            
       </view>
-      
-   </scroll-view>
+   </view>
 </view>

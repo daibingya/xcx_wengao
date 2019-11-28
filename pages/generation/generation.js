@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    title:"",
     textAreat: '',
     indexFlag:false
   },
@@ -15,13 +16,15 @@ Page({
   onLoad: function (options) {
     let that=this;
     const eventChannel = this.getOpenerEventChannel();
-    eventChannel.on('acceptDataFromOpenerPage', function (data) {
+    eventChannel.on('sendContent', function (data) {
        let innerText='';
-       data.data.forEach((val,index)=>{
+       data.data.array.forEach((val,index)=>{
          innerText+=val.text+'\n';
        })
        that.setData({
-         textAreat:innerText
+         title:data.data.name,
+         textAreat:innerText,
+         id:data.data.id
        })
     })
   },
@@ -69,7 +72,8 @@ Page({
       indexFlag:true,
       sendCont:{
         title: this.data.title,
-        content:this.data.textAreat
+        content:this.data.textAreat,
+        id:this.data.id
       }
     });
   },
@@ -85,34 +89,6 @@ Page({
       textAreat: e.detail.value
     })
   },
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
   /**
    * 用户点击右上角分享
    */

@@ -2,6 +2,7 @@
 /* 列表内容 */
 .textListBox{
   width:100%;
+  margin-top:100rpx;
 }
 .textListBox .textList{
   width:100%;
@@ -24,14 +25,19 @@
   display: block;
   position: relative;
   overflow: hidden;
-  border-top: 1px solid #e1e1e1;
+  border-top: 1rpx solid #e1e1e1;
+  text-overflow: -o-ellipsis-lastline;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 }
 
 checkbox-group{
   position: absolute;
   top:10rpx;
   left:-50px;
-  transition:all .33s;
+  transition:all .1s;
 }
 checkbox-group.noMargin{
   left:0;
@@ -95,7 +101,14 @@ text.hasMargin{
 .icon-fenxiang{
   color:#e57971;
 }
-
+.textOver{
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
  /* iconfont */
 @font-face {
   font-family: 'iconfont';  /* project id 1468276 */
@@ -133,6 +146,7 @@ text.hasMargin{
 
 .icon-shanchu:before {
   content: "\e630";
+  font-size: 30rpx;
 }
 
 .icon-bianji:before {
@@ -152,4 +166,10 @@ text.hasMargin{
 
 .icon-fenxiang1:before {
   content: "\e628";
+}
+
+button[open-type='share']{
+  background: rgba(0,0,0,0);
+  line-height: inherit;
+  font-size:26rpx;
 }

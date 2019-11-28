@@ -44,8 +44,7 @@ Page({
           wx.navigateTo({
             url: '/pages/details/details',
             success: function (res) {
-              // 通过eventChannel向被打开页面传送数据
-              res.eventChannel.emit('acceptDataFromOpenerPage', { data: value.data.data})
+              res.eventChannel.emit('sendSentence', { data: value.data.data})
               wx.hideLoading();
             }
           })
@@ -72,8 +71,12 @@ Page({
   },
   
   // 加载数据
-  lodingData: function (opPull, onBoot, parameter){
+  lodingData: function (down, up, parameter){
     var that=this;
+    wx.showLoading({
+      title: '加载中...',
+    })
+    up && ++that.data.page
     new Promise((resolve, reject) => {
       wx.getStorage({
         key: 'token',
@@ -105,40 +108,34 @@ Page({
           }
         },
         success: function (res) {
-
+          wx.hideLoading();
+          let nodata=false;
           if (res.data.code == 200) {
-            let datasu,nodata;
-            if (opPull){
-              datasu = res.data.data.records
+            if (up && res.data.data.records.length<=0){
+              wx.showToast({
+                title: '我也是有底线的',
+                image:"/image/nofined.png"
+              })
             }
-            else if(onBoot){
-              datasu = that.data.sentenceData.concat(res.data.data.records);
-            }else{
-              datasu = res.data.data.records
-            }
-            // 判断有无数据，打开提示信息
-            if (datasu.length<=0){
+            if(!up && res.data.data.records.length <= 0){
               nodata=true
-            }else{nodata=false}
-
+            }
             that.setData({
-              pages:res.data.data.pages,
-              sentenceData: datasu,
+              sentenceData: up ? that.data.sentenceData.concat(res.data.data.records) : res.data.data.records,
               nodataFlag: nodata
             })
-            
-            if (opPull) { wx.stopPullDownRefresh({
-              success:function(){
-                wx.showToast({
-                  title: '刷新成功',
-                })
-                wx.hideNavigationBarLoading();
-              }
-            })}
-
-            wx.hideLoading();
+            // 下拉刷新
+            if (down) { 
+              wx.stopPullDownRefresh({
+                success:function(){
+                  wx.showToast({
+                    title: '刷新成功',
+                  })
+                  wx.hideNavigationBarLoading();
+                }
+              })
+            }
           } else {
-            wx.hideLoading();
             wx.showModal({
               title: '请求失败',
               content: res.data.msg,
@@ -167,50 +164,15 @@ Page({
       title: '正在加载...',
       mask: true
     })
-    this.lodingData();
+    this.lodingData(false,false,false);
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    // wx.startPullDownRefresh()
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
- 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
     // 加载数据函数  
     // 参数含义：是否下拉，是否上拉
-
-    if (++this.data.page > this.data.pages) {
-      return
-    }else{
-      this.lodingData(false, true, this.data.searchData)
-    }
+    this.lodingData(false, true, this.data.searchData)
   },
 
   /**

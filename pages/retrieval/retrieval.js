@@ -97,7 +97,6 @@ Page({
     this.setData({
       keywords:e.detail.value
     })
-    console.log(this.data.keywords)
   },
   //发布时间;
   bindSendChange:function(e){
@@ -150,8 +149,11 @@ Page({
     //关键在这里，调用上一页的函数
     prePage.loadingData(false, false, searchCondition);
     prePage.setData({
-      keywords: this.data.keywords
+      searchData: searchCondition,
+      keywords: this.data.keywords,
+      manIndex:1
     });
+    console.log(searchCondition)
     wx.navigateBack({
       delta: 1
     })

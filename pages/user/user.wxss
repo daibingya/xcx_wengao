@@ -127,7 +127,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom:1px dashed #e1e1e1;
+  border-bottom:1rpx dashed #e1e1e1;
 }
 .listContet .listNode .listText:last-child .dashedLine{
   border-bottom:0;

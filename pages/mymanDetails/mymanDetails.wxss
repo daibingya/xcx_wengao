@@ -1,0 +1,35 @@
+/* pages/manDetails/manDetails.wxss */
+page{
+  background: #fff;
+}
+.manDetailsBox{
+  width:100%;
+  padding:10rpx 30rpx;
+  box-sizing:border-box;
+}
+.manDetailsBox .title{
+  font-size:38rpx;
+  color:#333333;
+  text-align: center;
+  padding:30rpx 0;
+}
+.content{
+  color:#333333;
+  font-size:28rpx;
+  background: #fbfbfb;
+  padding: 10rpx;
+  text-indent:30rpx;
+  line-height: 44rpx;
+}
+.shera{
+ width:100%;
+ text-align: center;
+ font-size:32rpx;
+ color:#fff;
+ background-color:#4d80f0;
+ border-radius:4rpx;
+ margin:30rpx 0;
+}
+.shera::after{
+  border:0
+}

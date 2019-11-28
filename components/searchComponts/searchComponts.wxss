@@ -1,10 +1,10 @@
 /* components/search/search.wxss */
 .search{
   position: fixed;
-  left:0;
-  right:0;
+  left:20rpx;
+  right:20rpx;
   top:0;
-  padding:20rpx;
+  padding:20rpx 0;
   padding-bottom:0;
   box-sizing:border-box;
   background: #edf2f3;

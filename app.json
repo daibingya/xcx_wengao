@@ -1,14 +1,15 @@
 {
   "pages": [
- 
-    "pages/index/index",
-      "pages/generation/generation",
-    "pages/preview/preview",
     "pages/user/user",
+    "login/index",
+    
+    "pages/index/index",
+    "pages/generation/generation",
+    "pages/preview/preview",
+    "pages/mymanDetails/mymanDetails",
     "pages/manDetails/manDetails",
     "pages/manEntry/manEntry",
     "pages/retrieval/retrieval",
-    "login/index",
     "pages/myDraft/myDraft",
     "pages/Sentence/Sentence",
     "pages/sentenceEditor/sentenceEditor",
@@ -16,7 +17,8 @@
     "pages/details/details",
     "pages/success/success",
     "pages/userEdit/userEdit",
-    "pages/manuscript/manuscript"
+    "pages/manuscript/manuscript",
+    "pages/searchDocument/searchDocument"
   ],
   "window": {
     "backgroundTextStyle": "light",

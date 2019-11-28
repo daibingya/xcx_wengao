@@ -11,17 +11,20 @@ page{
 .detailsBox .list{
   width:100%;
   padding:20rpx 0;
-  border-bottom: 1px solid #e1e1e1;
+  border-bottom: 1rpx solid #e1e1e1;
   color:#4a4747;
   font-size:28rpx;
   background:rgba(0,0,0,0);
+}
+.detailsBox .list:last-child{
+  padding:20rpx 0 0;
 }
 .detailsBox .list text:first-child{
   font-size:30rpx;
   margin-right:10rpx;
 }
 .cotentBox{
-  margin-top:20rpx;
+  margin-top:  35rpx;
   line-height: 45rpx;
   text-indent: 40rpx;
 }

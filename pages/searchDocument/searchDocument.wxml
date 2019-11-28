@@ -1,0 +1,21 @@
+<view class="searchBox">
+    <!-- 搜索栏 -->
+    <view class="inputBox">
+      <input bindinput='breakTosearch' placeholder='请输入关键字进行搜索'></input>
+    </view>
+    <!-- 精准检索 -->
+    <view class="searchTitle">精准检索</view>
+    <!-- 下拉框 -->
+    <view class="listInput">
+      <image src="/image/login/time.png" mode='widthFix'></image>
+      <picker mode="date" start="2016-01-01" end="2017-09-01" bindchange="bindtimeChange" value="{{date}}">
+          <text wx:if="{{!searchArry.startDate}}" style="color:gray">请选择录入时间</text>
+          <text  style="color:#000">{{searchArry.startDate}}</text>
+          <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
+      </picker>
+    </view>
+    <view class="flexBox">
+        <view class="cancel" bindtap="cancel">取消</view>
+        <view class="Determine" bindtap="search">查询</view>
+    </view> 
+</view>
