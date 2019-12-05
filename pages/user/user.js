@@ -7,77 +7,76 @@ Page({
    */
   data: {
       token:"",
-      user_url:"/image/user_image/userTx.png",
-      userdata:{}
+      user_url:"/image/user_image/userTx.png"
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
     // 开启loding加载模态框
     wx.showLoading({
       title: '正在加载....',
       mask:true
     })
     var that=this;
-    // 获取个人信息的token
-    wx.getStorage({
-      key:"token",
-      // 获取用户信息;
-      success:function(res){
-        let token=res.data;
-        wx.request({
-          url: ip +'/api/userSettings/info',
-          header:{
-            "content-type":"application/json",
-            "Authorization": "Bearer " + token
-          },
-          success:function(res){
-            if(res.data.code==200){
-                that.setData({
-                  userdata: res.data.data,
-                  token: token
-                })
-                // 关闭加载模态框
-                wx.hideLoading();
-            }else{
-                // 关闭加载模态框
-                wx.hideLoading();
-                wx.showModal({
-                  title: '请求失败',
-                  content: res.data.msg,
-                  success:function(res){
-                    wx.redirectTo({
-                      url: '/login/index'
-                    })
-                  }
-                })
+    // 获取个人信息的token  
+    new Promise((resolve,reject)=>{
+      wx.getStorage({
+        key: "token",
+        // 获取token
+        success: function (res) {
+          let token = res.data;
+          //回调resolve
+          resolve(token);
+        }, fail: function (error) {
+          // 关闭加载模态框
+          wx.hideLoading();
+          wx.showModal({
+            title: '请求失败',
+            content: error.errMsg,
+            success: function (res) {
+              wx.redirectTo({
+                url: '/login/index'
+              })
             }
-          },fail:function(error){
-            // 关闭加载模态框
-            wx.hideLoading();
+          });
+        }
+      })
+    }).then(token=>{
+      wx.request({
+        url: ip + '/api/userSettings/info',
+        header: {
+          "content-type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        success: function (val) {
+          if (val.data.code == 200) {
+            that.setData({
+              userdata: val.data.data,
+              token: token
+            })
+          } else {
             wx.showModal({
-              title: '网络问题',
-              content: '无网络或服务关闭'
+              title: '请求失败',
+              content: val.data.msg,
+              success: function (res) {
+                wx.redirectTo({
+                  url: '/login/index'
+                })
+              }
             })
           }
-        })
-      },fail:function(error){
-        // 关闭加载模态框
-        console.log(error)
-        wx.hideLoading();
-        wx.showModal({
-          title: '请求失败',
-          content: error.errMsg,
-          success:function(res){
-            wx.redirectTo({
-              url: '/login/index'
-            })
-          }
-        });
-      }
+          // 关闭加载模态框
+          wx.hideLoading();
+        }, fail: function (error) {
+          // 关闭加载模态框
+          wx.hideLoading();
+          wx.showModal({
+            title: '网络问题',
+            content: '无网络或服务关闭'
+          })
+        }
+      })
     })
   },
   // 姓名、电话、密码更改;
@@ -144,11 +143,18 @@ Page({
             "avatar": base64
           },
           success:function(res){
-            var avatar="userdata.avatar";
-            that.setData({
-              [avatar]: res.data.data.avatar
-            });
-
+            console.log(res)
+            if(res.data.code==200){
+              var avatar="userdata.avatar";
+              that.setData({
+                [avatar]: res.data.data.avatar
+              });
+            }else{
+              wx.showModal({
+                title: '错误提示',
+                content: res.data.msg
+              });
+            }
           }
         })
       }

@@ -5,8 +5,9 @@
       <image  src="/image/user_image/user_bg.png"></image>
       <!-- 悬浮用框 -->
       <view class="postBox">
-
+          <!-- 没有用户头像使用默认头像 -->
           <image wx:if="{{!userdata.avatar}}" bindtap='openCamera' class="userImage_Box" src="{{user_url}}" mode='aspectFill'></image>
+          <!-- 存在用户头像 -->
           <image wx:else bindtap='openCamera' class="userImage_Box" src="{{userdata.avatar}}" mode='aspectFill'></image>
           
           <view class="userNameBox">

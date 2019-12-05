@@ -15,6 +15,10 @@ page{
   font-size:30rpx;
   color:#2b2828;
 }
+.entryBox .entryList>text:first-child{
+  display:inline-block;
+  width:120rpx;
+}
 .entryBox .entryList input{
   flex:1;
   padding-left:40rpx;
@@ -47,9 +51,20 @@ page{
   line-height: 40rpx;
   color:#fff;
 }
-.conImport .textareaBox .operation>text:last-child{
+.conImport .textareaBox .operation .reduce{
   margin-left:20rpx;
   background:#c4c4c4;
+}
+.reduce{
+  width:40rpx;
+  height:40rpx;
+  border-radius: 50%;
+  text-align:center;
+  display: inline-block;
+  margin-left:20rpx;
+  background:#c4c4c4;
+  line-height: 40rpx;
+  color:#fff;
 }
 .conImport .textareaBox>textarea{
   width:100%;
@@ -63,8 +78,22 @@ page{
   min-height:500rpx;
   margin-bottom:260rpx;
 }
+.placeView{
+  color:#e1e1e1;
+  font-size:28rpx;
+  line-height: 34rpx;
+  padding-left:40rpx;
+  flex:1;
+  max-width: 75%;
+  word-break: break-all;
+  word-warp: break-word;
+}
+.placeView view{
+  color:#000;
+  padding:6rpx 0;
+}
 .entryList picker .selectJb{
-  color:#c4c4c4;
+  color:gray;
   font-size: 28rpx;
 }
 .entryList picker{

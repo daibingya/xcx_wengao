@@ -9,7 +9,6 @@ Page({
     textAreat: '',
     indexFlag:false
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -28,33 +27,20 @@ Page({
        })
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
   // 预览
   previewMan:function(){
     let datas=this.data;
     if (!this.data.title || !this.data.textAreat) {
       wx.showToast({
         title: '请输入标题或内容',
-        icon: 'none'
+        icon: 'error'
       })
       return
     }
     wx.navigateTo({
       url: '/pages/preview/preview',
       success:function(res){
+        console.log(datas.textAreat);
         res.eventChannel.emit('openpage', { data: { title: datas.title, content: datas.textAreat} })
       }
     })

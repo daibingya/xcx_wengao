@@ -1,7 +1,7 @@
 <!--pages/preview/preview.wxml-->
 <view class="manDetailsBox">
   <view class="title">{{sendData.title}}</view>
-  <view class="information">
+  <view class="information" wx:>
         {{sendData.content}}
   </view>
   <view class="shera">分享</view>

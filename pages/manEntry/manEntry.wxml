@@ -68,7 +68,16 @@
     <!-- 文稿附件 -->
     <view class="entryList">
       <text>文稿附件</text>
-      <input placeholder='请选择文稿附件'></input>
+      <view class="placeView">
+        <!-- <text wx:if="{{!name}}">请打开对话框选择文件</text> -->
+        <view  bindtap="focusSend" style="color:gray">请选择文件+</view>
+        <block wx:for="{{uploadShowArray}}" wx:key="{{index}}">
+          <view>
+            <text>{{item.name}}</text>
+            <text class="reduce" data-id="{{item.id}}" bindtap="reduceUpload">x</text>
+          </view>
+        </block>
+      </view>
     </view>
 
     <!-- 正文 -->

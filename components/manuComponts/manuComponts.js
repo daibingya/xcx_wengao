@@ -1,5 +1,6 @@
 var app = getApp();
 var ip = app.globalData.ip;
+var WxParse = require('../../wxParse/wxParse.js');
 Component({
   properties: {
     // 这里定义了innerText属性，属性值可以在组件使用时指定
@@ -141,9 +142,17 @@ Component({
             url = ip + '/api/document/detail/' + id;
             src = '/pages/manDetails/manDetails';  
         }else{
-            // 我的文稿详情
-            url = ip + '/api/mydocument/detail/' + id;
-            src = '/pages/mymanDetails/mymanDetails';  
+          const form = e.currentTarget.dataset.from;
+           if(form == 0){
+            //  录入
+             url = ip + '/api/document/detail/' + id;
+             src = '/pages/manDetails/manDetails';  
+           }else if(form == 1){
+            //  生成
+             // 我的文稿详情
+             url = ip + '/api/mydocument/detail/' + id;
+             src = '/pages/mymanDetails/mymanDetails';  
+           }
         }
         wx.request({
           url: url,

@@ -2,7 +2,6 @@
 var app=getApp();
 var ip=app.globalData.ip;
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -69,12 +68,11 @@ Page({
     }).then(val=>{
       //查看是否需要获取密码
       let user = wx.getStorageSync("user");
-      console.log(user);
       if (user) {
         let index = 0;
         for (let i = 0; i < that.data.array.length; i++) {
           if (that.data.array[i].id == user.orgId) {
-            index = i
+            index = i;
             break;
           }
         }
@@ -145,7 +143,7 @@ Page({
           }else{
             wx.showModal({
               title: '登录失败',
-              content: res.data.message
+              content: res.data.msg
             })
           }
         }else{
