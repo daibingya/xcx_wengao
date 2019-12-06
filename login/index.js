@@ -66,7 +66,7 @@ Page({
         }
       })
     }).then(val=>{
-      //查看是否需要获取密码
+      //查看是否存储了用户信息
       let user = wx.getStorageSync("user");
       if (user) {
         let index = 0;
@@ -79,6 +79,7 @@ Page({
         _this.setData({
           username: user.username,
           checked: user.checked,
+          orgId:user.orgId,
           index: index,
           remember:true
         })
@@ -98,6 +99,8 @@ Page({
         "checked": "true",
         "orgId": this.data.orgId
       })
+      console.log("name:"+this.data.username);
+      console.log("ordId:"+this.data.orgId)
     }else{
       try {
         //清理存储;
