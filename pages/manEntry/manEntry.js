@@ -1,6 +1,7 @@
 // pages/manEntry/manEntry.js
 var app = getApp();
 var ip = app.globalData.ip;
+const util = require('../debounce/debounce.js');
 Page({
   /**
    * 页面的初始数据
@@ -25,6 +26,7 @@ Page({
       rangeId: this.data.rangesd[e.detail.value].id
     })
   },
+  // 新增摘要栏目
   addFun:function(){
     this.setData({
       textCont:++this.data.textCont
@@ -41,21 +43,20 @@ Page({
       [contTent]:'',
       textCont: --this.data.textCont
     })
-    console.log(contTent)
   },
   // 标题
-  inputTitle:function(e){
+  inputTitle:util.debounce(function(e){
     this.setData({
       title:e.detail.value
     })
-  },
+  },500),
   // 摘要
-  changeInputText:function(e){
+  changeInputText:util.debounce(function(e){
     let cont='conTent'+'.cont'+e.currentTarget.dataset.id;
     this.setData({
         [cont]:e.detail.value
     })
-  },
+  },500),
   // 文稿附件
   focusSend:function(){
     let that=this;
@@ -194,17 +195,17 @@ Page({
     })
   },
   // 出处
-  sourceChange:function(e){
+  sourceChange:util.debounce(function(e){
     this.setData({
       source:e.detail.value
     })
-  },
+  },500),
   // 正文
-  editorInput:function(e){
+  editorInput:util.debounce(function(e){
     this.setData({
       edtiorContext:e.detail.text
     })
-  },
+  },500),
   // 保存到草稿箱
   Savecaogao:function(){
     this.sendManuscript(false,1);

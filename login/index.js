@@ -1,6 +1,7 @@
 // login/index.js
 var app=getApp();
 var ip=app.globalData.ip;
+const util = require('../pages/debounce/debounce.js');
 Page({
   /**
    * 页面的初始数据
@@ -12,13 +13,13 @@ Page({
     password:"",
     checked:false
   },
-  // 获取用户名，密码
-  updateName:function(e){
+  // 键入用户名，密码
+  updateName:util.debounce(function(e){
     let name = e.currentTarget.dataset.name;
     let nameMap = {}
     nameMap[name] = e.detail && e.detail.value
     this.setData(nameMap)
-  },
+  },800),
   //单位选择：
   bindPickerChange: function (e) {
     this.setData({
@@ -169,47 +170,7 @@ Page({
   onReady: function () {
     wx.hideHomeButton();
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  
   onShow: function () {
       wx.hideHomeButton();
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-      console.log(1)
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
   }
 })

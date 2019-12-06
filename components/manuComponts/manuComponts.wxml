@@ -7,7 +7,7 @@
                 <text class="text">{{item.title}}</text>
             </view>
             <!-- 存在remark （文稿库）-->
-            <block wx:if="{{item.remark}}" wx:for="{{item.remark}}" wx:for-item="value" wx:key="index">
+            <block wx:if="{{types == 'library' && item.remark}}" wx:for="{{item.remark}}" wx:for-item="value" wx:key="index">
                 <view class="textCont">
                     <checkbox-group class="{{checkFlag?'noMargin':''}}" bindchange="changeBox" data-id="{{item.id}}"  data-text="{{value.content}}"  data-sid="{{value.id}}">
                       <label class="checkbox" >
@@ -18,12 +18,11 @@
                 </view>
             </block>
             <!-- 不存在remark （我的文稿） -->
-            <block wx:if="{{!item.remark}}">
+            <block wx:if="{{types == 'myMan' || types == 'dm'}}">
               <view class="textCont">
                   <text class="textOver" bindtap="lookMessage" data-from="{{item.from}}" data-sid="{{item.id}}">{{item.content}}</text>
               </view>
             </block>
-
             <view class="timeBox" wx:if="{{timeFlag}}">
                 <view class="time">
                   <image src="/image/time.png" mode="widthFix"></image>

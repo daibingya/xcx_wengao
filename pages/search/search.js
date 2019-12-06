@@ -1,6 +1,7 @@
 // pages/search/search.js
 var app=getApp();
 var ip=app.globalData.ip;
+const util = require('../debounce/debounce.js');
 Page({
 
   /**
@@ -136,12 +137,12 @@ Page({
     })
   },
   // 关键词
-  breakTosearch: function (e) {
+  breakTosearch: util.debounce(function (e) {
     let inputValue = 'searchArry.keyword';
     this.setData({
       [inputValue]: e.detail.value
     });
-  },
+  },500),
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -133,7 +133,7 @@ Page({
         method: "POST",
         data: {
           "current": that.data.manIndex,
-          "size": 5,
+          "size": 10,
           "searchCondition": {
             "title": searchCondition ? searchCondition.title:'',
             "orgid": searchCondition ? searchCondition.orgid : '',
@@ -170,9 +170,11 @@ Page({
               title: '加载失败',
               content: res.data.msg,
               success:function(v){
-                wx.redirectTo({
-                  url: '/login/index'
-                })
+                if(!v.cancel){
+                  wx.redirectTo({
+                    url: '/login/index'
+                  })
+                }
               }
             })
           }

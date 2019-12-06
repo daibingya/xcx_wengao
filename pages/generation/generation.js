@@ -1,4 +1,5 @@
 // pages/generation/generation.js
+const util = require('../debounce/debounce.js');
 Page({
 
   /**
@@ -64,17 +65,17 @@ Page({
     });
   },
   // 标题键入
-  titleChange:function(e){
+  titleChange: util.debounce(function(e){
     this.setData({
-      title:e.detail.value
+      title: e.detail.value
     })
-  },
+  },1000),
   // 内容键入
-  textareaChange:function(e){
+  textareaChange:util.debounce(function(e){
     this.setData({
       textAreat: e.detail.value
     })
-  },
+  },1000),
   /**
    * 用户点击右上角分享
    */

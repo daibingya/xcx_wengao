@@ -1,17 +1,15 @@
 {
   "pages": [
-    
     "pages/index/index",
+    "pages/retrieval/retrieval",
     "pages/manEntry/manEntry",
     "pages/user/user",
     "login/index",
-    "pages/generation/generation",
     "pages/preview/preview",
     "pages/mymanDetails/mymanDetails",
     "pages/manDetails/manDetails",
-    
+    "pages/generation/generation",
     "pages/manEntry/upload/upload",    
-    "pages/retrieval/retrieval",
     "pages/myDraft/myDraft",
     "pages/Sentence/Sentence",
     "pages/sentenceEditor/sentenceEditor",

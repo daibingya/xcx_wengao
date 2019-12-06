@@ -1,6 +1,7 @@
 // pages/userEdit/userEdit.js
 var app=getApp();
 var ip=app.globalData.ip;
+const util = require('../debounce/debounce.js');
 Page({
 
   /**
@@ -18,12 +19,12 @@ Page({
   },
 
   // 键盘键入事件
-  bindKeyInput:function(e){
+  bindKeyInput:util.debounce(function(e){
       let values=e.detail.value.replace(/\s+/g,"")
       this.setData({
         value: values
       })
-  },
+  },500),
 
   /**
    * 生命周期函数--监听页面加载
@@ -138,7 +139,7 @@ Page({
 
   },
   // 监听密码改变;
-  sizePass:function(e){
+  sizePass:util.debounce(function(e){
     var that=this;
     let values=e.detail.value.replace(/\s+/g,"");
     if(e.target.dataset.id=='orPass'){
@@ -156,7 +157,7 @@ Page({
         okPassword: values
       })
     };
-  },
+  },500),
   //修改密码;
   preservationPassword: function () {
     var that=this;

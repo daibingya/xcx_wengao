@@ -1,6 +1,7 @@
 // pages/retrieval/retrieval.js
 var app = getApp();
 var ip = app.globalData.ip;
+const util = require('../debounce/debounce.js');
 Page({
 
   /**
@@ -93,11 +94,11 @@ Page({
     })
   },
   // 关键字
-  keywordsChange:function(e){
+  keywordsChange:util.debounce(function (e) {
     this.setData({
-      keywords:e.detail.value
+      keywords: e.detail.value
     })
-  },
+  },500),
   //发布时间;
   bindSendChange:function(e){
     this.setData({
