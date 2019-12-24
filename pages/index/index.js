@@ -133,7 +133,7 @@ Page({
         method: "POST",
         data: {
           "current": that.data.manIndex,
-          "size": 10,
+          "size": 5,
           "searchCondition": {
             "title": searchCondition ? searchCondition.title:'',
             "orgid": searchCondition ? searchCondition.orgid : '',

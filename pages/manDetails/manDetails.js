@@ -23,15 +23,29 @@ Page({
   // 下载文件
   downloadFiles:function(e){
     let path = e.currentTarget.dataset.url;
+    let fileType = path.slice(+path.lastIndexOf('.')+1);
     wx.showLoading({
-      title: '下载中...',
+      title: '下载中....',
+      mask:true
     });
     wx.downloadFile({
       url: ip + path,
       success(res) {
-        console.log(res);
         if (res.statusCode === 200) {
           wx.hideLoading();
+          wx.openDocument({
+            filePath:  res.tempFilePath,
+            fileType:  fileType,
+            success:function(res){
+              console.log(res)
+            },
+            fail:function(err){
+              wx.showModal({
+                title: '下载失败',
+                content: err.errMsg
+              })
+            }
+          })
         }
       }
     })

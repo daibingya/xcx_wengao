@@ -17,7 +17,7 @@
       <!-- 常用语句 -->
       <view class='scrollContent changyong' wx:if="{{!textActive}}" bindtap="goEditor">
             <nodata wx-if="{{sentenceData.length<=0}}"></nodata>
-            <block wx:for="{{sentenceData}}" wx:key="{{index}}">  
+            <block wx:for="{{sentenceData}}" wx:key="index">  
               <view class="list">
                   <view>
                     <text class="yuan"></text>

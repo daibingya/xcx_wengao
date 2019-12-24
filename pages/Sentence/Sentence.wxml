@@ -6,7 +6,7 @@
     <nodata wx:if="{{nodataFlag}}"></nodata>
     <!-- 内容列表 -->
     <view class="contentBox"  bindtap="goMessage"> 
-        <block wx:for="{{sentenceData}}" wx:key="{{index}}">
+        <block wx:for="{{sentenceData}}" wx:key="index">
           <view class="list" id="{{item.id}}">
               <view id="{{item.id}}">
                 <text class="yuan"></text>
@@ -17,5 +17,5 @@
         </block>
     </view>
     <!-- 新建 -->
-    <view class="fixedImage" bindtap="newSentence">+</view>
+    <view class="fixedImage" bindtap="newSentence">+</view> 
 </view>

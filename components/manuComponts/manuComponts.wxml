@@ -29,8 +29,8 @@
                   <text>{{item.pubTime}}</text>
                 </view>
                 <view class="caozuo" bindtap="operationChange" data-id="{{item.id}}" data-title="{{item.title}}" data-text="{{item.content}}">
-                  <text class="iconfont icon-icon-edit" data-operation="editor">编辑</text>
-                  <text class="iconfont icon-shanchu"   data-operation="delete">删除</text>
+                  <text class="iconfont icon-icon-edit" data-operation="editor" data-from="{{item.from}}">编辑</text>
+                  <text class="iconfont icon-shanchu"   data-operation="delete" data-from="{{item.from}}">删除</text>
                   <button open-type="share" class="iconfont icon-fenxiang" wx:if="{{shareFlag}}" data-title="{{item.title}}" data-sid="{{item.id}}">分享</button>
                 </view> 
             </view>

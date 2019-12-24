@@ -14,7 +14,7 @@
       </view>
   </view>
   <template is="wxParse" data="{{wxParseData:active.nodes}}" />
-  <block wx:for="{{contData.attachList}}">
+  <block wx:for="{{contData.attachList}}" wx:key="index">
     <view class="Enclosure">
       <view><text>附件：</text><text>{{item.name}}</text></view>
       <view><image bindtap="downloadFiles" data-url="{{item.path}}" src="/image/down.png" mode="widthFix"></image></view>

@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/retrieval/retrieval",
-    "pages/manEntry/manEntry",
     "pages/user/user",
+    "pages/index/index",
+    "pages/manEntry/manEntry",
+    "pages/retrieval/retrieval",
     "login/index",
     "pages/preview/preview",
     "pages/mymanDetails/mymanDetails",

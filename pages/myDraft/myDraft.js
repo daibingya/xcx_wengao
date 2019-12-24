@@ -150,6 +150,11 @@ Page({
             wx.showModal({
               title: '请求错误',
               content: res.data.msg,
+              success:function(res){
+                wx.reLaunch({
+                  url: '/login/index'
+                })
+              }
             })
           };
         }

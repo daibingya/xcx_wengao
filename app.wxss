@@ -18,9 +18,6 @@ button::after {
 }
 .flexBox{
   height:220rpx;
-  position: fixed;
-  bottom:50rpx;
-  z-index: 99999;
   left:30rpx;right:30rpx;
   box-sizing: border-box;
   display: flex;

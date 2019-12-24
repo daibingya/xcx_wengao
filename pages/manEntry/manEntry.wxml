@@ -4,18 +4,18 @@
     <!-- 文稿名称 -->
     <view class="entryList">
       <text class="name">文稿名称</text>
-      <input placeholder='请输入文稿名称' bindinput="inputTitle"></input>
+      <input placeholder='请输入文稿名称' bindinput="inputTitle" value="{{getData.title}}"></input>
     </view>
 
     <!-- 内容摘要 -->
     <view class="conImport">
       <view>内容摘要</view>
       <view class="textareaBox">
-          <block wx:for="{{textCont}}" wx:key="{{index}}">
-              <textarea bindinput="changeInputText" data-id='{{item}}' placeholder='请输入内容摘要' maxlength='-1'></textarea>
+          <block wx:for="{{textCont}}" wx:key="index" wx:for-index="index">
+              <textarea bindinput="changeInputText" data-sid='{{index}}' placeholder='请输入内容摘要' maxlength='-1' value="{{item.content?item.content:''}}"></textarea>
           </block>
           <view class="operation"><text class="add" bindtap="addFun">+</text><text class="reduce" bindtap="reduceFun">-</text></view>
-      </view>
+      </view> 
     </view>
 
 
@@ -62,7 +62,7 @@
     <!-- 文稿出处 -->
     <view class="entryList">
       <text>文稿出处</text>
-      <input placeholder='请输入文稿出处' bindinput="sourceChange"></input>
+      <input placeholder='请输入文稿出处' bindinput="sourceChange" value="{{source}}"></input>
     </view>
 
     <!-- 文稿附件 -->
@@ -82,10 +82,16 @@
 
     <!-- 正文 -->
     <view class="conImport">
-      <view>正文</view>
-      <editor bindinput="editorInput" placeholder="请输入文本"></editor>
+        <view>正文</view>
+        <editor 
+        bindinput="editorInput"
+        id="editor"
+        class="ql-container"
+        placeholder="请输入文本"
+        bindstatuschange="onStatusChange"
+        bindready="onEditorReady">
+        </editor>
     </view>
-
     <view class="flexBox">
         <view class="cancel" bindtap="Savecaogao">保存到草稿箱</view>
         <view class="Determine" bindtap="sendManuscript">提交</view>

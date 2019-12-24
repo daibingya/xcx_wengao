@@ -75,8 +75,8 @@ page{
   font-size:27rpx;
 }
 .conImport editor{
-  min-height:500rpx;
-  margin-bottom:260rpx;
+  min-height:555rpx;
+  margin-bottom:20rpx;
 }
 .placeView{
   color:#e1e1e1;

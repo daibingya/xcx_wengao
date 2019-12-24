@@ -1,6 +1,5 @@
 var app = getApp();
 var ip = app.globalData.ip;
-var WxParse = require('../../wxParse/wxParse.js');
 Component({
   properties: {
     // 这里定义了innerText属性，属性值可以在组件使用时指定
@@ -72,7 +71,7 @@ Component({
     let timeout=setTimeout(function(){
       that.data.dataArray.forEach((val, index) => {
         if (val.remark) {
-          for (let i = 0; i < val.remark.length; i++) {
+          for (let i = 0, length = val.remark.length; i < length; i++) {
             dataLength++;
           }
         }
@@ -80,7 +79,6 @@ Component({
       that.setData({
         dataLength: dataLength
       });
-      timeout=null;
     },1000);
   },
   methods: {
@@ -185,10 +183,17 @@ Component({
       let that=this;
       let t = e.target.dataset.operation;
       let n = e.currentTarget.dataset;
+      let froms=e.target.dataset.from;
+      let url='';
       //编辑;
       if(t == "editor"){
+        if (froms == 0){
+          url = "/pages/manEntry/manEntry"
+        }else{
+          url = "/pages/generation/generation"
+        }
         wx.navigateTo({
-          url: '/pages/generation/generation',
+          url:url,
           success: function (res) {
             res.eventChannel.emit('sendContent', { data: { name:n.title, array:[{text:n.text}],id:n.id} })
           }
@@ -201,14 +206,15 @@ Component({
           content: '是否确定删除？',
           success:function(com){
             if(com.confirm){
-              that.deleteData(n);
+              
+              that.deleteData(n, froms);
             }
           }
         })
       }
     },
     // 删除API请求
-    deleteData:function(n){
+    deleteData:function(n,froms){
       let that=this;
       new Promise((resolve, reject) => {
         wx.getStorage({
@@ -219,8 +225,10 @@ Component({
           fail: function () { reject(error) }
         })
       }).then(token => {
+        let document='';
+        document = froms == 0 ?  "document" : "mydocument";
         wx.request({
-          url: ip + '/api/mydocument/delete/' + n.id,
+          url: ip + '/api/'+document+'/delete/' + n.id,
           method: "GET",
           header: {
             "Authorization": "Bearer " + token

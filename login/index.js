@@ -93,6 +93,10 @@ Page({
   },
   // 登录跳转
   brekPage:function(){
+    wx.showLoading({
+      title: '登录中...',
+      mask:true
+    })
     var _this=this;
     if(this.data.remember){
       wx.setStorageSync("user", {
@@ -122,9 +126,9 @@ Page({
         orgId: this.data.array[this.data.index].id     //单位
       },
       success:function(res){
+        wx.hideLoading();
         if (res.statusCode==200){
           // 登录成功跳转地址
-          console.log(res)
           if(res.data.code == 200 ){
             //存储Token
             new Promise((resolve,reject)=>{
@@ -157,6 +161,7 @@ Page({
           })
         }
       },fail:function(error){
+        wx.hideLoading();
         wx.showModal({
           title: '登录失败',
           content: "网络请求失败"

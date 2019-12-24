@@ -2,6 +2,10 @@
 var app = getApp();
 var ip = app.globalData.ip;
 const util = require('../debounce/debounce.js');
+function Details(id,content){
+  this.id=id;
+  this.content=content
+}
 Page({
   /**
    * 页面的初始数据
@@ -16,7 +20,7 @@ Page({
       id:1,
       name:"本单位可见"
     }],
-    textCont:1,
+    textCont:[],
     dataArray:[],
     uploadShowArray:[]
   },
@@ -28,20 +32,18 @@ Page({
   },
   // 新增摘要栏目
   addFun:function(){
+    let textCont=this.data.textCont;
+    textCont.push(new Details());
     this.setData({
-      textCont:++this.data.textCont
+      textCont:textCont
     })
   },
   // 删除
   reduceFun: function () {
-    if(this.data.textCont==1){
-      return
-    };
-    let index = 'cont'+(this.data.textCont-1);
-    let contTent ='conTent.'+index;
+    let textCont = this.data.textCont;
+    textCont.pop();
     this.setData({
-      [contTent]:'',
-      textCont: --this.data.textCont
+      textCont: textCont
     })
   },
   // 标题
@@ -52,9 +54,13 @@ Page({
   },500),
   // 摘要
   changeInputText:util.debounce(function(e){
-    let cont='conTent'+'.cont'+e.currentTarget.dataset.id;
+    
+    let index = e.currentTarget.dataset.sid; //第index
+    let contContent=this.data.textCont[index];
+    contContent.content=e.detail.value;
+    contContent.id=index;
     this.setData({
-        [cont]:e.detail.value
+        textCont:this.data.textCont
     })
   },500),
   // 文稿附件
@@ -172,8 +178,76 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let that=this;
+    const eventChannel = this.getOpenerEventChannel();
+    // 监听sendContent事件，获取上一页面通过eventChannel传送到当前页面的数据
+    eventChannel.on('sendContent', function (data) {
+      wx.showLoading({
+        title: '加载中....',
+      })
+        let id = data.data.id;
+        new Promise((resolve,reject)=>{
+          wx.getStorage({
+            key: 'token',
+            success: function(res) {
+              resolve(res.data)
+            },
+          })
+        }).then(function(token){
+          wx.request({
+            url: ip + '/api/document/detail/' + id,
+            header: {
+              "Authorization": "Bearer " +token,
+            },
+            method: "GET",
+            success:function(data){
+              let dataMsg=data.data.data
+              that.setData({
+                getData: dataMsg,
+                title:dataMsg.title,                //标题         
+                textCont: dataMsg.remark,           //摘要
+                levelData: dataMsg.levelName,       //级别名
+                levelId: dataMsg.levelId,           //级别Id
+                classData:dataMsg.typeName,         //类别名
+                classId:dataMsg.typeId,             //类别Id
+                inputTime:dataMsg.pubTime,          //发布时间
+                rangeData: dataMsg.rangedName,      //范围名称
+                rangeId:dataMsg.ranged,             //范围Id
+                source: dataMsg.source,             //文稿出处
+                uploadShowArray:dataMsg.attachList  // 附件信息
+              })
+              wx.hideLoading();
+            },
+            fail:function(err){
+              console.log(err)
+            }
+          })
+        })
+      })
   },
+  // 获取编辑信息
+  getMessage:function(){
+    // /api/document / detail / {
+  },
+  onEditorReady:function() {
+    const that = this;
+    let time = setTimeout(function(){
+      wx.createSelectorQuery().select('#editor').context(function (res) {
+        that.editorCtx = res.context;
+        that.editorCtx.setContents({
+          html: that.data.getData.content,
+          success: (res) => {
+            console.log(res)
+          },
+          fail: (res) => {
+            console.log(res)
+          }
+        })
+      }).exec()
+      clearTimeout(time);
+    }, 1000) 
+  },
+  
   // 级别
   pickerlevelChange:function(e){
     this.setData({
@@ -206,15 +280,22 @@ Page({
       edtiorContext:e.detail.text
     })
   },500),
+  // 正文改变：
+  onStatusChange: util.debounce(function(e){
+    this.setData({
+      edtiorContext: e.detail.text
+    })
+    console.log(e.detail.text)
+  }),
   // 保存到草稿箱
   Savecaogao:function(){
     this.sendManuscript(false,1);
   },
   // 提交
   sendManuscript:function(e,status=0){
-    
     let data=this.data;
     let that=this;
+    // 拼接上传的文件名，id
     if(data.uploadShowArray.length){
         let symbols;
         for(let i=0;i<data.uploadShowArray.length;i++){
@@ -222,19 +303,6 @@ Page({
           data.attach += data.uploadShowArray[i].name + symbols;
           data.attachpath += data.uploadShowArray[i].id + symbols;
         }
-    }
-    console.log(data.attach)
-    console.log(data.attachpath)
-    if (data.conTent){  
-      Object.keys(this.data.conTent).map(function(val){
-        let id=val.slice(4);
-        let text = that.data.conTent[val];
-        if(text.trim()){
-          that.data.dataArray.push({ id: id, content: text });
-        }
-      })
-    }else{
-      //...
     }
     if (!data.classId && !data.levelId && !data.rangeId){
       wx.showModal({
@@ -254,9 +322,9 @@ Page({
         "content": data.edtiorContext ? data.edtiorContext:'',
         "typeId": data.classId ? data.classId:'',
         "levelId": data.levelId ? data.levelId:'',
-        "remark": data.dataArray ? data.dataArray:'',
+        "remark": data.textCont ? data.textCont:'',
         "status": status?status:0, //0发布  1草稿
-        "publishTime": data.inputTime ? data.inputTime:'',
+        "pubTime": data.inputTime ? data.inputTime:'',
         "memo": null,
         "source": data.source ? data.source:'',
         "urllink": "",
@@ -293,7 +361,6 @@ Page({
       startTime: (date.getFullYear() - 3) + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
       endTime: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
     });
-
     //文稿级别;
     new Promise((resolve, reject) =>{
       wx.getStorage({
