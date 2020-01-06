@@ -29,7 +29,7 @@ Component({
     }
   },
   ready: function () {
-
+    
   },
   methods: {
     conWen:function(){
@@ -67,6 +67,7 @@ Component({
           fail: function () { reject(error) }
         })
       }).then(token => {
+        console.log(datas)
         wx.request({
           url: ip + '/api/mydocument/save',
           method: 'POST',
@@ -74,7 +75,7 @@ Component({
             "Authorization": "Bearer " + token
           },
           data: {
-            "id" : datas.id ? datas.id:"",
+            "id" : datas.id ? datas.id : "",
             "title": datas.title,
             "content": datas.content,
             "status": that.data.status,
@@ -85,11 +86,14 @@ Component({
               wx.showToast({
                 title: '保存成功！',
                 success: function () {
+                  // 利用generate可以看到需要返回两级还是1级
+                  let gernflag = that.data.shouData.generate;
                   wx.navigateBack({
-                    delta: 1
+                    delta: gernflag ? 2:1
                   });
                   var pages = getCurrentPages();
-                  var prevPage = pages[pages.length - 2];  //上一个页面
+                  // 利用generate可以看到需要刷新倒数第2级还是倒数第1级
+                  var prevPage = gernflag ? pages[pages.length - 3] : pages[pages.length - 2];  //上一个页面
                   if(!datas.id){
                     prevPage.setData({
                       checkFlag:false,

@@ -65,12 +65,10 @@
   width:90%;
   text-align:left;
 }
-
 .flexBox{
   height:220rpx;
-  position: fixed;
-  bottom:50rpx;
-  left:30rpx;right:30rpx;
+  width:95%;
+  margin:0 auto 20rpx;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -90,4 +88,7 @@
   background-color:#fff;
   border:1px solid #e1e1e1;
   color:gray;
+}
+.companyList{
+  background:#f8f8f8
 }

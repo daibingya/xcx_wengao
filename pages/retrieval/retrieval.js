@@ -9,7 +9,12 @@ Page({
    */
   data: {
     startTime:'2016-01-01',
-    endTime:''
+    endTime:'',
+    treeData: {
+      title: '请选择单位',
+      id: 1,
+      children: {}
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -67,6 +72,7 @@ Page({
         })
       })
     },error=>{}).then(token=>{
+      // 类型
       wx.request({
         url: ip + '/api/document/type',
         header: {
@@ -80,18 +86,43 @@ Page({
           }
         }
       })
+
+      // 单位
+      wx.request({
+        url: ip + '/api/document/orglist',
+        method: 'GET',
+        header: {
+          "Authorization": "Bearer " + token
+        },
+        success: function (res) {
+          that.data.treeData.children = res.data.data;
+          that.setData({
+            treeData: that.data.treeData
+          })
+        }, fail: function (error) {
+        }
+      })
     },fails=>{})
     // 录入单位
-    wx.request({
-      url: ip + '/api/organization/',
-      method: 'GET',
-      success: function (res) {
-        that.setData({
-          company: res.data.data
-        })
-      }, fail: function (error) {
-      }
-    })
+    // wx.request({
+    //   url: ip + '/api/organization/',
+    //   method: 'GET',
+    //   success: function (res) {
+    //     that.setData({
+    //       company: res.data.data
+    //     })
+    //   }, fail: function (error) {
+    //   }
+    // })
+
+    
+  },
+  //事件处理函数
+  tapItem: function (e) { 
+    let id=e.detail.itemid;
+    this.setData({
+      comId: e.detail.itemid
+    })    
   },
   // 关键字
   keywordsChange:util.debounce(function (e) {
@@ -119,13 +150,13 @@ Page({
     })
   },
   //录入单位;
-  bindCompanyChage:function(e){
-    console.log(e)
-    this.setData({
-      comData: this.data.company[e.detail.value].name,
-      comId: this.data.company[e.detail.value].id
-    })
-  },
+  // bindCompanyChage:function(e){
+  //   console.log(e)
+  //   this.setData({
+  //     comData: this.data.company[e.detail.value].name,
+  //     comId: this.data.company[e.detail.value].id
+  //   })
+  // },
   //文稿类型;
   bindClassChange: function (e) {
     this.setData({

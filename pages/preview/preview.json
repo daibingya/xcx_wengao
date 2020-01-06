@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "文稿预览"
+  "navigationBarTitleText": "文稿预览",
+  "usingComponents": {
+    "save": "/components/saveComponts/saveComponts"
+  }
 }

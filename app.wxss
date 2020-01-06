@@ -21,6 +21,8 @@ button::after {
   left:30rpx;right:30rpx;
   box-sizing: border-box;
   display: flex;
+  margin:20rpx auto;
+  width:95%;
   flex-direction: column;
   justify-content: space-between;
 }
@@ -39,7 +41,6 @@ button::after {
   border:1px solid #e1e1e1;
   color:gray;
 }
-
 /* 悬浮的新增 */
 .fixedImage{
   width:100rpx;
@@ -52,7 +53,7 @@ button::after {
   background: #4d80f0;
   color:#fff;
   text-align:center;
-  font-size: 60rpx;
+  font-size: 35rpx;
 }
 
 /* 复用的常用语句 */

@@ -102,7 +102,9 @@ Page({
     this.data.page=1;
     this.loadingData(true,false,false);
   },
+  // 分享
   onShareAppMessage: function (res) {
+    console.log(res)
     wx.showLoading({
       title: '正在加载...',
     })

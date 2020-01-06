@@ -20,7 +20,14 @@ Page({
       })
     })
   },
-
+  //保存;
+  sendManuscript: function () {
+    this.data.sendData.generate=true;
+    this.setData({
+      indexFlag: true,
+      sendCont: this.data.sendData
+    });
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

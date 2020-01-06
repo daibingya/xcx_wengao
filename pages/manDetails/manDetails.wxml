@@ -1,5 +1,3 @@
-<!--pages/manDetails/manDetails.wxml-->
-<import src="../../wxParse/wxParse.wxml" />
 <view class="manDetailsBox">
   <view class="title">{{contData.title}}</view>
   <view class="information">
@@ -13,12 +11,12 @@
         <view>文稿出处：{{contData.source}}</view>
       </view>
   </view>
-  <template is="wxParse" data="{{wxParseData:active.nodes}}" />
+  <rich-text nodes="{{setDataImage}}" bindtap="tap"></rich-text>
   <block wx:for="{{contData.attachList}}" wx:key="index">
     <view class="Enclosure">
       <view><text>附件：</text><text>{{item.name}}</text></view>
       <view><image bindtap="downloadFiles" data-url="{{item.path}}" src="/image/down.png" mode="widthFix"></image></view>
     </view>
   </block>
-  <button open-type="share" class="shera">分享</button>
+  <button open-type="share" class="shera" data-sid="{{contData.id}}">分享</button>
 </view>

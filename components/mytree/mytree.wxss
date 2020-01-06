@@ -1,0 +1,46 @@
+.ul .li-item {
+  width: 100%;
+  height: 100rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10rpx 40rpx 10px 10px;
+  font-size: 30rpx;
+  font-family: PingFang-SC-Medium;
+  font-weight: 500;
+  color: rgba(90, 90, 90, 1);
+  border-bottom: 0.5rpx solid rgba(213, 213, 214, 0.5);
+}
+.danweiName{
+  display: flex;
+  align-items: center;
+}
+.danweiName text{
+  margin-left:25rpx;
+}
+.ul .li-item-child{
+  padding-left:60rpx;
+}
+.radioBox{
+  float:right;
+}
+.ul .li-item .text {
+  font-size: 30rpx;
+  font-family: PingFang-SC-Medium;
+  font-weight: 500;
+  color: rgba(169, 169, 169, 1);
+}
+.menu-img{
+  width: 23rpx;
+  height: 23rpx;
+}
+.selector{
+  width:30rpx;
+}
+.actives{
+  background:#ebebeb
+}
+.removes{
+  background:rgba(0,0,0,0)
+}

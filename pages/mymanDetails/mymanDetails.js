@@ -20,8 +20,10 @@ Page({
           if(res.data.code==200){
             that.setData({
               contData: res.data.data,
-              showFlag:true
+              showFlag:true,
+              setDataImage: res.data.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto"')
             })
+            console.log(res.data.data)
           }else{
             wx.showModal({
               title: '请求错误',
@@ -41,16 +43,17 @@ Page({
       const eventChannel = this.getOpenerEventChannel();
       try{
           eventChannel.on('details', function (data) {
+            let d=data.data.data;
             that.setData({
-              contData: data.data.data,
-              showFlag:true
+              contData: d,
+              showFlag:true,
+              setDataImage: d.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto"')
             })
           })
       }catch(e){console.log(e)}
     }
   },
   onShow: function(options){
-    console.log(options);
   },
   // 手动分享
   onShareAppMessage: function (res) {

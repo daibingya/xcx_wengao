@@ -19,7 +19,7 @@ Page({
     let nameMap = {}
     nameMap[name] = e.detail && e.detail.value
     this.setData(nameMap)
-  },800),
+  },300),
   //单位选择：
   bindPickerChange: function (e) {
     this.setData({

@@ -1,0 +1,12 @@
+<view class="ul">
+  <view class="li-item {{ idd == model.id ? 'actives':'removes'}}" bindtap='{{isBranch?"toggle":"tapItem"}}' data-itemid='{{ model.id }}'>
+    <view class="danweiName">
+      <image src="/image/login/danwei.png" mode='widthFix'></image>
+      <text>{{model.title}}</text>
+    </view>
+    <image src="../../image/{{open?'top':'bot'}}.png" mode='widthFix' wx:if='{{ isBranch }}' class="selector" ></image>
+  </view>
+  <view style='padding-left: 50rpx;' wx:if='{{ isBranch }}' hidden='{{ !open }}'>
+    <mytree wx:for='{{ model.children }}' wx:key='id' model='{{ item }}'></mytree>
+  </view>
+</view>

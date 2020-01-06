@@ -1,8 +1,7 @@
 <!--pages/manDetails/manDetails.wxml-->
 <view class="manDetailsBox" wx:if="{{showFlag}}">
   <view class="title">{{contData.title}}</view>
-  <view class="content">
-        {{contData.content}}
-  </view>
+  
+  <rich-text class="content" nodes="{{setDataImage}}"></rich-text>
   <button open-type="share" class="shera" data-title="{{contData.title}}" data-sid="{{contData.id}}">分享</button>
 </view>

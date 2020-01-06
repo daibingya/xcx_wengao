@@ -54,14 +54,21 @@ Page({
   },500),
   // 摘要
   changeInputText:util.debounce(function(e){
-    
+    //获取唯一标示index
     let index = e.currentTarget.dataset.sid; //第index
     let contContent=this.data.textCont[index];
+    //给对应index的对象赋值
     contContent.content=e.detail.value;
-    contContent.id=index;
+    contContent.id = index;
+    //如果无内容，将从数组中删除
+    if (!e.detail.value.trim()){
+      this.data.textCont.length != 1 && this.data.textCont.splice(index, 1);
+    }
+    //重新设置内容
     this.setData({
         textCont:this.data.textCont
     })
+
   },500),
   // 文稿附件
   focusSend:function(){
@@ -125,6 +132,7 @@ Page({
           wx.showToast({
             title: '成功',
           })
+          console.log(that)
           that.data.uploadShowArray.push({
             name:name,
             id:datas.data.fileid
@@ -179,6 +187,7 @@ Page({
    */
   onLoad: function (options) {
     let that=this;
+    that.data.textCont.length <= 0 && that.addFun();
     const eventChannel = this.getOpenerEventChannel();
     // 监听sendContent事件，获取上一页面通过eventChannel传送到当前页面的数据
     eventChannel.on('sendContent', function (data) {
@@ -204,17 +213,18 @@ Page({
               let dataMsg=data.data.data
               that.setData({
                 getData: dataMsg,
-                title:dataMsg.title,                //标题         
-                textCont: dataMsg.remark,           //摘要
-                levelData: dataMsg.levelName,       //级别名
-                levelId: dataMsg.levelId,           //级别Id
-                classData:dataMsg.typeName,         //类别名
-                classId:dataMsg.typeId,             //类别Id
-                inputTime:dataMsg.pubTime,          //发布时间
-                rangeData: dataMsg.rangedName,      //范围名称
-                rangeId:dataMsg.ranged,             //范围Id
-                source: dataMsg.source,             //文稿出处
-                uploadShowArray:dataMsg.attachList  // 附件信息
+                title:dataMsg.title,                // 标题         
+                textCont: dataMsg.remark,           // 摘要
+                levelData: dataMsg.levelName,       // 级别名
+                levelId: dataMsg.levelId,           // 级别Id
+                classData:dataMsg.typeName,         // 类别名
+                classId:dataMsg.typeId,             // 类别Id
+                inputTime:dataMsg.pubTime,          // 发布时间
+                rangeData: dataMsg.rangedName,      // 范围名称
+                rangeId:dataMsg.ranged,             // 范围Id
+                source: dataMsg.source,             // 文稿出处
+                uploadShowArray:dataMsg.attachList?dataMsg:[], // 附件信息
+                edtiorContext:dataMsg.content       // 正文
               })
               wx.hideLoading();
             },
@@ -296,7 +306,7 @@ Page({
     let data=this.data;
     let that=this;
     // 拼接上传的文件名，id
-    if(data.uploadShowArray.length){
+    if (data.uploadShowArray && data.uploadShowArray.length){
         let symbols;
         for(let i=0;i<data.uploadShowArray.length;i++){
           i == data.uploadShowArray.length - 1 ? symbols='':symbols=':'

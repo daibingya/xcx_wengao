@@ -92,8 +92,8 @@
         bindready="onEditorReady">
         </editor>
     </view>
-    <view class="flexBox">
-        <view class="cancel" bindtap="Savecaogao">保存到草稿箱</view>
-        <view class="Determine" bindtap="sendManuscript">提交</view>
-    </view> 
 </view>
+<view class="flexBox">
+    <view class="cancel" bindtap="Savecaogao">保存到草稿箱</view>
+    <view class="Determine" bindtap="sendManuscript">提交</view>
+</view> 

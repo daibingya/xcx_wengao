@@ -4,5 +4,10 @@
   <view class="information" wx:>
         {{sendData.content}}
   </view>
-  <view class="shera">分享</view>
+  
+    <!-- 底部的选择 -->
+    <view class="Position">
+        <cover-button class="Determine" bindtap="sendManuscript">保存</cover-button>
+    </view>
+    <save showFlag="{{indexFlag}}" sendCont="{{sendCont}}"></save>
 </view>

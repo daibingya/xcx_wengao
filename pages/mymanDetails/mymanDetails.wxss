@@ -13,13 +13,8 @@ page{
   text-align: center;
   padding:30rpx 0;
 }
-.content{
-  color:#333333;
-  font-size:28rpx;
-  background: #fbfbfb;
-  padding: 10rpx;
-  text-indent:30rpx;
-  line-height: 44rpx;
+.content image{
+  width:100%;
 }
 .shera{
  width:100%;

@@ -35,3 +35,18 @@ page{
  border-radius:4rpx;
  margin-bottom:30rpx;
 }
+
+.Position{
+   width:98%;
+   margin: 20rpx auto;
+   background-color:rgba(0,0,0,0);
+}
+.Determine{
+  display: block;
+  height:90rpx;
+  line-height:90rpx;
+  text-align: center;
+  border-radius:2rpx;
+  background-color:#4d80f0;
+  color:#fff;
+}

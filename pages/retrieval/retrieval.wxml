@@ -8,13 +8,19 @@
     <!-- 精准检索 -->
     <view class="searchTitle">精准检索</view>
     
+    
+    <!-- 选择单位 -->
+    <view class="companyList">
+        <mytree idd="{{ idd }}" model='{{ treeData }}' bind:tapitem='tapItem'></mytree>
+    </view>
+
     <!-- 发布时间 -->
     <view class="listInput">
       <image src="/image/login/time.png" mode='widthFix'></image>
       <picker mode="date" start="{{startTime}}" end="{{endTime}}" bindchange="bindSendChange" value="{{index}}" range="{{array}}">
           <text wx:if="{{!sendTime}}" style="color:gray">请选择发布时间</text>
           <text  style="color:#000">{{sendTime}}</text>
-          <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
+          <image class="selector" src="/image/bot.png" mode='widthFix'></image>
       </picker>
     </view>
 
@@ -24,7 +30,7 @@
       <picker mode="date" start="{{startTime}}" end="{{endTime}}" bindchange="bindInputChange" value="{{index}}">
           <text wx:if="{{!inputTime}}" style="color:gray">请选择录入时间</text>
           <text  style="color:#000">{{inputTime}}</text>
-          <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
+          <image class="selector" src="/image/bot.png" mode='widthFix'></image>
       </picker>
     </view>
 
@@ -34,32 +40,31 @@
       <picker bindchange="bindlevelChange" value="{{index}}" range-key="name" range="{{level}}">
           <text wx:if="{{!levelData}}" style="color:gray">请选择文稿级别</text>
           <text  style="color:#000">{{levelData}}</text>
-          <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
+          <image class="selector" src="/image/bot.png" mode='widthFix'></image>
       </picker>
     </view>
 
     <!-- 单位 -->
-    <view class="listInput">
+    <!-- <view class="listInput">
       <image src="/image/login/danwei.png" mode='widthFix'></image>
       <picker bindchange="bindCompanyChage" value="{{index}}" range-key="name" range="{{company}}">
           <text wx:if="{{!comData}}" style="color:gray">请选择录入单位</text>
           <text  style="color:#000">{{comData}}</text>
-          <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
+          <image class="selector" src="/image/bot.png" mode='widthFix'></image>
       </picker>
-    </view>
-
+    </view> -->
     <!-- 类型 -->
     <view class="listInput">
       <image src="/image/login/danwei.png" mode='widthFix'></image>
       <picker bindchange="bindClassChange" value="{{index}}" range-key="name" range="{{clAss}}">
           <text wx:if="{{!classData}}" style="color:gray">请选择类型</text>
           <text  style="color:#000">{{classData}}</text>
-          <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
+          <image class="selector" src="/image/bot.png" mode='widthFix'></image>
       </picker>
     </view>
-
-    <view class="flexBox">
-        <view class="cancel">取消</view>
-        <view class="Determine" bindtap="searchManuscript">查询</view>
-    </view> 
 </view>
+
+<view class="flexBox">
+    <view class="cancel">取消</view>
+    <view class="Determine" bindtap="searchManuscript">查询</view>
+</view> 

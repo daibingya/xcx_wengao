@@ -1,24 +1,73 @@
 // pages/manDetails/manDetails.js
 const app = getApp()
 let ip = app.globalData.ip;
-var WxParse = require('../../wxParse/wxParse.js');
 Page({
   data: {
     content:''
   },
+  // 分享
+  onShareAppMessage: function (res) {
+    console.log(res)
+    wx.showLoading({
+      title: '正在加载...',
+    })
+    if (res.from === 'button') {
+      wx.hideLoading();
+    }
+    return {
+      title: res.target.dataset.title,
+      path: '/pages/manDetails/manDetails?sendParameter=' + res.target.dataset.sid,
+      success: function (res) {
+      },
+      fail: function (error) {
+        console.log(error);
+      }
+    }
+  },
   onLoad: function (options) {
     let that=this;
-    const eventChannel = this.getOpenerEventChannel()
-    // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
-    eventChannel.on('details', function (data) {
-
-      that.setData({
-        contData: data.data.data,
-        content: data.data.data.content
+    let sid=options.sendParameter;
+    console.log("sid："+sid)
+    if (sid) {
+      wx.showLoading({
+        title: '加载中...',
       })
-      
-      WxParse.wxParse('active', 'html', that.data.content, that);
-    })
+      wx.request({
+        url: ip + '/api/document/detail/' + sid,
+        method: "GET",
+        success: function (res) {
+          wx.hideLoading();
+          if (res.data.code == 200) {
+            that.setData({
+              contData: res.data.data,
+              setDataImage: res.data.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
+            })
+          } else {
+            wx.showModal({
+              title: '请求错误',
+              content: res.data.message,
+            })
+          };
+        },
+        fail: function (err) {
+          wx.hideLoading();
+          wx.showModal({
+            title: '请求错误',
+            content: err.msg,
+          })
+        }
+      })
+    }else{
+      const eventChannel = this.getOpenerEventChannel()
+      // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
+      eventChannel.on('details', function (data) {
+        let d=data.data.data
+        that.setData({
+          contData: d,
+          setDataImage: d.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
+        })
+      })
+    }
   },
   // 下载文件
   downloadFiles:function(e){

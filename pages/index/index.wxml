@@ -36,5 +36,5 @@
       <nodata wx:if="{{documentArray.length<=0}}"></nodata>
     </view>
      <!-- 新建 -->
-    <view class="fixedImage" bindtap='newPages' wx:if="{{!checkFlag}}">+</view>
+    <view class="fixedImage" bindtap='newPages' wx:if="{{!checkFlag}}">录入</view>
 </view>

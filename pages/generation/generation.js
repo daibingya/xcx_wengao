@@ -34,7 +34,7 @@ Page({
     if (!this.data.title || !this.data.textAreat) {
       wx.showToast({
         title: '请输入标题或内容',
-        icon: 'error'
+        icon: 'none'
       })
       return
     }
@@ -42,7 +42,7 @@ Page({
       url: '/pages/preview/preview',
       success:function(res){
         console.log(datas.textAreat);
-        res.eventChannel.emit('openpage', { data: { title: datas.title, content: datas.textAreat} })
+        res.eventChannel.emit('openpage', { data: { title: datas.title, content: datas.textAreat, id: datas.id ? datas.id : ""} })
       }
     })
   },
