@@ -9,7 +9,7 @@
 
     <!-- 内容摘要 -->
     <view class="conImport">
-      <view>内容摘要</view>
+      <view class="name">内容摘要</view>
       <view class="textareaBox">
           <block wx:for="{{textCont}}" wx:key="index" wx:for-index="index">
               <textarea bindinput="changeInputText" data-sid='{{index}}' placeholder='请输入内容摘要' maxlength='-1' value="{{item.content?item.content:''}}"></textarea>
@@ -17,23 +17,42 @@
           <view class="operation"><text class="add" bindtap="addFun">+</text><text class="reduce" bindtap="reduceFun">-</text></view>
       </view> 
     </view>
+    
+    <!--业务归口 -->
+    <view class="entryList">
+      <text class="name">业务归口</text>
+      <picker range='{{level}}' range-key="name" bindchange='pickerlevelChange' value="{{index}}">
+          <text class="selectJb" wx:if="{{!levelData}}">请选择业务归口</text>
+          <text class="selectJb" style="color:#000">{{levelData}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
 
+    <!--素材分类 -->
+    <view class="entryList">
+      <text class="name">素材分类</text>
+      <picker range='{{Fenlei}}' range-key="title" bindchange='pickerFenleiChange' value="{{index}}">
+          <text class="selectJb" wx:if="{{!fenLeiData}}">请选择素材分类</text>
+          <text class="selectJb" style="color:#000">{{fenLeiData}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
 
     <!-- 文稿级别 -->
     <view class="entryList">
-      <text class="name">文稿级别</text>
-      <picker range='{{level}}' range-key="name" bindchange='pickerlevelChange' value="{{index}}">
-          <text class="selectJb" wx:if="{{!levelData}}">请选择文稿级别</text>
-          <text class="selectJb" style="color:#000">{{levelData}}</text>
+      <text class="name">素材标签</text>
+      <picker range='{{tag}}' range-key="name" bindchange='pickerTagChange' disabled="{{tagFlag}}" value="{{index}}">
+          <text class="selectJb {{ tagFlag?'Dark':'' }}" wx:if="{{!tagData}}">请选择素材标签</text>
+          <text class="selectJb" style="color:#000">{{tagData}}</text>
           <image class="xiala" src="/image/login/xiala.png"></image>
       </picker>
     </view>
 
     <!-- 文稿类型 -->
     <view class="entryList">
-      <text class="name">文稿类型</text>
+      <text class="name">文体类型</text>
       <picker range='{{clAss}}' range-key="name" bindchange='pickerTypeChange' value="{{index}}">
-          <text class="selectJb" wx:if="{{!classData}}">请选择文稿类型</text>
+          <text class="selectJb" wx:if="{{!classData}}">请选择文体类型</text>
           <text class="selectJb" style="color:#000">{{classData}}</text>
           <image class="xiala" src="/image/login/xiala.png"></image>
       </picker>

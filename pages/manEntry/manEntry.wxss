@@ -96,6 +96,9 @@ page{
   color:gray;
   font-size: 28rpx;
 }
+.entryList picker .selectJb.Dark{
+  color:#e1e1e1;
+}
 .entryList picker{
   width:calc(100% - 150rpx);
   position: relative;

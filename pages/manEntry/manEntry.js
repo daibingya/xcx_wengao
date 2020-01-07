@@ -13,6 +13,7 @@ Page({
   data: {
     attach:'',
     attachpath:'',
+    tagFlag:true,
     rangesd:[{
       id:0,
       name:"全员可见"
@@ -235,16 +236,48 @@ Page({
         })
       })
   },
-  // 获取编辑信息
-  getMessage:function(){
-    // /api/document / detail / {
+  // 素材分类
+  pickerFenleiChange:function(val){
+    let that=this;
+    this.setData({
+      fenLeiData:this.data.Fenlei[val.detail.value].title
+    })
+    let id = this.data.Fenlei[val.detail.value].id
+    wx.request({
+      url: ip + '/api/category/getTagByCategoryId?categoryId='+id,
+      method:'GET',
+      header:{
+        "Authorization": "Bearer " +that.data.token
+      },
+      success:function(res){
+        if(res.data.code == 200){
+            let flag;
+            if (!res.data.data || !res.data.data.length) {
+                flag = true
+            }else{
+                flag = false
+            }
+            that.setData({
+              tag:res.data.data,
+              tagData:'',
+              tagFlag: flag
+            })
+        }
+      }
+    })
+  },
+  // 素材标签
+  pickerTagChange:function(val){
+    this.setData({
+      tagData:this.data.tag[val.detail.value].name
+    })
   },
   onEditorReady:function() {
     const that = this;
     let time = setTimeout(function(){
       wx.createSelectorQuery().select('#editor').context(function (res) {
         that.editorCtx = res.context;
-        that.editorCtx.setContents({
+        that.data.getData && that.editorCtx.setContents({
           html: that.data.getData.content,
           success: (res) => {
             console.log(res)
@@ -371,7 +404,7 @@ Page({
       startTime: (date.getFullYear() - 3) + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
       endTime: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
     });
-    //文稿级别;
+    // 素材标签;
     new Promise((resolve, reject) =>{
       wx.getStorage({
         key: 'token',
@@ -418,12 +451,32 @@ Page({
         },
         success: function (res) {
           if (res.data.code == 200) {
+            console.log("clAss")
+            console.log(res)
             that.setData({
               clAss: res.data.data
             })
           }
         }
       })
+      // 素材分类
+      wx.request({
+        url: ip + '/api/category/getCateByUser',
+        header: {
+          "Authorization": "Bearer " + token
+        },
+        method:'GET',
+        success: function (res) {
+          console.log(res)
+          if (res.data.code == 200) {
+            that.setData({
+              Fenlei : res.data.data
+            })
+          }
+        }
+      })
     }, fails => { })
+
+    
   }
 })
