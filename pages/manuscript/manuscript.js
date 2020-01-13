@@ -5,7 +5,7 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {page:1},
+  data: {page:1,clickMe:'shengcheng'},
   searchWxml:function(){
     let that=this;
     wx.navigateTo({
@@ -20,8 +20,24 @@ Page({
       } 
     })
   },
+  // tab切换
+  tabChange:function(e){
+    let url;
+    if (e.target.dataset.id=='shengcheng'){
+       url = '/api/mydocument/list';
+    } else if (e.target.dataset.id == 'luru'){
+      url = '/api/document/mylist';
+    }
+    this.setData({
+      clickMe: e.target.dataset.id,
+      url:url,
+      page:1
+    })
+    this.loadingData(false,false,false,url);
+  },
   // 加载数据
-  loadingData:function(down,up,searchData){
+  loadingData:function(down,up,searchData,urls){
+    let url = urls ? urls : '/api/mydocument/list';
     wx.showLoading({
       title: '正在加载...',
     })
@@ -40,7 +56,7 @@ Page({
       })
     }).then(token => {
       wx.request({
-        url: ip + '/api/mydocument/list',
+        url: ip + url,
         header: {
           "Authorization": "Bearer " + token
         },
@@ -100,7 +116,7 @@ Page({
     */
   onPullDownRefresh: function () {
     this.data.page=1;
-    this.loadingData(true,false,false);
+    this.loadingData(true,false,false,this.data.url);
   },
   // 分享
   onShareAppMessage: function (res) {
@@ -154,6 +170,6 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.loadingData(false, true, this.data.searchData);
+    this.loadingData(false, true, this.data.searchData,this.data.url);
   }
 })

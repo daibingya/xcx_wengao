@@ -1,8 +1,8 @@
 /* components/search/search.wxss */
 .search{
   position: fixed;
-  left:20rpx;
-  right:20rpx;
+  left:30rpx;
+  right:30rpx;
   top:0;
   padding:20rpx 0;
   padding-bottom:0;

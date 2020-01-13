@@ -1,9 +1,8 @@
 /* components/manuComponts/manuComponts.wxss */
 /* 列表内容 */
-@import "/wxParse/wxParse.wxss";
 .textListBox{
   width:100%;
-  margin-top:100rpx;
+  margin-top:25rpx;
 }
 .textListBox .textList{
   width:100%;
@@ -55,7 +54,7 @@ text.hasMargin{
   align-items: center;
 }
 .textListBox .textList .textTitle .circular{
-  width:20rpx;
+  width: 20rpx;
   height:20rpx;
   display: inline-block;
   vertical-align: middle;

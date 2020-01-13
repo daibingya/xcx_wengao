@@ -2,20 +2,27 @@
 <view class="myDraft">
    <view class="fixedTab">
       <view class="selectTab" bindtap='activeBox'>
-            <text data-id="wengao" class="{{textActive == true ? 'textActives' : ''}}">文稿</text>
-            <text data-id="yuju" class="{{textActive == false ? 'textActives' : ''}}">常用语句</text>
+            <text data-id="wengao" class="{{textActive == 'wengao' ? 'textActives' : ''}}">录入文稿</text>
+            <text data-id="generate" class="{{textActive == 'generate' ? 'textActives' : ''}}">生成文稿</text>
+            <text data-id="yuju" class="{{textActive == 'yuju' ? 'textActives' : ''}}">常用语句</text>
       </view>
    </view>
     
-    <view class="cyyj">
-      <!-- 文稿 -->
-      <view class="scrollContent wengao" wx:if="{{textActive}}">
+
+      <!-- 录入文稿 -->
+      <view class="scrollContent wengao" wx:if="{{textActive=='wengao'}}">
           <manuscript timeFlag="{{true}}" myWengao="{{false}}" dataArray="{{mydocumentData}}" types="dm"></manuscript>
           <nodata wx-if="{{mydocumentData.length<=0}}"></nodata>
       </view>
-      
+
+      <!-- 生成文稿 -->
+      <view class='scrollContent generate' wx:if="{{textActive=='generate'}}">
+          <manuscript timeFlag="{{true}}" myWengao="{{false}}" dataArray="{{mydocumentData}}" types="dm"></manuscript>
+          <nodata wx-if="{{mydocumentData.length<=0}}"></nodata>
+      </view>
+
       <!-- 常用语句 -->
-      <view class='scrollContent changyong' wx:if="{{!textActive}}" bindtap="goEditor">
+      <view class='changyong' wx:if="{{textActive=='yuju'}}" bindtap="goEditor">
             <nodata wx-if="{{sentenceData.length<=0}}"></nodata>
             <block wx:for="{{sentenceData}}" wx:key="index">  
               <view class="list">
@@ -31,5 +38,5 @@
               </view>
             </block>
       </view>
-   </view>
+
 </view>

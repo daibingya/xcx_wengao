@@ -61,6 +61,7 @@ page{
 }
 .scrollContent{
   width:100%;
+  padding-top:85rpx;
 }
 .list .time{
   float: left;

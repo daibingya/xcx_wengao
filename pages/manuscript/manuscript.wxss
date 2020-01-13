@@ -5,4 +5,21 @@
   height:auto;
   box-sizing:border-box;
 }
+.flexText{
+  width:100%;
+  display:flex;
+  padding:10rpx 0;
+  background: #fff;
+  margin-top:110rpx;
+}
+.flexText text{
+  width:50%;
+  height:80rpx;
+  line-height:80rpx;
+  text-align: center;
+}
+.flexText text.active{
+  color:#4d80f0;
+}
+
 

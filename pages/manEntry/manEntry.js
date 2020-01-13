@@ -213,6 +213,7 @@ Page({
             success:function(data){
               let dataMsg=data.data.data
               that.setData({
+                id : dataMsg.id,
                 getData: dataMsg,
                 title:dataMsg.title,                // 标题         
                 textCont: dataMsg.remark,           // 摘要
@@ -319,6 +320,7 @@ Page({
   },500),
   // 正文
   editorInput:util.debounce(function(e){
+    console.log(e.detail.text)
     this.setData({
       edtiorContext:e.detail.text
     })
@@ -361,6 +363,7 @@ Page({
       },
       method:"POST",
       data:{
+        "id":data.id ? data.id:'',
         "title": data.title ? data.title:'',
         "content": data.edtiorContext ? data.edtiorContext:'',
         "typeId": data.classId ? data.classId:'',
@@ -382,8 +385,9 @@ Page({
             success:function(){
               var pages = getCurrentPages(); // 获取页面栈
               var prevPage = pages[pages.length - 2]; // 上一个页面
-              prevPage.data.manIndex=1;
-              prevPage.loadingData(false, false);
+              prevPage.data.manIndex = 1;
+              prevPage.manuScript && prevPage.manuScript(false, false, false,'/api/document/mydraft')
+              prevPage.loadingData && prevPage.loadingData(false, false);
               wx.navigateBack({
                 delta: 1
               })

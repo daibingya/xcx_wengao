@@ -2,6 +2,10 @@
 <view class="manuscriptBox">
     <!-- 搜索栏 -->
     <my-search bind:breakTo="searchWxml" values="{{searchData}}"></my-search>
+    <view class="flexText" bindtap="tabChange">
+        <text data-id='shengcheng' class="{{clickMe=='shengcheng' ? 'active':''}}">生成文稿</text>
+        <text data-id='luru' class="{{clickMe=='luru' ? 'active':''}}">录入文稿</text>
+    </view>
     <manuscript timeFlag="{{true}}" shareFlag="{{true}}" checkFlag="{{false}}" dataArray="{{mydocument}}" types="myMan"></manuscript>
     <nodata wx:if="{{mydocument.length<=0}}"></nodata>
 </view>

@@ -206,7 +206,6 @@ Component({
           content: '是否确定删除？',
           success:function(com){
             if(com.confirm){
-              
               that.deleteData(n, froms);
             }
           }
@@ -239,7 +238,7 @@ Component({
             var prevPage = pages[pages.length - 1];
             if(res.data.code==200){
               if(types=="myMan"){
-                prevPage.loadingData(false,false,false);
+                prevPage.loadingData(false, false, false, prevPage.data.url);
               }else if (types =="dm"){
                 prevPage.data.manIndex=1;
                 prevPage.manuScript(false,false,false);

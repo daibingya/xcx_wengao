@@ -89,13 +89,19 @@ Page({
   activeBox:function(e){
     if (this.data.node != e.target.dataset.id){
         if (e.target.dataset.id == "wengao"){
-          this.setData({ textActive: true ,manIndex:1})
-          this.manuScript(false,false,false)
+          let url = '/api/document/mydraft';
+          this.setData({ textActive: 'wengao', manIndex: 1, url: url })
+          this.manuScript(false,false,false,url);
         };
-        if(e.target.dataset.id == "yuju"){
-          this.setData({ textActive: false, sentenceIndex: 1 })
-          this.sentEnce(false,false,false)
+      if (e.target.dataset.id == "generate"){
+          let url = '/api/mydocument/mydraft';
+          this.setData({ textActive: 'generate', manIndex: 1, url: url })
+          this.manuScript(false, false, false, url);
         };
+        if (e.target.dataset.id == "yuju") {
+          this.setData({ textActive: 'yuju', sentenceIndex: 1 })
+          this.sentEnce(false, false, false)
+      };
     }
     this.setData({
       node: e.target.dataset.id
@@ -160,8 +166,8 @@ Page({
         }
       })
   },
-  // 加载文稿
-  manuScript:function(down,up,searchData){
+  // 加载录入文稿/生成文稿
+  manuScript:function(down,up,searchData,url){
     let that=this;
     wx.showLoading({
       title: '正在加载...',
@@ -179,7 +185,7 @@ Page({
       })
     }).then(token => {
       wx.request({
-        url: ip + '/api/document/mydraft',
+        url: ip + url,
         method: "POST",
         header: {
           "Authorization": "Bearer " + token
@@ -191,6 +197,7 @@ Page({
         success: function (res) {
           wx.hideLoading();
           if (res.data.code == 200) {
+            console.log(url.indexOf('i'))
             that.setData({
               mydocumentData: up ? that.data.mydocumentData.concat(res.data.data.records) : res.data.data.records,
             });
@@ -235,11 +242,13 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    if (this.data.textActive){
-      // 加载文稿
+    let url=this.data.url;
+    if (this.data.textActive == 'wengao' || this.data.textActive == 'generate'){
+      // 加载录入文稿
       this.data.manIndex=1;
-      this.manuScript(true,false,false)
-    }else{
+      this.manuScript(true,false,false , url)
+    } 
+    else if (this.data.textActive == 'yuju'){
       // 加载常用语句
       this.data.sentenceIndex=1;
       this.sentEnce(true,false,false)
@@ -250,8 +259,11 @@ Page({
    */
   onReachBottom: function () {
     // 草稿->文稿
-    if(this.data.textActive){
-        this.manuScript(false,true,false);
+    console.log("entry")
+    if (this.data.textActive == 'wengao' || this.data.textActive == 'generate'){
+        let url=this.data.url;
+        console.log('render')
+        this.manuScript(false,true,false,url);
     }else{
     // 草稿->常用语句
       this.sentEnce(false,true,false)

@@ -10,7 +10,7 @@
             <block wx:if="{{types == 'library' && item.remark}}" wx:for="{{item.remark}}" wx:for-item="value" wx:key="index">
                 <view class="textCont">
                     <checkbox-group class="{{checkFlag?'noMargin':''}}" bindchange="changeBox" data-id="{{item.id}}"  data-text="{{value.content}}"  data-sid="{{value.id}}">
-                      <label class="checkbox" >
+                      <label class="checkbox">
                         <checkbox value="{{item.id}}" checked="{{checkAllSelt}}"/>
                       </label>
                     </checkbox-group> 
