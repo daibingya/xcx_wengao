@@ -1,10 +1,9 @@
 {
   "pages": [
-    "pages/user/user",
     "pages/index/index",
+    "pages/user/user",
     "pages/manEntry/manEntry",
     "pages/retrieval/retrieval",
-   
     "login/index",
     "pages/preview/preview",
     "pages/mymanDetails/mymanDetails",

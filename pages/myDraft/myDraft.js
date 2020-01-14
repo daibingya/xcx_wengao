@@ -6,6 +6,7 @@ Page({
       textActive:true,
       node:'',
       manIndex:1,
+      url:'',
       sentenceIndex:1
   },
   goMessages: function (e) {

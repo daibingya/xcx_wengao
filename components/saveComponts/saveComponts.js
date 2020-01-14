@@ -100,7 +100,7 @@ Component({
                       checkAllFlag:false
                     })
                   }else{
-                    prevPage.manuScript ? prevPage.manuScript(false, false, false) : prevPage.loadingData(false,false,false)
+                    prevPage.manuScript ? prevPage.manuScript(false, false, false, prevPage.data.url) : prevPage.loadingData(false, false, false, prevPage.data.url)
                   }
                   that.setData({
                     clickFlag:true

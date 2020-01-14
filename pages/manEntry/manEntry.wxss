@@ -17,7 +17,7 @@ page{
 }
 .entryBox .entryList>text:first-child{
   display:inline-block;
-  width:120rpx;
+  min-width:120rpx;
 }
 .entryBox .entryList input{
   flex:1;
@@ -128,3 +128,10 @@ textarea{
   top:0;
   font-size:32rpx;
 }
+.flexBox{
+  width:95%
+}
+.entryBox .entryList.removePading{padding:0;border:0;line-height: 90rpx;}
+.entryBox .entryList.removePading text{margin-right:30rpx}
+.mytree{margin-left: -33rpx;width:100%}
+

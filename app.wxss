@@ -22,7 +22,6 @@ button::after {
   box-sizing: border-box;
   display: flex;
   margin:20rpx auto;
-  width:95%;
   flex-direction: column;
   justify-content: space-between;
 }

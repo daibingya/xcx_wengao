@@ -13,6 +13,11 @@ Page({
   data: {
     attach:'',
     attachpath:'',
+    treeData: {
+      name: '请选择单位',
+      id: 1,
+      children: {}
+    },
     tagFlag:true,
     rangesd:[{
       id:0,
@@ -82,7 +87,6 @@ Page({
           title: '上传中，请等待...',
         })
         let tempFiles=res.tempFiles;
-        console.log(res);
         // 此处size单位是b     50兆为52428800b
         if (tempFiles.size >= 52428800){
             wx.showModal({
@@ -133,7 +137,6 @@ Page({
           wx.showToast({
             title: '成功',
           })
-          console.log(that)
           that.data.uploadShowArray.push({
             name:name,
             id:datas.data.fileid
@@ -188,6 +191,7 @@ Page({
    */
   onLoad: function (options) {
     let that=this;
+    that.convergence();
     that.data.textCont.length <= 0 && that.addFun();
     const eventChannel = this.getOpenerEventChannel();
     // 监听sendContent事件，获取上一页面通过eventChannel传送到当前页面的数据
@@ -237,11 +241,34 @@ Page({
         })
       })
   },
-  // 素材分类
+  // 业务归口
+  convergence:function(){
+    let that = this;
+    wx.request({
+      url: ip + '/api/organization/business',
+      header:{
+        "Authorization": "Bearer "+that.data.token
+      },
+      method:"GET",
+      success:function(res){
+        console.log(res)
+        that.data.treeData.children = res.data.data;
+        that.setData({
+          treeData: that.data.treeData
+        })
+      }
+    })
+  },
+  // 选择业务归口的id
+  tapItem:function(val){
+    this.setData({businessId:val.detail.itemid})
+  },
+  // 素材分类的 id
   pickerFenleiChange:function(val){
     let that=this;
     this.setData({
-      fenLeiData:this.data.Fenlei[val.detail.value].title
+      fenLeiData:this.data.Fenlei[val.detail.value].title,
+      fenLeiId: this.data.Fenlei[val.detail.value].id
     })
     let id = this.data.Fenlei[val.detail.value].id
     wx.request({
@@ -270,7 +297,8 @@ Page({
   // 素材标签
   pickerTagChange:function(val){
     this.setData({
-      tagData:this.data.tag[val.detail.value].name
+      tagData:this.data.tag[val.detail.value].name,
+      tagId: this.data.tag[val.detail.value].id
     })
   },
   onEditorReady:function() {
@@ -320,7 +348,6 @@ Page({
   },500),
   // 正文
   editorInput:util.debounce(function(e){
-    console.log(e.detail.text)
     this.setData({
       edtiorContext:e.detail.text
     })
@@ -330,7 +357,6 @@ Page({
     this.setData({
       edtiorContext: e.detail.text
     })
-    console.log(e.detail.text)
   }),
   // 保存到草稿箱
   Savecaogao:function(){
@@ -376,7 +402,10 @@ Page({
         "urllink": "",
         "ranged": data.rangeId ? data.rangeId:0,
         "attach": data.attach ? data.attach:'',
-        "attachpath": data.attachpath ? data.attachpath:''  
+        "attachpath": data.attachpath ? data.attachpath:'',
+        "business": data.businessId ? data.businessId:'',
+        "categoryId": data.fenLeiId ? data.fenLeiId :'',
+        "tag": data.tagId ? data.tagId:''
       },
       success:function(res){
         if(res.data.code==200){
@@ -387,7 +416,7 @@ Page({
               var prevPage = pages[pages.length - 2]; // 上一个页面
               prevPage.data.manIndex = 1;
               prevPage.manuScript && prevPage.manuScript(false, false, false,'/api/document/mydraft')
-              prevPage.loadingData && prevPage.loadingData(false, false);
+              prevPage.loadingData && prevPage.loadingData(false, false, false, prevPage.data.url);
               wx.navigateBack({
                 delta: 1
               })
@@ -455,8 +484,6 @@ Page({
         },
         success: function (res) {
           if (res.data.code == 200) {
-            console.log("clAss")
-            console.log(res)
             that.setData({
               clAss: res.data.data
             })
@@ -471,7 +498,6 @@ Page({
         },
         method:'GET',
         success: function (res) {
-          console.log(res)
           if (res.data.code == 200) {
             that.setData({
               Fenlei : res.data.data
@@ -480,7 +506,5 @@ Page({
         }
       })
     }, fails => { })
-
-    
   }
 })

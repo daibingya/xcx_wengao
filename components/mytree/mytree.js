@@ -1,5 +1,6 @@
 // pages/components/mytree/mytree.js
 Component({
+  
   properties: {
     model: Object,
     idd: String,

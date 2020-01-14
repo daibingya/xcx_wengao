@@ -19,13 +19,9 @@
     </view>
     
     <!--业务归口 -->
-    <view class="entryList">
+    <view class="entryList removePading">
       <text class="name">业务归口</text>
-      <picker range='{{level}}' range-key="name" bindchange='pickerlevelChange' value="{{index}}">
-          <text class="selectJb" wx:if="{{!levelData}}">请选择业务归口</text>
-          <text class="selectJb" style="color:#000">{{levelData}}</text>
-          <image class="xiala" src="/image/login/xiala.png"></image>
-      </picker>
+      <mytree idd="{{ idd }}" ul='newUl' class="mytree" model='{{ treeData }}' bind:tapitem='tapItem'></mytree>
     </view>
 
     <!--素材分类 -->

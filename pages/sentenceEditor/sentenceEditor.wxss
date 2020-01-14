@@ -52,3 +52,6 @@ page{
   padding:5rpx;
   box-sizing:border-box;
 }
+.flexBox{
+  width:95%;
+}

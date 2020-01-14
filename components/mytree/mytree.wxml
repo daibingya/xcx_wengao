@@ -1,8 +1,11 @@
 <view class="ul">
   <view class="li-item {{ idd == model.id ? 'actives':'removes'}}" bindtap='{{isBranch?"toggle":"tapItem"}}' data-itemid='{{ model.id }}'>
-    <view class="danweiName">
+    <view class="danweiName" wx:if="{{model.title}}">
       <image src="/image/login/danwei.png" mode='widthFix'></image>
       <text>{{model.title}}</text>
+    </view>
+    <view class="danweiName" wx:else>
+      <text>{{model.name}}</text>
     </view>
     <image src="../../image/{{open?'top':'bot'}}.png" mode='widthFix' wx:if='{{ isBranch }}' class="selector" ></image>
   </view>
