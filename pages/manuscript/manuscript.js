@@ -120,16 +120,18 @@ Page({
   },
   // 分享
   onShareAppMessage: function (res) {
-    console.log(res)
     wx.showLoading({
       title: '正在加载...',
     })
     if (res.from === 'button') {
       wx.hideLoading();
     }
+    let path;
+    res.target.dataset.from == 0 && (path = '/pages/manDetails/manDetails?sendParameter=');
+    res.target.dataset.from == 1 && (path = '/pages/mymanDetails/mymanDetails?sendParameter=')
     return {
       title: res.target.dataset.title,
-      path: '/pages/mymanDetails/mymanDetails?sendParameter='+res.target.dataset.sid,
+      path: path + res.target.dataset.sid,
       success:function(res){
       },
       fail:function(error){

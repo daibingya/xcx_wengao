@@ -196,9 +196,9 @@ Page({
     const eventChannel = this.getOpenerEventChannel();
     // 监听sendContent事件，获取上一页面通过eventChannel传送到当前页面的数据
     eventChannel.on('sendContent', function (data) {
-      wx.showLoading({
-        title: '加载中....',
-      })
+        wx.showLoading({
+          title: '加载中....',
+        })
         let id = data.data.id;
         new Promise((resolve,reject)=>{
           wx.getStorage({
@@ -216,41 +216,53 @@ Page({
             method: "GET",
             success:function(data){
               let dataMsg=data.data.data
+              let companyData={
+                itemid:dataMsg.business,
+                name: dataMsg.businessName
+              }
               that.setData({
                 id : dataMsg.id,
                 getData: dataMsg,
                 title:dataMsg.title,                // 标题         
                 textCont: dataMsg.remark,           // 摘要
-                levelData: dataMsg.levelName,       // 级别名
-                levelId: dataMsg.levelId,           // 级别Id
-                classData:dataMsg.typeName,         // 类别名
-                classId:dataMsg.typeId,             // 类别Id
+                companyData: companyData,           // 业务归口
+                fenLeiData: dataMsg.categoryName,   // 素材分类Name
+                fenLeiId: dataMsg.categoryId,       // 素材分类ID
+                tagData:dataMsg.tagName,            // 素材标签Name
+                tagId: dataMsg.tag,                 // 素材标签ID
+                levelData: dataMsg.levelName,       // 级别Name
+                levelId: dataMsg.levelId,           // 级别ID
+                classData:dataMsg.typeName,         // 类别Name
+                classId:dataMsg.typeId,             // 类别ID
                 inputTime:dataMsg.pubTime,          // 发布时间
                 rangeData: dataMsg.rangedName,      // 范围名称
-                rangeId:dataMsg.ranged,             // 范围Id
+                rangeId:dataMsg.ranged,             // 范围ID
                 source: dataMsg.source,             // 文稿出处
                 uploadShowArray:dataMsg.attachList?dataMsg:[], // 附件信息
                 edtiorContext:dataMsg.content       // 正文
               })
               wx.hideLoading();
+              that.getTagdata(dataMsg.categoryId)
             },
             fail:function(err){
               console.log(err)
             }
           })
         })
+
+      
       })
   },
   // 业务归口
-  convergence:function(){
+  convergence: function () {
     let that = this;
     wx.request({
       url: ip + '/api/organization/business',
-      header:{
-        "Authorization": "Bearer "+that.data.token
+      header: {
+        "Authorization": "Bearer " + that.data.token
       },
-      method:"GET",
-      success:function(res){
+      method: "GET",
+      success: function (res) {
         console.log(res)
         that.data.treeData.children = res.data.data;
         that.setData({
@@ -259,10 +271,29 @@ Page({
       }
     })
   },
-  // 选择业务归口的id
-  tapItem:function(val){
-    this.setData({businessId:val.detail.itemid})
+  // 跳转选择单位界面
+  selectCompany:function(){
+    console.log('entry')
+    let that = this;
+    wx.navigateTo({
+      url: '../treePage/treePage',
+      events: {
+        // 获取被打开页面传送到当前页面的数据
+        getcompany: function (data) {
+          that.setData({
+            companyData:data.data
+          })
+        }
+      },
+      success:function(res){
+        res.eventChannel.emit('sendTree', { data: that.data.treeData })
+      }
+    })
   },
+  // 选择业务归口的id
+  // tapItem:function(val){
+  //   this.setData({businessId:val.detail.itemid})
+  // },
   // 素材分类的 id
   pickerFenleiChange:function(val){
     let that=this;
@@ -271,25 +302,29 @@ Page({
       fenLeiId: this.data.Fenlei[val.detail.value].id
     })
     let id = this.data.Fenlei[val.detail.value].id
+    this.getTagdata(id);
+  },
+  // 素材标签数据
+  getTagdata:function(id){
+    let that=this;
     wx.request({
-      url: ip + '/api/category/getTagByCategoryId?categoryId='+id,
-      method:'GET',
-      header:{
-        "Authorization": "Bearer " +that.data.token
+      url: ip + '/api/category/getTagByCategoryId?categoryId=' + id,
+      method: 'GET',
+      header: {
+        "Authorization": "Bearer " + that.data.token
       },
-      success:function(res){
-        if(res.data.code == 200){
-            let flag;
-            if (!res.data.data || !res.data.data.length) {
-                flag = true
-            }else{
-                flag = false
-            }
-            that.setData({
-              tag:res.data.data,
-              tagData:'',
-              tagFlag: flag
-            })
+      success: function (res) {
+        if (res.data.code == 200) {
+          let flag;
+          if (!res.data.data || !res.data.data.length) {
+            flag = true
+          } else {
+            flag = false
+          }
+          that.setData({
+            tag: res.data.data,
+            tagFlag: flag
+          })
         }
       }
     })
@@ -403,7 +438,7 @@ Page({
         "ranged": data.rangeId ? data.rangeId:0,
         "attach": data.attach ? data.attach:'',
         "attachpath": data.attachpath ? data.attachpath:'',
-        "business": data.businessId ? data.businessId:'',
+        "business": data.companyData ? data.companyData.itemid:'',
         "categoryId": data.fenLeiId ? data.fenLeiId :'',
         "tag": data.tagId ? data.tagId:''
       },

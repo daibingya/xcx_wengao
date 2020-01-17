@@ -51,6 +51,7 @@ Page({
         },
         success: function (val) {
           if (val.data.code == 200) {
+            console.log(val)
             that.setData({
               userdata: val.data.data,
               token: token

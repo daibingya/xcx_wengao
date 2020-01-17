@@ -136,11 +136,12 @@ Page({
           "size": 5,
           "searchCondition": {
             "title": searchCondition ? searchCondition.title:'',
+            "categoryId": searchCondition ? searchCondition.categoryId : '',
             "orgid": searchCondition ? searchCondition.orgid : '',
-            "level": searchCondition ? searchCondition.level : '',
-            "type": searchCondition ? searchCondition.type : '',
+            "tag": searchCondition ? searchCondition.level : '',
+            "docType": searchCondition ? searchCondition.type : '',
             "createdDate": searchCondition ? searchCondition.createdDate : '',
-            "pubTime": searchCondition ? searchCondition.pubTime : ''
+            "pubTime": searchCondition ? searchCondition.pubTime : '',
           }
         },
         success: function (res) {

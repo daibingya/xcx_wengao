@@ -1,5 +1,5 @@
 <view class="ul">
-  <view class="li-item {{ idd == model.id ? 'actives':'removes'}}" bindtap='{{isBranch?"toggle":"tapItem"}}' data-itemid='{{ model.id }}'>
+  <view class="li-item {{ idd == model.id ? 'actives':'removes'}}" bindtap='{{isBranch?"toggle":"tapItem"}}' data-itemid='{{ model.id }}' data-name='{{ model.name }}' data-orgid="{{ model.orgId }}">
     <view class="danweiName" wx:if="{{model.title}}">
       <image src="/image/login/danwei.png" mode='widthFix'></image>
       <text>{{model.title}}</text>

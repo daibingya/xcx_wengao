@@ -2,13 +2,15 @@
   <view class="title">{{contData.title}}</view>
   <view class="information">
       <view class="left">
-        <view>发布时间：{{contData.pubTime}}</view>
-        <view>文稿类型：{{contData.typeName}}</view>
-        <view>录入时间：{{contData.createdDate}}</view>
+        <view>发布时间：{{contData.pubTime?contData.pubTime:'---'}}</view>
+        <view>文体类型：{{contData.typeName?contData.typeName:'---'}}</view>
+        <view>录入时间：{{contData.createdDate?contData.createdDate:'---'}}</view>
+        <view>文稿出处：{{contData.source?contData.source:'---'}}</view>
       </view>
       <view class="right">
-        <view>文稿级别：{{contData.levelName}}</view>
-        <view>文稿出处：{{contData.source}}</view>
+        <view>业务归口：{{contData.businessName?contData.businessName:'---'}}</view>
+        <view>素材分类：{{contData.categoryName?contData.categoryName:'---'}}</view>
+        <view>素材标签：{{contData.tagName?contData.tagName:'---'}}</view>
       </view>
   </view>
   <rich-text nodes="{{setDataImage}}" bindtap="tap"></rich-text>

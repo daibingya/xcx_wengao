@@ -40,7 +40,7 @@ Page({
           if (res.data.code == 200) {
             that.setData({
               contData: res.data.data,
-              setDataImage: res.data.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
+              setDataImage: res.data.data.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto;" ')
             })
           } else {
             wx.showModal({
@@ -62,6 +62,7 @@ Page({
       // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
       eventChannel.on('details', function (data) {
         let d=data.data.data
+        console.log(data.data.data)
         that.setData({
           contData: d,
           setDataImage: d.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')

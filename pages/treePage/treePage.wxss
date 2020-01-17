@@ -1,0 +1,6 @@
+/* pages/treePage/treePage.wxss */
+page{background: #fff;padding-bottom:200rpx;}
+.fixed{position:fixed;width:100%;height:100rpx;bottom:50rpx;display:flex;justify-content: space-around}
+.fixed button{width:48%;border-radius:5rpx;font-size:34rpx;line-height: 100rpx;}
+.fixed button:nth-child(1){background:#cecece}
+.fixed button:nth-child(2){background:#0099FF;color:#fefefe}

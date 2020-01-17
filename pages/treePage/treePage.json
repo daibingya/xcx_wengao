@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "选择单位",
+  "usingComponents": {
+    "mytree": "../../components/mytree/mytree"
+  }
+}

@@ -9,17 +9,17 @@
    </view>
     
 
-      <!-- 录入文稿 -->
-      <view class="scrollContent wengao" wx:if="{{textActive=='wengao'}}">
+      <!-- 录入文稿 or 生成文稿-->
+      <view class="scrollContent wengao" wx:if="{{textActive=='wengao'||textActive=='generate'}}">
           <manuscript timeFlag="{{true}}" myWengao="{{false}}" dataArray="{{mydocumentData}}" types="dm"></manuscript>
           <nodata wx-if="{{mydocumentData.length<=0}}"></nodata>
       </view>
 
       <!-- 生成文稿 -->
-      <view class='scrollContent generate' wx:if="{{textActive=='generate'}}">
+      <!-- <view class='scrollContent generate' wx:if="{{textActive=='generate'}}">
           <manuscript timeFlag="{{true}}" myWengao="{{false}}" dataArray="{{mydocumentData}}" types="dm"></manuscript>
           <nodata wx-if="{{mydocumentData.length<=0}}"></nodata>
-      </view>
+      </view> -->
 
       <!-- 常用语句 -->
       <view class='changyong' wx:if="{{textActive=='yuju'}}" bindtap="goEditor">

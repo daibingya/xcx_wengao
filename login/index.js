@@ -104,8 +104,6 @@ Page({
         "checked": "true",
         "orgId": this.data.orgId
       })
-      console.log("name:"+this.data.username);
-      console.log("ordId:"+this.data.orgId)
     }else{
       try {
         //清理存储;
@@ -130,22 +128,57 @@ Page({
         if (res.statusCode==200){
           // 登录成功跳转地址
           if(res.data.code == 200 ){
-            //存储Token
+            //  存储Token
             new Promise((resolve,reject)=>{
               wx.setStorage({
                 key: 'token',
                 data: res.data.data.accessToken,
                 success:function(){
-                  resolve();
+                  resolve(res.data.data.accessToken);
                 },
                 fail:function(error){
                   reject(error);
                 }
               })
-            }).then(function(){
+            }).then(function(token){
               // 利用promise确保异步操作成功后再执行跳转
               wx.switchTab({
                 url: '/pages/index/index',
+              })
+              // 获取用户信息
+              wx.request({
+                url: ip + '/api/userSettings/info',
+                header: {
+                  "content-type": "application/json",
+                  "Authorization": "Bearer " + token
+                },
+                success: function (val) {
+                  if (val.data.code == 200) {
+                    wx.setStorageSync(
+                     "userData",
+                      val.data.data
+                    )  
+                  } else {
+                    wx.showModal({
+                      title: '请求失败',
+                      content: val.data.msg,
+                      success: function (res) {
+                        wx.redirectTo({
+                          url: '/login/index'
+                        })
+                      }
+                    })
+                  }
+                  // 关闭加载模态框
+                  wx.hideLoading();
+                }, fail: function (error) {
+                  // 关闭加载模态框
+                  wx.hideLoading();
+                  wx.showModal({
+                    title: '网络问题',
+                    content: '无网络或服务关闭'
+                  })
+                }
               })
             },function(){})
           }else{

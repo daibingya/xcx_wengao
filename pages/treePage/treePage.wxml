@@ -1,0 +1,6 @@
+<!--pages/treePage/treePage.wxml-->
+<mytree idd="{{ idd }}" model='{{ treeData }}' bind:tapitem='tapItem'></mytree>
+<view class="fixed">
+   <button bindtap="cancel">取消</button>
+   <button bindtap="confirm">确定</button>
+</view>

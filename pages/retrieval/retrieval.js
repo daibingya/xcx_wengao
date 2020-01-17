@@ -3,23 +3,52 @@ var app = getApp();
 var ip = app.globalData.ip;
 const util = require('../debounce/debounce.js');
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
     startTime:'2016-01-01',
     endTime:'',
+    kitchenFlag:true,   // 默认不阻止
     treeData: {
       title: '请选择单位',
       id: 1,
       children: {}
-    }
+    },
+    Kitchen:[
+      {
+        id: 0,
+        name: '总厨房'
+      },
+      {
+        id: 1,
+        name: '子厨房'
+      }
+    ]
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this;
+    let userData = wx.getStorageSync("userData");
+    wx.getStorage({
+        key: 'token',
+        success: function(res) {
+          that.setData({
+            token:res.data
+          })
+          if (userData.orgCode === 'GXQ') {
+            that.setData({
+              selectLevel: true,
+              kitchenFlag: false
+            })
+          } else {
+            that.getdepartmentdata('', '/api/category/getCateByUser');
+          }
+        },
+        fail:function(err){console.log(err)}
+      })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -31,21 +60,16 @@ Page({
     this.setData({ 
       endTime: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
     });
-
-    //文稿级别;
     new Promise((resolve,reject)=>{
       wx.getStorage({
         key: 'token',
-        success: function(res) {
-          that.setData({
-            token:res.data
-          })
-          resolve(res.data)
-        },
-        fail:function(){reject(error)}
+        success: function (res) {
+          resolve(res.data) 
+        }
       })
     }).then(token=>{
-      return new Promise((successd,fail)=>{
+      // 素材标签;
+      return new Promise((successd, fail) => {
         wx.request({
           url: ip + '/api/document/level',
           header: {
@@ -71,7 +95,7 @@ Page({
           }
         })
       })
-    },error=>{}).then(token=>{
+    },fail=>{}).then(token=>{
       // 类型
       wx.request({
         url: ip + '/api/document/type',
@@ -86,43 +110,44 @@ Page({
           }
         }
       })
-
-      // 单位
-      wx.request({
-        url: ip + '/api/document/orglist',
-        method: 'GET',
-        header: {
-          "Authorization": "Bearer " + token
-        },
-        success: function (res) {
-          that.data.treeData.children = res.data.data;
-          that.setData({
-            treeData: that.data.treeData
-          })
-        }, fail: function (error) {
-        }
-      })
     },fails=>{})
-    // 录入单位
-    // wx.request({
-    //   url: ip + '/api/organization/',
-    //   method: 'GET',
-    //   success: function (res) {
-    //     that.setData({
-    //       company: res.data.data
-    //     })
-    //   }, fail: function (error) {
-    //   }
-    // })
-
-    
   },
-  //事件处理函数
+  //选择单位事件处理函数
   tapItem: function (e) { 
-    let id=e.detail.itemid;
+    let d=e.detail;
+    console.log(d)
     this.setData({
-      comId: e.detail.itemid
-    })    
+      categoryId: d.itemid,
+      orgid:d.orgid
+    }) 
+  },
+  // 厨房类型
+  bindKitchenChange:function(e){
+    let url;
+    this.setData({
+      KitchenData: this.data.Kitchen[e.detail.value].name,
+      kitchenFlag: true
+    })
+    e.detail.value === '0' && (url = '/api/category/getCateByUser')
+    e.detail.value === '1' && (url = '/api/category/getCateGroupByOrg')
+    this.getdepartmentdata(e.detail.value,url)
+  },
+  // 获取当前用户所属部门的素材分类
+  getdepartmentdata:function(id,url){
+    let that = this;
+    wx.request({
+      url: ip + url,
+      header:{
+        "Authorization": "Bearer "  + that.data.token 
+      },
+      method:"GET",
+      success:function(res){
+        that.data.treeData.children = res.data.data;
+        that.setData({
+          treeData: that.data.treeData
+        })
+      }
+    })
   },
   // 关键字
   keywordsChange:util.debounce(function (e) {
@@ -168,12 +193,13 @@ Page({
   //查询;
   searchManuscript:function(){
     let searchCondition={
-      title:this.data.keywords,
-      orgid: this.data.comId,
-      level: this.data.levelId,
-      type: this.data.classId,
-      createdDate: this.data.inputTime,
-      pubTime: this.data.sendTime
+      title:this.data.keywords,          // 标题
+      categoryId: this.data.categoryId,  // 选中的单位
+      orgid: this.data.orgid,            // orgid
+      level: this.data.levelId,         
+      type: this.data.classId,           // 类型
+      createdDate: this.data.inputTime,  // 创建时间
+      pubTime: this.data.sendTime,       // 发布时间
     }
     //获取页面栈
     var pages = getCurrentPages();

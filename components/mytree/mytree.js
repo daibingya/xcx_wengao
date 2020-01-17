@@ -21,7 +21,6 @@ Component({
   methods: { 
     // 组件内部父级打开事件
     toggle: function (e) {
-      console.log(this)
       if (this.data.isBranch) {
         this.setData({
           open: !this.data.open,
@@ -32,20 +31,23 @@ Component({
     tapItem:function(e){
       let that = this;
       let itid = e.currentTarget.dataset.itemid;
+      let name = e.currentTarget.dataset.name;
+      let orgid = e.currentTarget.dataset.orgid;
       this.setData({
         idd: itid
       })
       var pages = getCurrentPages();
       var p = pages[pages.length - 2];  //上一个页面
-      if (p.data.setThis){
+      if (p.data.setThis && p.data.setThis!=that) {
         p.data.setThis.setData({
-            idd:''
+          idd: ''
         })
       }
       p.setData({
         setThis:that
       })  
-      this.triggerEvent('tapitem', { itemid: itid}, { bubbles: true,composed: true})
+      
+      this.triggerEvent('tapitem', { itemid: itid, name: name, orgid: orgid}, { bubbles: true,composed: true})
     }
   },
   ready: function (e) {

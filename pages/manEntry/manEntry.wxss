@@ -55,6 +55,11 @@ page{
   margin-left:20rpx;
   background:#c4c4c4;
 }
+.selectCompany{
+  margin-left:5px;
+  display: inline-block;
+  width: 100%;
+}
 .reduce{
   width:40rpx;
   height:40rpx;
@@ -131,7 +136,6 @@ textarea{
 .flexBox{
   width:95%
 }
-.entryBox .entryList.removePading{padding:0;border:0;line-height: 90rpx;}
 .entryBox .entryList.removePading text{margin-right:30rpx}
 .mytree{margin-left: -33rpx;width:100%}
 

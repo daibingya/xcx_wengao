@@ -90,5 +90,8 @@
   color:gray;
 }
 .companyList{
-  background:#f8f8f8
+  background:#f8f8f8;
+}
+.pointer{
+  pointer-events: none;
 }

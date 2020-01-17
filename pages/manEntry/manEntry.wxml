@@ -21,7 +21,7 @@
     <!--业务归口 -->
     <view class="entryList removePading">
       <text class="name">业务归口</text>
-      <mytree idd="{{ idd }}" ul='newUl' class="mytree" model='{{ treeData }}' bind:tapitem='tapItem'></mytree>
+      <text class="selectCompany" bindtap="selectCompany">{{companyData?companyData.name:'请选择单位'}}</text>
     </view>
 
     <!--素材分类 -->
