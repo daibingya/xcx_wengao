@@ -12,7 +12,7 @@
           
           <view class="userNameBox">
              <text class="name">{{userdata.name}}</text>
-             <image class="userEditor" src="/image/user_image/editor.png" mode="widthFix" bindtap='navJump' data-id="name"></image>
+             <image class="userEditor" src="/image/user_image/editor.png" mode="widthFix" bindtap='navJump' data-id="name"></image>  
           </view>
           <view class="userMesage">
               <view class="left">

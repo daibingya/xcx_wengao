@@ -1,9 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/user/user",
     "login/index",
-   
+    "pages/user/user",   
     "pages/manEntry/manEntry",
     "pages/retrieval/retrieval",
     "pages/treePage/treePage",

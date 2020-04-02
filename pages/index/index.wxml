@@ -3,9 +3,10 @@
     <!-- 搜索栏 -->
     <view class="back">
       
-      <view class="inputBox">
-        <input placeholder='请输入关键字进行搜索' value="{{keywords}}"></input>
-        <view class="mark" bindtap='jumpTo'></view>
+      <view class="inputBox"  bindtap='jumpTo'>
+        <!-- <input placeholder='请输入关键字进行搜索' value="{{keywords}}"></input>
+        <view class="mark"></view> -->
+        搜索
       </view>
       <view class="Administration">
         <view class="adminFlex">
