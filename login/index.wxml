@@ -14,6 +14,10 @@
             </picker>
          </view>
 
+        <!-- 树状单位 -->
+        <!-- <view class="listInput" style="height:auto">
+          <mytree idd="{{ idd }}" model='{{ array }}' bind:tapitem='tapItem'></mytree>
+        </view> -->
         <!-- 账号 -->
           <view class="listInput">
             <image src="/image/login/geren.png" mode='widthFix'></image>

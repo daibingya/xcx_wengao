@@ -8,7 +8,7 @@ Component({
   data: {
     open: false,
     isBranch: false,
-    check: true,
+    that:null,
     getIdd:''
   },
   observers: {
@@ -30,22 +30,31 @@ Component({
     // 组件内部子级的点击事件
     tapItem:function(e){
       let that = this;
+      
       let itid = e.currentTarget.dataset.itemid;
       let name = e.currentTarget.dataset.name;
       let orgid = e.currentTarget.dataset.orgid;
       this.setData({
         idd: itid
       })
-      var pages = getCurrentPages();
-      var p = pages[pages.length - 2];  //上一个页面
-      if (p.data.setThis && p.data.setThis!=that) {
-        p.data.setThis.setData({
+      wx.setStorageSync("that", that);
+      let setStorage = wx.getStorageSync("that");
+      if(this.that){
+        this.that.setData({
           idd: ''
         })
       }
-      p.setData({
-        setThis:that
-      })  
+      this.that = this;
+      // var pages = getCurrentPages();
+      // var p = pages[pages.length - 2];  //上一个页面
+      // if (p.data.setThis && p.data.setThis!=that) {
+      //   p.data.setThis.setData({
+      //     idd: ''
+      //   })
+      // }
+      // p.setData({
+      //   setThis:that
+      // })
       
       this.triggerEvent('tapitem', { itemid: itid, name: name, orgid: orgid}, { bubbles: true,composed: true})
     }

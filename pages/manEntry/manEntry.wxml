@@ -100,6 +100,7 @@
         <view>正文</view>
         <editor 
         bindinput="editorInput"
+        bindfocus="focusEdit"
         id="editor"
         class="ql-container"
         placeholder="请输入文本"

@@ -1,12 +1,17 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/rich-index/index",
     "login/index",
+    "pages/index/index",
+   
+    "pages/rich-details/details",
+   
     "pages/user/user",   
     "pages/manEntry/manEntry",
     "pages/retrieval/retrieval",
     "pages/treePage/treePage",
     "pages/preview/preview",
+    
     "pages/mymanDetails/mymanDetails",
     "pages/manDetails/manDetails",
     "pages/generation/generation",
@@ -35,7 +40,7 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "文稿库",
+        "text": "系统内容库",
         "iconPath":"./image/wn.png",
         "selectedIconPath":"./image/wc.png"
       },

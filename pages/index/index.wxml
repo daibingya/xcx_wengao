@@ -18,11 +18,11 @@
               </checkbox-group> 
               <text>全选</text>
           </view>
-          <view class="adminText" bindtap="selectCheck" data-flag='{{checkFlag}}'>
+          <!-- <view class="adminText" bindtap="selectCheck" data-flag='{{checkFlag}}'>
               <text class="blueText" wx:if="{{!checkFlag}}">管理</text>
               <text class="blueText" wx:else>取消</text>
               <text class="smallText" wx:if="{{!checkFlag}}">（用于生成文稿）</text>
-          </view>
+          </view> -->
         </view>
         <view class="generate" wx:if="{{checkFlag}}" bindtap="alertModel">
           <text>生成文稿</text>

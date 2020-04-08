@@ -138,7 +138,7 @@ Page({
             "title": searchCondition ? searchCondition.title:'',
             "categoryId": searchCondition ? searchCondition.categoryId : '',
             "orgid": searchCondition ? searchCondition.orgid : '',
-            "tag": searchCondition ? searchCondition.level : '',
+            "tags": searchCondition ? searchCondition.level : '',
             "docType": searchCondition ? searchCondition.type : '',
             "createdDate": searchCondition ? searchCondition.createdDate : '',
             "pubTime": searchCondition ? searchCondition.pubTime : '',

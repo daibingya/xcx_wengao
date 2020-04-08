@@ -34,7 +34,7 @@
   vertical-align: middle;
 }
 .scrollBox{
-  margin-top:170rpx;
+  margin-top:125rpx;
 }
 /* 列表内容 */
 .textListBox{

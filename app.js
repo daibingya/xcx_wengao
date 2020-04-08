@@ -34,7 +34,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    // ip:"http://192.168.0.253:8080/document-bigdata",
-    ip:"https://www.xagxqwgdsj.cn"
+    ip:"http://192.168.0.109:8080",
+    // ip:"https://www.xagxqwgdsj.cn",
   }
 })

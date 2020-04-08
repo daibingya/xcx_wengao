@@ -8,7 +8,7 @@ Page({
    */
   data: {
     //普通选择器：（普通数组）
-    array: [] ,
+    array: [],
     username:"",
     password:"",
     checked:false
@@ -20,6 +20,8 @@ Page({
     nameMap[name] = e.detail && e.detail.value
     this.setData(nameMap)
   },300),
+
+
   //单位选择：
   bindPickerChange: function (e) {
     this.setData({
@@ -33,6 +35,9 @@ Page({
       }
     }
   },
+
+
+
   // 记住密码：
   checkboxChange: function (e) {
     if(e.detail.value[0]){
@@ -58,8 +63,9 @@ Page({
         url: ip + '/api/organization/',
         method: 'GET',
         success: function (res) {
-          _this.setData({
-            array: res.data.data
+          that.setData({
+            // array: {name:"请选择单位",id:1,children:res.data.data },
+            array:res.data.data
           })
           resolve();
         }, fail: function (error) {
@@ -68,6 +74,7 @@ Page({
       })
     }).then(val=>{
       //查看是否存储了用户信息
+      console.log(_this.data)
       let user = wx.getStorageSync("user");
       if (user) {
         let index = 0;
@@ -91,6 +98,9 @@ Page({
       }
     },error=>{})
   },
+
+
+  tapItem:function(){console.log(111)},
   // 登录跳转
   brekPage:function(){
     wx.showLoading({

@@ -186,6 +186,12 @@ Page({
       }
     })
   },
+  // 获取焦点
+  focusEdit:function(){
+    wx.navigateTo({
+      url:"../rich-index/index"
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

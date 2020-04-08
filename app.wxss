@@ -16,6 +16,9 @@ button::after {
     height: 0;
     color: transparent;
 }
+mytree{
+  width:100%
+}
 .flexBox{
   height:220rpx;
   left:30rpx;right:30rpx;
