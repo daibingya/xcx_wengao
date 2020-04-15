@@ -63,9 +63,11 @@ mytree{
   width:100%;
   margin-bottom:20rpx;
   padding:20rpx;
+  font-size:0;
   padding-bottom:10rpx;
   box-sizing: border-box;
   border-radius:4rpx;
+  overflow: hidden;
   background: #fff;
 }
 .list>view{

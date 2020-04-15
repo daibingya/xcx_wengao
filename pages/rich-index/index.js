@@ -14,13 +14,20 @@ Page({
     })
   },
   onLoad() {
-
+    let that = this;
+    
   },
   // 编辑器初始化完成时触发
   onEditorReady() {
     const that = this;
     wx.createSelectorQuery().select('#editor').context(function(res) {
       that.editorCtx = res.context;
+      const eventChannel = that.getOpenerEventChannel()
+      eventChannel.on('sendText', function (data) {
+        that.editorCtx.setContents({
+          html: data.data
+        })
+      })
     }).exec();
   },
   undo() {
@@ -105,8 +112,25 @@ Page({
       }
     })
   },
+  // 直接保存
+  saveText(){
+    const sendText = this.getOpenerEventChannel();
+    this.editorCtx.getContents({
+      success: res =>{
+        // 记录到全局
+        app.globalData.html = res.html
+        sendText.emit('getText', { data: res.html });
+        wx.navigateBack({
+          delta: 1,
+          success: (res) => {
+          }
+        })
+      }
+    })
+  },
   //查看详细页面
   toDeatil() {
+    let that = this;
     this.editorCtx.getContents({
       success: (res) => {
         console.log(res.html)

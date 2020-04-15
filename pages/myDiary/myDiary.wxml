@@ -1,0 +1,29 @@
+<!--pages/myDiary/myDiary.wxml-->
+<view class="container">
+    <!-- 搜索栏 -->
+    <view class="back">
+      <view class="inputBox"  bindtap='jumpTo'>写日记</view>
+    </view>
+
+    <!-- 文本列表 -->
+    <view class="contentBox"  bindtap="goMessage"> 
+        <block wx:for="{{records}}" wx:key="index">
+          <view class="list" id="{{item.id}}">
+              <view id="{{item.id}}">
+                <text class="yuan"></text>
+                <view class="yuju" data-time="{{item.createdDate}}" data-content="{{item.content}}" bindtap="getContent">{{item.content}}</view>
+              </view>
+               <view class="timeBox">
+                <view class="time">
+                  <image src="/image/time.png" mode="widthFix"></image>
+                  <text>{{item.createdDate?item.createdDate:'---'}}</text>
+                </view>
+                <view class="caozuo" bindtap="operationChange" data-id="{{item.id}}" data-title="{{item.title}}" data-text="{{item.content}}">
+                  <text class="iconfont icon-icon-edit" data-operation="editor" data-from="{{item.content}}" data-id="{{item.id}}">编辑</text>
+                  <text class="iconfont icon-shanchu"   data-operation="delete" data-id="{{item.id}}">删除</text>
+                </view> 
+            </view>
+          </view>
+        </block>
+    </view>
+</view>

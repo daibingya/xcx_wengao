@@ -1,0 +1,23 @@
+/* pages/diaryDetails/diaryDetails.wxss */
+page{
+  background: #fff
+}
+.diaryBox{
+  width: 95%;
+  margin: auto;
+}
+.entryList{
+  width:100%;
+  border-bottom:1px solid #f0f0f0;
+  padding:20rpx 0;
+  font-size:30rpx;
+  color:#2b2828;
+  display: flex;
+}
+.entryList>text:first-child{
+  display:inline-block;
+  min-width:120rpx;
+}
+.content{
+  width:75%;
+}

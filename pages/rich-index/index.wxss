@@ -25,13 +25,22 @@
     cursor: pointer;
     font-size: 20px;
 }
-
 .toolbar {
+    width:100%;
     box-sizing: border-box;
     border-bottom: 0;
+    position: fixed;
+    z-index: 9;
+    top:0;
+    left:0;
+    background: #edf2f3;
     font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
-
+.editorContent{
+  width:100%;
+  height:auto;
+  margin-top:315rpx;
+}
 .ql-container {
     box-sizing: border-box;
     padding: 12rpx 15rpx;

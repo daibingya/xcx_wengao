@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<view class="container">
+    <!-- 搜索栏 -->
+    <view class="back">
+      <view class="inputBox"  bindtap='jumpTo'>搜索</view>
+    </view>
+
+    <!-- 文本列表 -->
+    <view class="scrollBox" bindtap="tiaozhuan">
+      <nodata wx:if="{{documentArray.length<=0}}"></nodata>
+      <view class="textCon" wx:for="{{documentArray}}">
+          <view class="title">
+            <text class="circular"></text>
+            <text class="titleText">{{item.title}}</text> 
+          </view>
+          <view class="text"  data-id="{{item.id}}">{{item.content}}</view>
+      </view>
+    </view>
+</view>

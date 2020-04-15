@@ -1,0 +1,20 @@
+<view class="manDetailsBox">
+  <view class="title">{{contData.title}}</view>
+  <view class="information">
+      <view class="left">
+        <view>发布时间：{{contData.pubTime?contData.pubTime:'---'}}</view>
+        <view>文稿分类：{{contData.orgName?contData.orgName:'---'}}</view>
+      </view>
+      <view class="right">
+        <view>文体类型：{{contData.typeName?contData.typeName:'---'}}</view>
+      </view>
+  </view>
+  <rich-text nodes="{{contData.content}}" bindtap="tap"></rich-text>
+  <block wx:for="{{contData.attachList}}" wx:key="index">
+    <view class="Enclosure">
+      <view><text>附件：</text><text>{{item.name}}</text></view>
+      <view><image bindtap="downloadFiles" data-url="{{item.path}}" src="/image/down.png" mode="widthFix"></image></view>
+    </view>
+  </block>
+  <button open-type="share" class="shera" data-sid="{{contData.id}}">分享</button>
+</view>

@@ -40,11 +40,14 @@
         <i class="iconfont icon-undo" bindtap="undo"></i>
         <i class="iconfont icon-redo" bindtap="redo"></i>
       </view>
-      <editor id="editor" class="ql-container" placeholder="{{placeholder}}" showImgSize showImgToolbar showImgResize bindstatuschange="onStatusChange" read-only="{{readOnly}}" bindready="onEditorReady"></editor>
+      <view class="editorContent">
+            <editor id="editor" class="ql-container" placeholder="{{placeholder}}" showImgSize showImgToolbar showImgResize bindstatuschange="onStatusChange" read-only="{{readOnly}}" bindready="onEditorReady"></editor>
+      </view>
     </view>
 
   </view>
   <view class="ajc" style="margin:10px;">
-    <button type="default" bindtap="toDeatil">查看生成页面</button>
+    <button type="default" bindtap="toDeatil">查看</button>
+    <button type="default" bindtap="saveText" style="background:#4d80f0;margin-top:20rpx;color:#fff">保存</button>
   </view>
 </view>

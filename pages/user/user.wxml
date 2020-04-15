@@ -77,6 +77,16 @@
             </view>
 
             <view class="listText">
+                <view class="dashedLine" bindtap="myDiary">
+                    <view class="leftCont">
+                      <image mode='widthFix' src="/image/user_image/Manuscript.png"></image>
+                      <text class="listTitle">工作日记</text>
+                    </view>
+                    <image class="returnImages" mode="widthFix" src="/image/user_image/return.png"></image>
+                </view>
+            </view>
+
+            <view class="listText">
                 <view class="dashedLine" bindtap='navJump' data-id="password">
                     <view class="leftCont">
                       <image mode='widthFix' src="/image/user_image/editPasword.png"></image>

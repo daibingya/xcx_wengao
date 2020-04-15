@@ -1,0 +1,23 @@
+<!--pages/keepDiary/keepDiary.wxml-->
+<view class="entryBox">
+    
+    <!-- 文稿名称 -->
+    <!-- <view class="entryList">
+      <text class="name">录入时间：</text>
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker">
+          当前选择：{{array[index]}}
+        </view>
+      </picker>
+    </view> -->
+    
+    <view class="entryList">
+      <textarea bindinput="textChage" value="{{contents}}"></textarea>
+    </view>
+
+    
+</view>
+<view class="flexBox">
+    <view class="Determine" bindtap="sendDiary">提交</view>
+</view> 
+

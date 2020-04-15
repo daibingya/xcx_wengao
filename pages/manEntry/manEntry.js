@@ -188,9 +188,28 @@ Page({
   },
   // 获取焦点
   focusEdit:function(){
-    wx.navigateTo({
-      url:"../rich-index/index"
+    let that = this;
+    that.editorCtx.getContents({
+      success: res => {
+        wx.navigateTo({
+          url: "../rich-index/index",
+          success: data => {
+            data.eventChannel.emit('sendText', { data: res.html })
+          },
+          events: {
+            // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+            getText: function (data) {
+              console.log(data)
+              that.editorCtx.setContents({
+                html: data.data
+              })
+            },
+          }
+        })
+      }
     })
+    return 
+    
   },
   /**
    * 生命周期函数--监听页面加载
@@ -388,11 +407,11 @@ Page({
     })
   },500),
   // 正文
-  editorInput:util.debounce(function(e){
-    this.setData({
-      edtiorContext:e.detail.text
-    })
-  },500),
+  // editorInput:util.debounce(function(e){
+  //   this.setData({
+  //     edtiorContext:e.detail.text
+  //   })
+  // },500),
   // 正文改变：
   onStatusChange: util.debounce(function(e){
     this.setData({
@@ -403,7 +422,7 @@ Page({
   Savecaogao:function(){
     this.sendManuscript(false,1);
   },
-  // 提交
+  // 提交数据
   sendManuscript:function(e,status=0){
     let data=this.data;
     let that=this;
@@ -432,7 +451,7 @@ Page({
       data:{
         "id":data.id ? data.id:'',
         "title": data.title ? data.title:'',
-        "content": data.edtiorContext ? data.edtiorContext:'',
+        "content": app.globalData.html ? app.globalData.html:'',
         "typeId": data.classId ? data.classId:'',
         "levelId": data.levelId ? data.levelId:'',
         "remark": data.textCont ? data.textCont:'',

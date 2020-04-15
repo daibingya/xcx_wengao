@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText":"文稿库",
+  "navigationBarTitleText":"系统内容库",
   "enablePullDownRefresh": true,
   "usingComponents":{
     "manuscript":"/components/manuComponts/manuComponts",

@@ -115,6 +115,18 @@ Page({
       url: '/pages/myDraft/myDraft',
     })
   },
+  // 我的日记
+  myDiary: function (){
+    wx.showLoading({
+      title: '正在加载...',
+    })
+    wx.navigateTo({
+      url: "../myDiary/myDiary",
+      success: res => {
+        wx.hideLoading();
+      }
+    })
+  },
   // 切换账号
   userSwitch:function(){
     wx.redirectTo({

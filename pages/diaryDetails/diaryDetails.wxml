@@ -1,0 +1,10 @@
+<!--pages/diaryDetails/diaryDetails.wxml-->
+<view class="diaryBox">
+    <view class="entryList">
+      <text class="name">记录时间：</text><text>{{content.time}}</text>
+    </view>
+    <view class="entryList">
+      <text class="name">内容详情：</text>
+      <view class="content">{{content.content}}</view>
+    </view>
+</view>
