@@ -46,16 +46,16 @@
         "selectedIconPath":"./image/wc.png"
       },
       {
-        "pagePath": "pages/Finalization/Finalization",
-        "text": "定稿共享库",
-        "iconPath": "./image/dn.png",
-        "selectedIconPath": "./image/dg.png"
-      },
-      {
         "pagePath": "pages/Sentence/Sentence",
         "text": "常用语句库",
         "iconPath": "./image/zn.png",
         "selectedIconPath": "./image/zc.png"
+      },
+      {
+        "pagePath": "pages/Finalization/Finalization",
+        "text": "定稿共享库",
+        "iconPath": "./image/dn.png",
+        "selectedIconPath": "./image/dg.png"
       },
       {
         "pagePath": "pages/user/user",

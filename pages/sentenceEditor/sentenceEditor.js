@@ -124,7 +124,7 @@ Page({
     })
     let id = this.data.editorId;
     wx.request({
-       url: ip+'/api/statement/save',
+       url: ip + '/api/statement/save',
        method:"POST",
        header:{"Authorization":"Bearer "+this.data.token},
        data:{

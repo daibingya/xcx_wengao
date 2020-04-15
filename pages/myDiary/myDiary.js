@@ -1,5 +1,6 @@
 // pages/myDiary/myDiary.js
 var app = getApp();
+const ip = app.globalData.ip;
 Page({
 
   /**
@@ -19,7 +20,7 @@ Page({
       title: '正在加载...',
     })
     wx.request({
-      url: 'http://192.168.0.109:8080/api/personalNote/list',
+      url: ip + '/api/personalNote/list',
       method: "post",
       header: {
         "Content-Type": "application/json",
@@ -90,7 +91,7 @@ Page({
            if(res.confirm){
              console.log("sdasadasd")
              wx.request({
-               url: 'http://192.168.0.109:8080/api/personalNote/delete/'+ id,
+               url: ip + '/api/personalNote/delete/'+ id,
                header: {
                  "Content-Type": "application/json",
                  "Authorization": "Bearer " + app.globalData.token,

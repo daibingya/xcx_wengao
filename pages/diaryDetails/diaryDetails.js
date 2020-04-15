@@ -1,4 +1,6 @@
 // pages/diaryDetails/diaryDetails.js
+const app = getApp();
+const ip =app.globalData.ip;
 Page({
 
   /**

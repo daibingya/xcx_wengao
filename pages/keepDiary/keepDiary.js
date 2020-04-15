@@ -1,6 +1,7 @@
 // pages/keepDiary/keepDiary.js
-var app = getApp();
 const util = require('../debounce/debounce.js');
+const app = getApp()
+let ip = app.globalData.ip;
 Page({
 
   /**
@@ -62,7 +63,7 @@ Page({
       return false
     }
     wx.request({
-      url: 'http://192.168.0.109:8080/api/personalNote/save',
+      url: ip + '/api/personalNote/save',
       header:{
         "Content-Type": "application/json",
         "Authorization": "Bearer "+ app.globalData.token

@@ -63,7 +63,7 @@ Page({
       })
     }).then(token => {
       wx.request({
-        url: 'http://192.168.0.109:8080/api/docShare/list',
+        url: ip + '/api/docShare/list',
         header: {
           "content-type": "application/json",
           "Authorization": "Bearer " + token
