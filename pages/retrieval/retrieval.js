@@ -211,10 +211,7 @@ Page({
       keywords: this.data.keywords,
       manIndex:1
     });
-    console.log(searchCondition)
-    wx.navigateBack({
-      delta: 1
-    })
+    wx.navigateBack()
   },
   /**
    * 生命周期函数--监听页面显示

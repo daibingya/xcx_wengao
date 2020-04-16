@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "定稿共享库检索",
+  "usingComponents": {
+    "mytree": "../../components/mytree/mytree"
+  }
+}

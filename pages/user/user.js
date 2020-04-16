@@ -13,12 +13,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this;
     // 开启loding加载模态框
     wx.showLoading({
       title: '正在加载....',
       mask:true
     })
-    var that=this;
+    
     // 获取个人信息的token  
     new Promise((resolve,reject)=>{
       wx.getStorage({
@@ -172,11 +173,5 @@ Page({
         })
       }
     })
-  },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
   }
 })

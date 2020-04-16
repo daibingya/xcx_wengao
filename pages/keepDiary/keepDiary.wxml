@@ -12,7 +12,7 @@
     </view> -->
     
     <view class="entryList">
-      <textarea bindinput="textChage" value="{{contents}}"></textarea>
+      <textarea maxlength="-1" bindinput="textChage" value="{{contents}}" placeholder="请在此输入"></textarea>
     </view>
 
     

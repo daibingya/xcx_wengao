@@ -9,7 +9,7 @@
 
     <!-- 内容摘要 -->
     <view class="conImport">
-      <view class="name">内容摘要</view>
+      <view class="name">内容精要</view>
       <view class="textareaBox">
           <block wx:for="{{textCont}}" wx:key="index" wx:for-index="index">
               <textarea bindinput="changeInputText" data-sid='{{index}}' placeholder='请输入内容摘要' maxlength='-1' value="{{item.content?item.content:''}}"></textarea>
@@ -34,12 +34,22 @@
       </picker>
     </view>
 
-    <!-- 文稿级别 -->
+    <!-- 素材标签1 -->
     <view class="entryList">
-      <text class="name">素材标签</text>
-      <picker range='{{tag}}' range-key="name" bindchange='pickerTagChange' disabled="{{tagFlag}}" value="{{index}}">
-          <text class="selectJb {{ tagFlag?'Dark':'' }}" wx:if="{{!tagData}}">请选择素材标签</text>
-          <text class="selectJb" style="color:#000">{{tagData}}</text>
+      <text class="name">素材标签1</text>
+      <picker range='{{tag1}}' range-key="name" bindchange='pickerTagChange1' value="{{index}}">
+          <text class="selectJb" wx:if="{{!tagData1}}">请选择素材标签1</text>
+          <text class="selectJb" style="color:#000">{{tagData1}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+     <!-- 素材标签2 -->
+    <view class="entryList">
+      <text class="name">素材标签2</text>
+      <picker range='{{tag2}}' range-key="name" bindchange='pickerTagChange2' value="{{index}}">
+          <text class="selectJb" wx:if="{{!tagData2}}">请选择素材标签2</text>
+          <text class="selectJb" style="color:#000">{{tagData2}}</text>
           <image class="xiala" src="/image/login/xiala.png"></image>
       </picker>
     </view>

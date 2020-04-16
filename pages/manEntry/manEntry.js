@@ -18,7 +18,6 @@ Page({
       id: 1,
       children: {}
     },
-    tagFlag:true,
     rangesd:[{
       id:0,
       name:"全员可见"
@@ -121,7 +120,7 @@ Page({
         method: 'POST'   //请求方式
       },
       header: {
-        "Authorization": "Bearer " + that.data.token,
+        "Authorization": "Bearer " + app.globalData.token,
         "Content-Type": "multipart/form-data"
       },
       success: function (data) {
@@ -166,7 +165,7 @@ Page({
     wx.request({
       url: ip+'/api/document/deleteFile?fileid='+id,
       header:{
-        "Authorization": "Bearer " + this.data.token,
+        "Authorization": "Bearer " + app.globalData.token,
       },
       method:"GET",
       success:function(res){
@@ -222,61 +221,54 @@ Page({
     // 监听sendContent事件，获取上一页面通过eventChannel传送到当前页面的数据
     eventChannel.on('sendContent', function (data) {
         wx.showLoading({
-          title: '加载中....',
+          title: '加载中...',
         })
         let id = data.data.id;
-        new Promise((resolve,reject)=>{
-          wx.getStorage({
-            key: 'token',
-            success: function(res) {
-              resolve(res.data)
-            },
-          })
-        }).then(function(token){
-          wx.request({
-            url: ip + '/api/document/detail/' + id,
-            header: {
-              "Authorization": "Bearer " +token,
-            },
-            method: "GET",
-            success:function(data){
-              let dataMsg=data.data.data
-              let companyData={
-                itemid:dataMsg.business,
-                name: dataMsg.businessName
-              }
-              that.setData({
-                id : dataMsg.id,
-                getData: dataMsg,
-                title:dataMsg.title,                // 标题         
-                textCont: dataMsg.remark,           // 摘要
-                companyData: companyData,           // 业务归口
-                fenLeiData: dataMsg.categoryName,   // 素材分类Name
-                fenLeiId: dataMsg.categoryId,       // 素材分类ID
-                tagData:dataMsg.tagName,            // 素材标签Name
-                tagId: dataMsg.tag,                 // 素材标签ID
-                levelData: dataMsg.levelName,       // 级别Name
-                levelId: dataMsg.levelId,           // 级别ID
-                classData:dataMsg.typeName,         // 类别Name
-                classId:dataMsg.typeId,             // 类别ID
-                inputTime:dataMsg.pubTime,          // 发布时间
-                rangeData: dataMsg.rangedName,      // 范围名称
-                rangeId:dataMsg.ranged,             // 范围ID
-                source: dataMsg.source,             // 文稿出处
-                uploadShowArray:dataMsg.attachList?dataMsg:[], // 附件信息
-                edtiorContext:dataMsg.content       // 正文
-              })
-              wx.hideLoading();
-              that.getTagdata(dataMsg.categoryId)
-            },
-            fail:function(err){
-              console.log(err)
-            }
-          })
-        })
-
-      
+        that.getDetails(id);
       })
+  },
+  // 编辑系统内容数据
+  getDetails: function(id){
+    let that = this;
+    wx.request({
+      url: ip + '/api/document/detail/' + id,
+      header: {
+        "Authorization": "Bearer " + app.globalData.token,
+      },
+      method: "GET",
+      success: function (data) {
+        let dataMsg = data.data.data
+        let companyData = {
+          itemid: dataMsg.business,
+          name: dataMsg.businessName
+        }
+        that.setData({
+          id: dataMsg.id,
+          getData: dataMsg,
+          title: dataMsg.title,                // 标题         
+          textCont: dataMsg.remark,           // 摘要
+          companyData: companyData,           // 业务归口
+          fenLeiData: dataMsg.categoryName,   // 素材分类Name
+          fenLeiId: dataMsg.categoryId,       // 素材分类ID
+          tagData: dataMsg.tagName,            // 素材标签Name
+          tagId: dataMsg.tag,                 // 素材标签ID
+          levelData: dataMsg.levelName,       // 级别Name
+          levelId: dataMsg.levelId,           // 级别ID
+          classData: dataMsg.typeName,         // 类别Name
+          classId: dataMsg.typeId,             // 类别ID
+          inputTime: dataMsg.pubTime,          // 发布时间
+          rangeData: dataMsg.rangedName,      // 范围名称
+          rangeId: dataMsg.ranged,             // 范围ID
+          source: dataMsg.source,             // 文稿出处
+          uploadShowArray: dataMsg.attachList ? dataMsg : [], // 附件信息
+          edtiorContext: dataMsg.content       // 正文
+        })
+        wx.hideLoading();
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
   },
   // 业务归口
   convergence: function () {
@@ -284,7 +276,7 @@ Page({
     wx.request({
       url: ip + '/api/organization/business',
       header: {
-        "Authorization": "Bearer " + that.data.token
+        "Authorization": "Bearer " + app.globalData.token
       },
       method: "GET",
       success: function (res) {
@@ -315,10 +307,6 @@ Page({
       }
     })
   },
-  // 选择业务归口的id
-  // tapItem:function(val){
-  //   this.setData({businessId:val.detail.itemid})
-  // },
   // 素材分类的 id
   pickerFenleiChange:function(val){
     let that=this;
@@ -326,32 +314,42 @@ Page({
       fenLeiData:this.data.Fenlei[val.detail.value].title,
       fenLeiId: this.data.Fenlei[val.detail.value].id
     })
-    let id = this.data.Fenlei[val.detail.value].id
-    this.getTagdata(id);
   },
-  // 素材标签数据
-  getTagdata:function(id){
+  // 获取素材标签数据
+  getTagdata:function(){
     let that=this;
     wx.request({
-      url: ip + '/api/category/getTagByCategoryId?categoryId=' + id,
+      url: ip + '/api/document/level',
       method: 'GET',
       header: {
-        "Authorization": "Bearer " + that.data.token
+        "Authorization": "Bearer " + app.globalData.token
       },
       success: function (res) {
         if (res.data.code == 200) {
-          let flag;
-          if (!res.data.data || !res.data.data.length) {
-            flag = true
-          } else {
-            flag = false
-          }
           that.setData({
-            tag: res.data.data,
-            tagFlag: flag
+            tag1: res.data.data.filter(function (value) {
+              return value.tagCate == "标签1"
+            }),
+            tag2: res.data.data.filter(function (value) {
+              return value.tagCate == "标签2"
+            })
           })
         }
       }
+    })
+  },
+  // 素材标签1
+  pickerTagChange1: function(e){
+    this.setData({
+      tagData1: this.data.tag1[e.detail.value].name,
+      tagid1: this.data.tag1[e.detail.value].id
+    })
+  },
+  // 素材标签2
+  pickerTagChange2: function (e) {
+    this.setData({
+      tagData2: this.data.tag2[e.detail.value].name,
+      tagid2: this.data.tag2[e.detail.value].id
     })
   },
   // 素材标签
@@ -361,6 +359,7 @@ Page({
       tagId: this.data.tag[val.detail.value].id
     })
   },
+
   onEditorReady:function() {
     const that = this;
     let time = setTimeout(function(){
@@ -369,7 +368,6 @@ Page({
         that.data.getData && that.editorCtx.setContents({
           html: that.data.getData.content,
           success: (res) => {
-            console.log(res)
           },
           fail: (res) => {
             console.log(res)
@@ -387,6 +385,7 @@ Page({
       levelId:this.data.level[e.detail.value].id
     })
   },
+
   // 类型
   pickerTypeChange:function(e){
     this.setData({
@@ -394,24 +393,21 @@ Page({
       classId: this.data.clAss[e.detail.value].id
     })
   },
+
   // 发布时间
   pickerTimeChange:function(e){
     this.setData({
       inputTime:e.detail.value
     })
   },
+
   // 出处
   sourceChange:util.debounce(function(e){
     this.setData({
       source:e.detail.value
     })
   },500),
-  // 正文
-  // editorInput:util.debounce(function(e){
-  //   this.setData({
-  //     edtiorContext:e.detail.text
-  //   })
-  // },500),
+
   // 正文改变：
   onStatusChange: util.debounce(function(e){
     this.setData({
@@ -445,7 +441,7 @@ Page({
     wx.request({
       url: ip + '/api/document/save',
       header:{
-        "Authorization": "Bearer "+this.data.token
+        "Authorization": "Bearer "+app.globalData.token
       },
       method:"POST",
       data:{
@@ -465,7 +461,7 @@ Page({
         "attachpath": data.attachpath ? data.attachpath:'',
         "business": data.companyData ? data.companyData.itemid:'',
         "categoryId": data.fenLeiId ? data.fenLeiId :'',
-        "tag": data.tagId ? data.tagId:''
+        "tag": data.tagid1 + ',' + data.tagid2
       },
       success:function(res){
         if(res.data.code==200){
@@ -482,89 +478,101 @@ Page({
               })
             }
           })
+        }else{
+          wx.showModal({
+            title: '提交错误',
+            content: '错误类查看err'
+          })
+        }
+      },
+      fail: err =>{
+        wx.showModal({
+          title: "网络错误",
+          content: '错误类可能源于网络',
+        })
+      }
+    })
+  },
+
+  // 素材分类数据获取
+  getClassification:function(){
+    let that = this;
+    wx.request({
+      url: ip + '/api/category/getCateByUser',
+      header: {
+        "Authorization": "Bearer " + app.globalData.token
+      },
+      method: 'GET',
+      success: function (res) {
+        if (res.data.code == 200) {
+          that.setData({
+            Fenlei: res.data.data
+          })
         }
       }
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    //初始化时间;
+  // 获取素材标签数据
+  getTag:function(){
     let that = this;
+    wx.request({
+      url: ip + '/api/document/level',
+      header: {
+        "Authorization": "Bearer " + app.globalData.token
+      },
+      success: function (res) {
+        if (res.data.code == 200) {
+          that.setData({
+            level: res.data.data
+          })
+        } else {
+          wx.showModal({
+            title: '页面出错',
+            content: res.data.msg,
+            success: function () {
+              wx.redirectTo({
+                url: '/login/index',
+              })
+            }
+          })
+        }
+      }
+    })
+  },
+  // 获取文体类型数据
+  getLiteraryStyle: function(){
+    let that = this;
+    wx.request({
+      url: ip + '/api/document/type',
+      header: {
+        "Authorization": "Bearer " + app.globalData.token
+      },
+      success: function (res) {
+        if (res.data.code == 200) {
+          that.setData({
+            clAss: res.data.data
+          })
+        }
+      }
+    })
+  },
+  // 获取时间数据
+  getTime: function(){
     let date = new Date();
     this.setData({
       startTime: (date.getFullYear() - 3) + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
       endTime: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
     });
-    // 素材标签;
-    new Promise((resolve, reject) =>{
-      wx.getStorage({
-        key: 'token',
-        success: function (res){
-          that.setData({
-            token: res.data
-          })
-          resolve(res.data)
-        },
-        fail: function () { reject(error) }
-      })
-    }).then(token => {
-      return new Promise((successd, fail) => {
-        wx.request({
-          url: ip + '/api/document/level',
-          header: {
-            "Authorization": "Bearer " + token
-          },
-          success: function (res) {
-            if (res.data.code == 200) {
-              that.setData({
-                level: res.data.data
-              })
-              successd(token);
-            } else {
-              wx.showModal({
-                title: '页面出错',
-                content: res.data.msg,
-                success: function () {
-                  wx.redirectTo({
-                    url: '/login/index',
-                  })
-                }
-              })
-            }
-          }
-        })
-      })
-    }, error => { }).then(token => {
-      wx.request({
-        url: ip + '/api/document/type',
-        header: {
-          "Authorization": "Bearer " + token
-        },
-        success: function (res) {
-          if (res.data.code == 200) {
-            that.setData({
-              clAss: res.data.data
-            })
-          }
-        }
-      })
-      // 素材分类
-      wx.request({
-        url: ip + '/api/category/getCateByUser',
-        header: {
-          "Authorization": "Bearer " + token
-        },
-        method:'GET',
-        success: function (res) {
-          if (res.data.code == 200) {
-            that.setData({
-              Fenlei : res.data.data
-            })
-          }
-        }
-      })
-    }, fails => { })
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+  */
+  onReady: function () {
+    let that = this;
+    that.getClassification();
+    that.getTag();
+    that.getLiteraryStyle();
+    that.getTime();
+    that.getTagdata();
   }
 })

@@ -7,15 +7,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    index : 1,
+    size : 10,
+    flag : true
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   // 加载数据
   loadingData:function(upPull,downPull){
     let that = this;
+    upPull && (that.data.index = 1) && (that.data.flag = true)
+    if(!that.data.flag) return false;
+
     wx.showLoading({
       title: '正在加载...',
     })
@@ -27,16 +31,24 @@ Page({
         "Authorization": "Bearer " + app.globalData.token,
       },
       data: {
-        current: 1,
-        size: 30
+        current: downPull ? ++that.data.index : that.data.index,
+        size: 10
       },
       success: res => {
+
         wx.hideLoading();
+        upPull && wx.stopPullDownRefresh()
+        if(!res.data.data.records.length){
+            that.data.flag = false
+            wx.showToast({
+              title: '我也是有底线的',
+              image: "/image/nofined.png"
+            })
+        }
         if (res.data.code === 200) {
           that.setData({
-            records: res.data.data.records
+            records: downPull ? that.data.records.concat(res.data.data.records) : res.data.data.records
           });
-          upPull && wx.stopPullDownRefresh()
         }else{
           wx.showModal({
             title: '请求错误',
@@ -44,6 +56,13 @@ Page({
           })
         }
         wx.hideLoading();
+
+      },
+      fail: err =>{
+        wx.showModal({
+          title: '请求失败',
+          content: err,
+        })
       }
     })
   },
@@ -106,9 +125,7 @@ Page({
        })
     }
   },
-  onReady: function () {
-
-  },
+  // 写日记
   jumpTo: function(){
     wx.navigateTo({
       url: '../keepDiary/keepDiary',
@@ -131,7 +148,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    
+    this.loadingData(false,true)
   },
 
   /**

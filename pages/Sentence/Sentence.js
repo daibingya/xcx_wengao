@@ -8,6 +8,7 @@ Page({
   data: {
     sentenceData:[],
     page:1,
+    searchFlag: true,
     nodataFlag:false
   },
   // 跳转页面
@@ -71,91 +72,82 @@ Page({
   },
   
   // 加载数据
-  lodingData: function (down, up, parameter){
+  lodingData: function (upPull, downPull, parameter){
     var that=this;
+    upPull && (that.data.page = 1) && (that.data.searchFlag = true)
+    if (!that.data.searchFlag) return false;
+
     wx.showLoading({
       title: '加载中...',
     })
-    up && ++that.data.page
-    new Promise((resolve, reject) => {
-      wx.getStorage({
-        key: 'token',
-        success: function (res) {
-          that.setData({
-            token: res.data
-          })
-          resolve(res.data)
-        },
-        fail: function (error) { reject(error.errMsg) }
-      })
-    }).then(token => {
-      // 获取数据
-      wx.request({
-        url: ip + '/api/statement/list',
-        method: "POST",
-        header: {
-          "Authorization": "Bearer " + token
-        },
-        data: {
-          "size": 10,
-          "current": that.data.page,
-          "searchCondition": {
-            "orgId": parameter ? parameter.orgid:"",
-            "docTypeId":parameter ? parameter.docTypeId:"",
-            "startDate": parameter ? parameter.startDate:"",
-            "endDate": parameter ? parameter.endDate:"",
-            "keyword": parameter ? parameter.keyword:"" //关键字查询
-          }
-        },
-        success: function (res) {
-          wx.hideLoading();
-          let nodata=false;
-          if (res.data.code == 200) {
-            if (up && res.data.data.records.length<=0){
-              wx.showToast({
-                title: '我也是有底线的',
-                image:"/image/nofined.png"
-              })
-            }
-            if(!up && res.data.data.records.length <= 0){
-              nodata=true
-            }
-            that.setData({
-              sentenceData: up ? that.data.sentenceData.concat(res.data.data.records) : res.data.data.records,
-              nodataFlag: nodata
+    // 获取数据
+    wx.request({
+      url: ip + '/api/statement/list',
+      method: "POST",
+      header: {
+        "Authorization": "Bearer " + app.globalData.token
+      },
+      data: {
+        "size": 10,
+        "current": downPull ? ++that.data.page : that.data.page,
+        "searchCondition": {
+          "orgId": parameter ? parameter.orgid : "",
+          "docTypeId": parameter ? parameter.docTypeId : "",
+          "startDate": parameter ? parameter.startDate : "",
+          "endDate": parameter ? parameter.endDate : "",
+          "keyword": parameter ? parameter.keyword : "" //关键字查询
+        }
+      },
+      success: function (res) {
+        wx.hideLoading();
+        let nodata = false;
+        if (res.data.code == 200) {
+          if (downPull && res.data.data.records.length <= 0) {
+            that.data.searchFlag = false;
+            wx.showToast({
+              title: '我也是有底线的',
+              image: "/image/nofined.png"
             })
-            // 下拉刷新
-            if (down) { 
-              wx.stopPullDownRefresh({
-                success:function(){
-                  wx.showToast({
-                    title: '刷新成功',
-                  })
-                  wx.hideNavigationBarLoading();
-                }
-              })
-            }
-          } else {
-            wx.showModal({
-              title: '请求失败',
-              content: res.data.msg,
-              complete:function(){
-                wx.redirectTo({
-                  url: '/login/index'
+          }
+          if (!downPull && res.data.data.records.length <= 0) {
+            nodata = true
+          }
+          that.setData({
+            sentenceData: downPull ? that.data.sentenceData.concat(res.data.data.records) : res.data.data.records,
+            nodataFlag: nodata
+          })
+          // 下拉刷新
+          if (upPull) {
+            wx.stopPullDownRefresh({
+              success: function () {
+                wx.showToast({
+                  title: '刷新成功',
                 })
+                wx.hideNavigationBarLoading();
               }
             })
-          };
-        },
-        fail: function (error) {
-          wx.hideLoading();
+          }
+        } else {
           wx.showModal({
             title: '请求失败',
-            content: error.errMsg
+            content: res.data.msg,
+            complete: function () {
+              wx.redirectTo({
+                url: '/login/index'
+              })
+            }
           })
-        }
-      })
-    }, error => {console.log(error) })
+        };
+      },
+      fail: function (error) {
+        wx.hideLoading();
+        wx.showModal({
+          title: '请求失败',
+          content: error.errMsg
+        })
+      }
+    })
+    
   },
   onLoad: function (options) {
     var that=this;
