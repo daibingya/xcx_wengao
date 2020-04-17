@@ -238,6 +238,10 @@ Page({
       method: "GET",
       success: function (data) {
         let dataMsg = data.data.data
+        let tag1Name = dataMsg.tagName.split("，")[0]
+        let tag2Name = dataMsg.tagName.split("，")[1]
+        let tag1id = dataMsg.tag.split(",")[0]
+        let tag2id = dataMsg.tag.split(",")[1]
         let companyData = {
           itemid: dataMsg.business,
           name: dataMsg.businessName
@@ -245,6 +249,10 @@ Page({
         that.setData({
           id: dataMsg.id,
           getData: dataMsg,
+          tagData1: tag1Name,
+          tagData2: tag2Name,
+          tagid1: tag1id,
+          tagid2: tag2id,
           title: dataMsg.title,                // 标题         
           textCont: dataMsg.remark,           // 摘要
           companyData: companyData,           // 业务归口
