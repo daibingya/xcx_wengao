@@ -20,7 +20,10 @@
   height:100%;
   display: inline-block;
   vertical-align: top;
+}
 
+.companyList{
+  background:#f8f8f8;
 }
 .searchBox  .searchTitle{
   margin:50rpx 0 20rpx;

@@ -10,6 +10,7 @@ Component({
     open: false,
     isBranch: false,
     that:null,
+    indexs:0,
     getIdd:''
   },
   observers: {
@@ -34,15 +35,21 @@ Component({
       let itid = e.currentTarget.dataset.itemid;
       let name = e.currentTarget.dataset.name;
       let orgid = e.currentTarget.dataset.orgid;
-      this.setData({
-          idd: itid
-      })
-      if(app.globalData.that){
+      
+      if (app.globalData.that) {
         app.globalData.that.setData({
           idd: ''
         })
       }
+      this.setData({
+          idd: itid
+      })
+      wx.showToast({
+        title: name,
+      })
+      
       app.globalData.that = that;
+      
       this.triggerEvent('tapitem', { itemid: itid, name: name, orgid: orgid}, { bubbles: true,composed: true})
     }
   },

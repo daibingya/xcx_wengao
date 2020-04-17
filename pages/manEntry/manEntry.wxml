@@ -3,7 +3,7 @@
     
     <!-- 文稿名称 -->
     <view class="entryList">
-      <text class="name">文稿名称</text>
+      <text class="name">文稿标题</text>
       <input placeholder='请输入文稿名称' bindinput="inputTitle" value="{{getData.title}}"></input>
     </view>
 
@@ -86,7 +86,7 @@
 
     <!-- 文稿出处 -->
     <view class="entryList">
-      <text>文稿出处</text>
+      <text>文稿来源</text>
       <input placeholder='请输入文稿出处' bindinput="sourceChange" value="{{source}}"></input>
     </view>
 

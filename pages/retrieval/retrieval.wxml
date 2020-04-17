@@ -7,22 +7,10 @@
 
     <!-- 精准检索 -->
     <view class="searchTitle">精准检索</view>
-    
-    <!-- 厨房类型 -->
-    <view class="listInput" wx:if="{{selectLevel}}">
-      <image src="/image/login/time.png" mode='widthFix'></image>
-      <picker bindchange="bindKitchenChange" value="{{index}}" range-key="name" range="{{Kitchen}}">
-          <text wx:if="{{!KitchenData}}" style="color:gray">请选择厨房类型</text>
-          <text  style="color:#000">{{KitchenData}}</text>
-          <image class="selector" src="/image/bot.png" mode='widthFix'></image>
-      </picker>
-    </view>
-
     <!-- 选择单位 -->
-    <view class="companyList {{ kitchenFlag ? '':'pointer'}}">
+    <view class="companyList">
         <mytree idd="{{ idd }}" model='{{ treeData }}' bind:tapitem='tapItem'></mytree>
     </view>
-
     <!-- 发布时间 -->
     <view class="listInput">
       <image src="/image/login/time.png" mode='widthFix'></image>
@@ -34,21 +22,31 @@
     </view>
 
      <!-- 录入时间 -->
-    <view class="listInput">
+    <!-- <view class="listInput">
       <image src="/image/login/time.png" mode='widthFix'></image>
       <picker mode="date" start="{{startTime}}" end="{{endTime}}" bindchange="bindInputChange" value="{{index}}">
           <text wx:if="{{!inputTime}}" style="color:gray">请选择录入时间</text>
           <text  style="color:#000">{{inputTime}}</text>
           <image class="selector" src="/image/bot.png" mode='widthFix'></image>
       </picker>
-    </view>
+    </view> -->
 
-    <!-- 文稿级别 -->
+    <!-- 请选择素材标签1 -->
     <view class="listInput">
       <image src="/image/login/class.png" mode='widthFix'></image>
       <picker bindchange="bindlevelChange" value="{{index}}" range-key="name" range="{{level}}">
-          <text wx:if="{{!levelData}}" style="color:gray">请选择素材标签</text>
+          <text wx:if="{{!levelData}}" style="color:gray">请选择素材标签1</text>
           <text  style="color:#000">{{levelData}}</text>
+          <image class="selector" src="/image/bot.png" mode='widthFix'></image>
+      </picker>
+    </view>
+
+    <!-- 请选择素材标签2 -->
+    <view class="listInput">
+      <image src="/image/login/class.png" mode='widthFix'></image>
+      <picker bindchange="bindlevelChange2" value="{{index}}" range-key="name" range="{{level2}}">
+          <text wx:if="{{!levelData2}}" style="color:gray">请选择素材标签2</text>
+          <text  style="color:#000">{{levelData2}}</text>
           <image class="selector" src="/image/bot.png" mode='widthFix'></image>
       </picker>
     </view>
@@ -66,7 +64,7 @@
     <view class="listInput">
       <image src="/image/login/danwei.png" mode='widthFix'></image>
       <picker bindchange="bindClassChange" value="{{index}}" range-key="name" range="{{clAss}}">
-          <text wx:if="{{!classData}}" style="color:gray">请选择类型</text>
+          <text wx:if="{{!classData}}" style="color:gray">请选择文体类型</text>
           <text  style="color:#000">{{classData}}</text>
           <image class="selector" src="/image/bot.png" mode='widthFix'></image>
       </picker>

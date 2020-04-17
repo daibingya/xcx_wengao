@@ -16,7 +16,7 @@ Page({
     let that = this;
     // 开启loding加载模态框
     wx.showLoading({
-      title: '正在加载....',
+      title: '正在加载...',
       mask:true
     })
     

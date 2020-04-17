@@ -1,25 +1,99 @@
-<!--pages/sentenceEditor/sentenceEditor.wxml-->
-
-<!--pages/details/details.wxml-->
-<view class="detailsBox">
-    <view class="list">
-      <text>录入时间：</text><text>{{time}}</text>
+<!--pages/manEntry/manEntry.wxml-->
+<view class="entryBox">
+    
+    <!-- 文稿名称 -->
+    <view class="entryList">
+      <text class="name">录入标题</text>
+      <input placeholder='请输入标题' bindinput="inputTitle" value="{{getData.title}}"></input>
     </view>
-    <view class="list">
-      <text>语句类型：</text>
-       <picker range='{{selectClass}}' bindchange='pickerChange' range-key="name" value="{{index}}">
-          <text class="selectJb" wx:if="{{!selectClass[index].id}}">选择类型</text>
-          <text>{{selectClass[index].name}}</text>
+    
+    <!--业务归口 -->
+    <view class="entryList removePading">
+      <text class="name">业务归口</text>
+      <text class="selectCompany" bindtap="selectCompany">{{companyData?companyData.name:'请选择单位'}}</text>
+    </view>
+
+    <!--素材分类 -->
+    <view class="entryList">
+      <text class="name">素材分类</text>
+      <picker range='{{Fenlei}}' range-key="name" bindchange='pickerFenleiChange' value="{{index}}">
+          <text class="selectJb" wx:if="{{!fenLeiData}}">请选择素材分类</text>
+          <text class="selectJb" style="color:#000">{{fenLeiData}}</text>
           <image class="xiala" src="/image/login/xiala.png"></image>
       </picker>
     </view>
-    <view class="list">
-      <text>常用语句：</text>
-      <textarea maxlength="-1" class="textareaBox" bindinput="inputconso"  placeholder="开始输入..." data-id="textAeat" value="{{textAeat}}"></textarea>
+
+    <!-- 素材标签1 -->
+    <view class="entryList">
+      <text class="name">素材标签1</text>
+      <picker range='{{tag1}}' range-key="name" bindchange='pickerTagChange1' value="{{index}}">
+          <text class="selectJb" wx:if="{{!tagData1}}">请选择素材标签1</text>
+          <text class="selectJb" style="color:#000">{{tagData1}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+     <!-- 素材标签2 -->
+    <view class="entryList">
+      <text class="name">素材标签2</text>
+      <picker range='{{tag2}}' range-key="name" bindchange='pickerTagChange2' value="{{index}}">
+          <text class="selectJb" wx:if="{{!tagData2}}">请选择素材标签2</text>
+          <text class="selectJb" style="color:#000">{{tagData2}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+    <!-- 文稿类型 -->
+    <view class="entryList">
+      <text class="name">文体类型</text>
+      <picker range='{{clAss}}' range-key="name" bindchange='pickerTypeChange' value="{{index}}">
+          <text class="selectJb" wx:if="{{!classData}}">请选择文体类型</text>
+          <text class="selectJb" style="color:#000">{{classData}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+    <!-- 发布时间 -->
+    <view class="entryList">
+      <text>发布时间</text>
+      <picker mode="date" start="{{startTime}}" end="{{endTime}}" bindchange='pickerTimeChange' value="">
+          <text class="selectJb" wx:if="{{!inputTime}}">请选择发布时间</text>
+          <text class="selectJb" style="color:#000">{{inputTime}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+     <!-- 可见范围 -->
+    <view class="entryList">
+      <text class="name">可见范围</text>
+      <picker range='{{rangesd}}' range-key="name" bindchange='pickerRangeChange' value="{{index}}">
+          <text class="selectJb" wx:if="{{!rangeData}}">请选择可见范围</text>
+          <text class="selectJb" style="color:#000">{{rangeData}}</text>
+          <image class="xiala" src="/image/login/xiala.png"></image>
+      </picker>
+    </view>
+
+    <!-- 常用语句来源 -->
+    <view class="entryList">
+      <text>语句来源</text>
+      <input placeholder='请输入出处' bindinput="sourceChange" value="{{source}}"></input>
+    </view>
+
+     <!-- 常用语句来源链接 -->
+    <view class="entryList">
+      <text>来源链接</text>
+      <input placeholder='请输入来源链接' bindinput="sourceChangelink" value="{{sourcelink}}"></input>
+    </view>
+
+    <!-- 内容摘要 -->
+    <view class="conImport">
+      <view class="name">内容精要</view>
+      <view class="textareaBox"> 
+        <textarea bindinput="changeInputText" data-sid='{{index}}' placeholder='请输入常用语句' maxlength='-1' value="{{contents}}"></textarea>
+      </view> 
     </view>
 </view>
-
 <view class="flexBox">
-    <view class="cancel" data-id="saveCg" bindtap="saveSentence">保存到草稿</view>
-    <view class="Determine" data-id="save" bindtap="saveSentence">保存</view>
+    <view class="cancel" bindtap="Savecaogao">保存到草稿箱</view>
+    <view class="Determine" bindtap="sendManuscript">提交</view>
 </view> 

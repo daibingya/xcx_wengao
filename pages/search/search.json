@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "常用语句检索"
+  "navigationBarTitleText": "常用语句检索",
+  "usingComponents": {
+    "mytree": "../../components/mytree/mytree"
+  }
 }

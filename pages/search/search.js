@@ -3,7 +3,6 @@ var app=getApp();
 var ip=app.globalData.ip;
 const util = require('../debounce/debounce.js');
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -14,6 +13,11 @@ Page({
       searchArry:{
         endDate:" 1"
       }
+    },
+    treeData: {
+      title: '请选择素材分类',
+      id: 1,
+      children: {}
     }
   }, 
   //
@@ -32,19 +36,19 @@ Page({
   search:function(){
     var pages = getCurrentPages();
     var prevPage = pages[pages.length - 2];
+
+    let tags = this.data.biaoData1Id + "," + this.data.biaoData2Id;
+    let t = "searchArry.tags";
+    this.setData({
+      [t] : tags
+    })
     prevPage.setData({
       page:1,
       searchData: this.data.searchArry 
     })
     prevPage.lodingData(false, false, this.data.searchArry);
-    const eventChannel = this.getOpenerEventChannel()
-    eventChannel.emit('someEvent', { data: this.data.searchArry });
-
-    // 返回上一级
-    wx.navigateBack({
-      delta: 1
-    });
     
+    wx.navigateBack()
   },
   onLoad: function (options) {
     //  时间设定
@@ -60,7 +64,6 @@ Page({
     this.setData({
       [end]:Y + '-' + M + '-' + D 
     })
-    
     let that=this;
     new Promise((resolve, reject) => {
       wx.getStorage({
@@ -73,23 +76,31 @@ Page({
         }
       })
     }).then(function (token) {
-      // 录入单位
+      // 如果是政研室
+      let url;
+      if (app.globalData.orgCode === "GXQZYS"){
+        url = '/api/statementcategory/getCateGroupByOrg';
+      }else{
+        url = '/api/statementcategory/getCateByUser';
+      }
+      // 素材分类
       wx.request({
-        url: ip+'/api/organization/',
+        url: ip + url,
+        header:{
+          "Authorization": "Bearer "+ token
+        },
         method:"GET",
         success:function(res){
-          if(res.data.code===200){
-            that.setData({
-              companyArray:res.data.data
-            })
-          }
+          that.data.treeData.children = res.data.data;
+          that.setData({
+            treeData: that.data.treeData
+          })
         }
       })
-      // 常用语句类别
+      // 文体类型
       wx.request({
         url: ip + '/api/statement/type',
         header: {
-          // "content-type": "application/json",
           "Authorization": "Bearer " + token
         },
         method: "GET",
@@ -105,20 +116,57 @@ Page({
           console.log(error)
         }
       })
+      // 获取素材标签
+      wx.request({
+        url: ip + '/api/statementcategory/tag',
+        header: {
+          "Authorization": "Bearer " + token
+        },
+        method:"GET",
+        success: res => {
+          if(res.data.code === 200){
+            let data = res.data.data;
+            that.setData({
+                biao1: data.filter(v => {
+                  return v.tagCate === "标签1"
+                }),
+                biao2: data.filter(v => {
+                  return v.tagCate === "标签2"
+                })
+            })
+          }
+        }
+      })
     }, function (error) {
       console.log(error)
     })
   },
-
- 
-  // 录入单位
-  bindcomChange:function(e){
-    let indec='searchArry.orgid';
+  // 素材标签1
+  biaoChange1: function(e){
     this.setData({
-      [indec]: this.data.companyArray[e.detail.value].id,
-      indec: e.detail.value
+      biaoData1:this.data.biao1[e.detail.value].name,
+      biaoData1Id: this.data.biao1[e.detail.value].id
     })
   },
+
+  // 素材标签2
+  biaoChange2: function (e) {
+    this.setData({
+      biaoData2: this.data.biao2[e.detail.value].name,
+      biaoData2Id: this.data.biao2[e.detail.value].id
+    })
+  },
+  //选择单位事件处理函数
+  tapItem: function (e) {
+    let d = e.detail;
+    let cid = "searchArry.cid";
+    let oid = "searchArry.oid";
+    this.setData({
+      [cid]: d.itemid,
+      [oid]: d.orgid
+    })
+  },
+ 
   // 时间日期
   bindtimeChange: function (e) {
     let date = 'searchArry.startDate';
@@ -128,7 +176,7 @@ Page({
       [endDate]: e.detail.value
     })
   },
-  // 语句类别
+  // 文体类型
   bindPickerChange: function (e) {
     let index = 'searchArry.docTypeId';
     this.setData({
@@ -136,6 +184,8 @@ Page({
       index: e.detail.value
     })
   },
+
+
   // 关键词
   breakTosearch: util.debounce(function (e) {
     let inputValue = 'searchArry.keyword';
@@ -143,52 +193,5 @@ Page({
       [inputValue]: e.detail.value
     });
   },500),
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+ 
 })

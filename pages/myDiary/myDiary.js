@@ -18,8 +18,9 @@ Page({
   loadingData:function(upPull,downPull){
     let that = this;
     upPull && (that.data.index = 1) && (that.data.flag = true)
+    console.log(that.data.flag);
     if(!that.data.flag) return false;
-
+    console.log("opens")
     wx.showLoading({
       title: '正在加载...',
     })
@@ -85,11 +86,13 @@ Page({
   // 操作
   operationChange: function (e){
     // 编辑
+    let that = this;
     let operation = e.target.dataset.operation;
     if ( !operation ) return false;
     let content = e.target.dataset.from;
     let id = e.target.dataset.id;
     if ( operation === "editor" ){
+      that.data.flag = true;
       wx.navigateTo({
         url: '../keepDiary/keepDiary',
         success: function (res) {
@@ -108,7 +111,6 @@ Page({
          success: res => {
            console.log(res)
            if(res.confirm){
-             console.log("sdasadasd")
              wx.request({
                url: ip + '/api/personalNote/delete/'+ id,
                header: {
@@ -117,7 +119,8 @@ Page({
                },
                method: "GET",
                success: res =>{
-                 res.data.code === 200 && this.loadingData(false,false)
+                 that.data.flag = true;
+                 res.data.code === 200 && that.loadingData(false,false)
                }
              })
            }
@@ -135,6 +138,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.data.flag = true;
     this.loadingData(false,false);
   },
   /**

@@ -1,16 +1,34 @@
 <!--pages/details/details.wxml-->
 <view class="detailsBox">
     <view class="list">
-      <text>录入单位：</text><text>{{detailsData.orgName}}</text>
+      <text>语句标题：</text><text>{{ detailsData.title ? detailsData.title : '---'}}</text>
     </view>
     <view class="list">
-      <text>录入时间：</text><text>{{detailsData.createdDate}}</text>
+      <text>素材分类：</text><text>{{ detailsData.categoryName ? detailsData.categoryName : '---'}}</text>
     </view>
     <view class="list">
-      <text>语句类型：</text><text>{{detailsData.typeName}}</text>
+      <text>素材标签：</text><text>{{ detailsData.tagName ? detailsData.tagName : '---' }}</text>
+    </view>
+    <view class="list">
+      <text>发布时间：</text><text>{{ detailsData.pubTime ? detailsData.pubTime : '---' }}</text>
+    </view>
+    <view class="list">
+      <text>业务归口：</text><text>{{ detailsData.businessName ? detailsData.businessName : '---'}}</text>
+    </view>
+    <view class="list">
+      <text>文体类型：</text><text>{{ detailsData.typeName ? detailsData.typeName : '---'}}</text>
+    </view>
+    <view class="list">
+      <text>内容来源：</text><text>{{ detailsData.source ? detailsData.source : '---'}}</text>
+    </view>
+    <view class="list">
+      <text>来源链接：</text><text>{{ detailsData.urllink ? detailsData.urllink : '---'}}</text>
+    </view>
+    <view class="list">
+      <text>可见范围：</text><text>{{ detailsData.rangedName ? detailsData.rangedName : '---' }}</text>
     </view>
     <view class="list">
       <text>常用语句：</text>
-      <view class="cotentBox">{{detailsData.content}}</view>
+      <view class="cotentBox">{{ detailsData.content}}</view>
     </view>
 </view>

@@ -1,5 +1,4 @@
 //index.js
-//获取应用实例
 const app = getApp()
 let ip=app.globalData.ip;
 Page({
@@ -74,9 +73,8 @@ Page({
           "title": searchCondition ? searchCondition.title : '',
           "categoryId": searchCondition ? searchCondition.categoryId : '',
           "orgid": searchCondition ? searchCondition.orgid : '',
-          "tags": searchCondition ? searchCondition.level : '',
+          "tags": searchCondition ? searchCondition.tags : '',
           "docType": searchCondition ? searchCondition.type : '',
-          "createdDate": searchCondition ? searchCondition.createdDate : '',
           "pubTime": searchCondition ? searchCondition.pubTime : '',
         }
       },
@@ -133,6 +131,13 @@ Page({
   },
   onLoad: function () {
     let that=this;
-    this.loadingData();
+    wx.getStorage({
+      key: 'token',
+      success: function(res) {
+        app.globalData.token = res.data;
+        that.loadingData();
+      },
+    })
+    
   }
 })

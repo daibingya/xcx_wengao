@@ -11,44 +11,16 @@ Page({
     endTime:'',
     kitchenFlag:true,   // 默认不阻止
     treeData: {
-      title: '请选择单位',
+      title: '请选择素材分类',
       id: 1,
       children: {}
-    },
-    Kitchen:[
-      {
-        id: 0,
-        name: '总厨房'
-      },
-      {
-        id: 1,
-        name: '子厨房'
-      }
-    ]
+    }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let that = this;
-    let userData = wx.getStorageSync("userData");
-    wx.getStorage({
-        key: 'token',
-        success: function(res) {
-          that.setData({
-            token:res.data
-          })
-          if (userData.orgCode === 'GXQ') {
-            that.setData({
-              selectLevel: true,
-              kitchenFlag: false
-            })
-          } else {
-            that.getdepartmentdata('', '/api/category/getCateByUser');
-          }
-        },
-        fail:function(err){console.log(err)}
-      })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -78,7 +50,12 @@ Page({
           success: function (res) {
             if (res.data.code == 200) {
               that.setData({
-                level: res.data.data
+                level: res.data.data.filter(function(value){
+                  return value.tagCate === "标签1"
+                }),
+                level2: res.data.data.filter(function(value){
+                  return value.tagCate === "标签2"
+                })
               })
               successd(token);
             } else {
@@ -114,31 +91,39 @@ Page({
   },
   //选择单位事件处理函数
   tapItem: function (e) { 
-    let d=e.detail;
-    console.log(d)
+    let d= e.detail;
+    console.log(e)
     this.setData({
       categoryId: d.itemid,
       orgid:d.orgid
     }) 
+    console.log(this.data)
   },
   // 厨房类型
   bindKitchenChange:function(e){
-    let url;
+   
     this.setData({
       KitchenData: this.data.Kitchen[e.detail.value].name,
       kitchenFlag: true
     })
-    e.detail.value === '0' && (url = '/api/category/getCateByUser')
-    e.detail.value === '1' && (url = '/api/category/getCateGroupByOrg')
-    this.getdepartmentdata(e.detail.value,url)
+   
   },
   // 获取当前用户所属部门的素材分类
-  getdepartmentdata:function(id,url){
+  getdepartmentdata:function(){
     let that = this;
+    let url;
+    console.log("asda")
+    if (app.globalData.orgCode === 'GXQZYS') {
+
+      url = '/api/category/getCateGroupByOrg'
+    } else {
+
+      url = '/api/category/getCateByUser'
+    }
     wx.request({
       url: ip + url,
       header:{
-        "Authorization": "Bearer "  + that.data.token 
+        "Authorization": "Bearer "  + app.globalData.token 
       },
       method:"GET",
       success:function(res){
@@ -167,11 +152,18 @@ Page({
       inputTime: e.detail.value
     })
   },
-  //文稿级别;
+  //素材标签1;
   bindlevelChange:function(e){
     this.setData({ 
       levelData:this.data.level[e.detail.value].name,
       levelId: this.data.level[e.detail.value].id
+    })
+  },
+  //素材标签2;
+  bindlevelChange2: function (e) {
+    this.setData({
+      levelData2: this.data.level2[e.detail.value].name,
+      levelId2: this.data.level2[e.detail.value].id
     })
   },
   //录入单位;
@@ -194,12 +186,11 @@ Page({
   searchManuscript:function(){
     let searchCondition={
       title:this.data.keywords,          // 标题
-      categoryId: this.data.categoryId,  // 选中的单位
+      categoryId: this.data.categoryId.replace(/^NULL_\d+$/,"") ,  // 选中的单位
       orgid: this.data.orgid,            // orgid
-      level: this.data.levelId,         
       type: this.data.classId,           // 类型
-      createdDate: this.data.inputTime,  // 创建时间
       pubTime: this.data.sendTime,       // 发布时间
+      tags: (this.data.levelId ? this.data.levelId : "" ) + "," + (this.data.levelId2 ? this.data.levelId2 : "")
     }
     //获取页面栈
     var pages = getCurrentPages();
@@ -217,6 +208,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getdepartmentdata();
   }
 })

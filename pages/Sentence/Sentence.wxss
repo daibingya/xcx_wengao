@@ -8,14 +8,26 @@ page{
   padding:30rpx;
   box-sizing: border-box;
 }
+.sentenceBox .back{
+  width:100%;
+  background: #edf2f3;
+  padding:20rpx 20rpx 0;
+  box-sizing:border-box;
+  position: fixed;
+  left:0;
+  top:0;
+  right:0;z-index:999
+}
 .sentenceBox .inputBox{
   width:100%;
   height:80rpx;
-  background: #fff;
-  border-radius:4px;
+  background: #4d80f0;
+  border-radius:10rpx;
+  padding-left:10rpx;
+  box-sizing:border-box;
+  color:#fff;
   line-height: 80rpx;
-  padding-left:20rpx;
-  box-sizing: border-box;
+  text-align: center;
   position: relative;
 }
 .sentenceBox .inputBox input{

@@ -61,7 +61,7 @@ mytree{
 /* 复用的常用语句 */
  .list{
   width:100%;
-  margin-bottom:20rpx;
+  margin-bottom:10rpx;
   padding:20rpx;
   font-size:0;
   padding-bottom:10rpx;

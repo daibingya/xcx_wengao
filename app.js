@@ -9,28 +9,6 @@ App({
     // 登录
     wx.login({
       success: res => {
-        // 获取token
-        new Promise((resolve,err)=>{
-            wx.getStorage({
-              key: 'token',
-              success: function(res) {
-                resolve(res.data)
-              },
-            })
-        }).
-        then(token => {
-          this.globalData.token = token
-          wx.request({
-            url: this.globalData.ip + '/api/userSettings/info',
-            header: {
-              "content-type": "application/json",
-              "Authorization": "Bearer " + token
-            },
-            success: res => { 
-              this.globalData.orgCode = res.data.data.orgCode
-            }
-          })
-        })
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
     })
@@ -55,9 +33,38 @@ App({
       }
     })
   },
+  onShow: function(){
+    this.getToken();
+  },
+  getToken: function(){
+    // 获取token
+    new Promise((resolve, err) => {
+      wx.getStorage({
+        key: 'token',
+        success: function (res) {
+          resolve(res.data)
+        },
+      })
+    }).
+      then(token => {
+        this.globalData.token = token
+        wx.request({
+          url: this.globalData.ip + '/api/userSettings/info',
+          header: {
+            "content-type": "application/json",
+            "Authorization": "Bearer " + token
+          },
+          success: res => {
+            // 获取单位标示
+            this.globalData.orgCode = res.data.data.orgCode
+            console.log(res.data.data.orgCode)
+          }
+        })
+      })
+  },
   globalData: {
     userInfo: null,
-    // ip:"http://192.168.0.109:8080",
+    // ip:"http://192.168.0.70:8080",
     ip:"https://www.xagxqwgdsj.cn",
   }
 })

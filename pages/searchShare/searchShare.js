@@ -18,13 +18,7 @@ Page({
    */
   onLoad: function (options) {
     this.literayStyle();
-    // 政研室
-    if(app.globalData.orgCode === "GXQZYS"){
-      this.setData({
-        kitchenFlag : true
-      })
-      this.getKitchen();
-    }
+    this.getKitchen();
   },
   // 厨房类型
   tapItem: function(e){
@@ -32,7 +26,7 @@ Page({
       orgId: e.detail.itemid
     })
   },
-  // 厨房类型
+  // 素材分类
   getKitchen: function(){
     let that = this;
     wx.request({
@@ -47,7 +41,7 @@ Page({
         if(res.data.code === 200){
           that.setData({
             treeData: {
-              name:"请选择厨房类型",
+              name:"请选择素材分类",
               id:"000",
               children:res.data.data
             }

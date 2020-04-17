@@ -8,6 +8,11 @@
     <!-- 精准检索 -->
     <view class="searchTitle">精准检索</view>
 
+    <!-- 选择单位 -->
+    <view class="companyList">
+        <mytree idd="{{ idd }}" model='{{ treeData }}' bind:tapitem='tapItem'></mytree>
+    </view>
+
     <!-- 下拉框 -->
     <view class="listInput">
       <image src="/image/login/time.png" mode='widthFix'></image>
@@ -18,26 +23,38 @@
       </picker>
     </view>
 
+    <!-- 素材标签1 -->
+    <view class="listInput">
+      <image src="/image/login/class.png" mode='widthFix'></image>
+      <picker bindchange="biaoChange1" value="{{index}}" range="{{biao1}}" range-key="name">
+          <text wx:if="{{!biaoData1}}" style="color:gray">请选择素材标签1</text>
+          <text  style="color:#000" data-id="{{selectClass[index].id}}">{{biaoData1}}</text>
+          <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
+      </picker>
+    </view>
+
+    <!-- 素材标签2 -->
+    <view class="listInput">
+      <image src="/image/login/class.png" mode='widthFix'></image>
+      <picker bindchange="biaoChange2" value="{{index}}" range="{{biao2}}" range-key="name">
+          <text wx:if="{{!biaoData2}}" style="color:gray">请选择素材标签2</text>
+          <text  style="color:#000" data-id="{{selectClass[index].id}}">{{biaoData2}}</text>
+          <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
+      </picker>
+    </view>
+
+
     <!-- 下拉框 -->
     <view class="listInput">
       <image src="/image/login/class.png" mode='widthFix'></image>
       <picker bindchange="bindPickerChange" value="{{index}}" range="{{selectClass}}" range-key="name">
-          <text wx:if="{{!selectClass[index].name}}" style="color:gray">请选择语句类别</text>
+          <text wx:if="{{!selectClass[index].name}}" style="color:gray">请选择文体类型</text>
           <text  style="color:#000" data-id="{{selectClass[index].id}}">{{selectClass[index].name}}</text>
           <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
       </picker>
     </view>
 
-    <!-- 下拉框 -->
-    <view class="listInput">
-      <image src="/image/login/danwei.png" mode='widthFix'></image>
-      <picker bindchange="bindcomChange" value="{{indec}}" range="{{companyArray}}" range-key="name">
-          <text wx:if="{{!companyArray[indec]}}" style="color:gray">请选择录入单位</text>
-          <text  style="color:#000">{{companyArray[indec].name}}</text>
-          <image class="selector" src="/image/login/xiala.png" mode='widthFix'></image>
-      </picker>
-    </view>
-
+   
     <view class="flexBox">
         <view class="cancel" bindtap="cancel">取消</view>
         <view class="Determine" bindtap="search">查询</view>

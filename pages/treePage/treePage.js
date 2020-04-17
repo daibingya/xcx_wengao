@@ -14,7 +14,6 @@ Page({
     let that = this;
     const eventChannel = this.getOpenerEventChannel();
     eventChannel.on('sendTree', function (data) {
-      console.log(data)
       that.setData({ 
         treeData: data.data
       })

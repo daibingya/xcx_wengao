@@ -1,7 +1,11 @@
 <!--pages/Sentence/Sentence.wxml-->
 
 <view class="sentenceBox">
-    <my-search bind:breakTo="senBreak" values="{{searchData}}"></my-search>
+    <view class="back">
+      <!-- 搜索 -->
+      <view class="inputBox"  bindtap='jumpTo'>搜索</view>      
+    </view>
+    <!-- <my-search bind:breakTo="senBreak" values="{{searchData}}"></my-search> -->
     <!-- 无内容 -->
     <nodata wx:if="{{nodataFlag}}"></nodata>
     <!-- 内容列表 -->
@@ -17,5 +21,5 @@
         </block>
     </view>
     <!-- 新建 -->
-    <view class="fixedImage" bindtap="newSentence">+</view> 
+    <view class="fixedImage" bindtap="newSentence">录入</view> 
 </view>

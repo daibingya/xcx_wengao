@@ -2,8 +2,8 @@
 <view class="myDraft">
    <view class="fixedTab">
       <view class="selectTab" bindtap='activeBox'>
-            <text data-id="wengao" class="{{textActive == 'wengao' ? 'textActives' : ''}}">录入文稿</text>
-            <text data-id="generate" class="{{textActive == 'generate' ? 'textActives' : ''}}">生成文稿</text>
+            <text data-id="wengao" class="{{textActive == 'wengao' ? 'textActives' : ''}}">系统内容</text>
+            <text data-id="generate" class="{{textActive == 'generate' ? 'textActives' : ''}}">文稿录入</text>
             <text data-id="yuju" class="{{textActive == 'yuju' ? 'textActives' : ''}}">常用语句</text>
       </view>
    </view>

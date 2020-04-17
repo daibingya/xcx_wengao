@@ -12,7 +12,7 @@ Page({
     nodataFlag:false
   },
   // 跳转页面
-  senBreak:function(e){
+  jumpTo:function(e){
     var that=this;
     wx.navigateTo({
       url: '/pages/search/search',
@@ -38,7 +38,7 @@ Page({
       wx.request({
         url: ip+'/api/statement/detail/' + e.target.id,
         header:{
-          "Authorization": "Bearer "+that.data.token
+          "Authorization": "Bearer "+ app.globalData.token
         },
         method:'GET',
         success:function(value){
@@ -55,8 +55,14 @@ Page({
   },
   // 新建常用语句
   newSentence:function(){
+    let that = this;
     wx.navigateTo({
       url: '/pages/sentenceEditor/sentenceEditor',
+      events: {
+        postPrames : function(){
+          that.lodingData(false,false);
+        }
+      }
     })
   },
   // 下拉刷新
@@ -91,11 +97,12 @@ Page({
         "size": 10,
         "current": downPull ? ++that.data.page : that.data.page,
         "searchCondition": {
-          "orgId": parameter ? parameter.orgid : "",
-          "docTypeId": parameter ? parameter.docTypeId : "",
-          "startDate": parameter ? parameter.startDate : "",
-          "endDate": parameter ? parameter.endDate : "",
-          "keyword": parameter ? parameter.keyword : "" //关键字查询
+          "orgId": parameter ? parameter.oid : null,
+          "categoryId": parameter ? parameter.cid.replace(/^NULL_\d+$/, "") : null,
+          "startDate": parameter ? parameter.startDate : null,
+          "endDate": parameter ? parameter.endDate : null,
+          "tags": parameter ? parameter.tags.replace(/undefined/ig,"") : null,
+          "keyword": parameter ? parameter.keyword : null //关键字查询
         }
       },
       success: function (res) {

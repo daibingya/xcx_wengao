@@ -220,5 +220,8 @@ Page({
   },
   onShow: function () {
       wx.hideHomeButton();
+  },
+  onUnload: function(){
+    app.getToken();
   }
 })

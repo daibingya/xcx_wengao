@@ -45,13 +45,16 @@ Page({
 
       wx.navigateTo({
         url: "/pages/sentenceEditor/sentenceEditor",
+        events:{
+          "pullChang": function(){
+            that.sentEnce(false,false,false)
+          }
+        },
         success: function (res) {
           // 通过eventChannel向被打开页面传送数据
-          res.eventChannel.emit('changyong', { data: {
-            id:id,
-            cont: cont,
-            typeId: typeId
-          } })
+          res.eventChannel.emit('sendContent', { data: {
+            id:id} 
+          })
         }
       })
     } else if (name == "delete"){
