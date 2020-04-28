@@ -9,6 +9,9 @@ Page({
       token:"",
       user_url:"/image/user_image/userTx.png"
   },
+  created: function () {
+    wx.hideShareMenu()
+  },
   /**
    * 生命周期函数--监听页面加载
    */

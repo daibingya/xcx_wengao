@@ -1,23 +1,27 @@
 // pages/manDetails/manDetails.js
 const app = getApp()
 let ip = app.globalData.ip;
+const util = require('../debounce/debounce.js');
+// longpressEvents: util.longpressEvents,
 Page({
   data: {
     content:''
   },
   // 分享
   onShareAppMessage: function (res) {
-    console.log(res)
+    let that = this;
     wx.showLoading({
       title: '正在加载...',
     })
     if (res.from === 'button') {
-      wx.hideLoading();
+      console.log("button转发")
     }
+    wx.hideLoading();
     return {
-      title: res.target.dataset.title,
-      path: '/pages/manDetails/manDetails?sendParameter=' + res.target.dataset.sid,
+      title: that.data.contData.title,
+      path: '/pages/manDetails/manDetails?sendParameter=' + that.data.contData.id,
       success: function (res) {
+        console.log(res)
       },
       fail: function (error) {
         console.log(error);
@@ -25,8 +29,9 @@ Page({
     }
   },
   onLoad: function (options) {
-    let that=this;
-    let sid=options.sendParameter;
+    let that = this;
+    let sid  = options.sendParameter;
+    console.log( options)
     console.log("sid："+sid)
     if (sid) {
       wx.showLoading({
@@ -70,8 +75,9 @@ Page({
       })
     }
   },
+  longpressEvents: util.longpressEvents,
   // 下载文件
-  downloadFiles:function(e){
+  downloadFiles: function(e){
     let path = e.currentTarget.dataset.url;
     let fileType = path.slice(+path.lastIndexOf('.')+1);
     wx.showLoading({

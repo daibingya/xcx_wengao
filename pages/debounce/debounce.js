@@ -32,8 +32,21 @@ function debounce(fun, delay) {
     }, delay)
   }
 }
-
+function longpressEvents(e) {
+    let reg = /<(?:[^"'>]|"[^"]*"|'[^']*')*>/g;
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.content.replace(reg, ""),
+      success(res) {
+        wx.getClipboardData({
+          success(res) {
+            console.log(res.data) 
+          }
+        })
+      }
+    })
+}
 module.exports = {
   throttle: throttle,
-  debounce: debounce
+  debounce: debounce,
+  longpressEvents: longpressEvents
 }

@@ -9,7 +9,7 @@
         <view>文体类型：{{contData.typeName?contData.typeName:'---'}}</view>
       </view>
   </view>
-  <rich-text nodes="{{contData.content}}" bindtap="tap"></rich-text>
+  <rich-text bindlongpress="longpressEvents" nodes="{{contData.content}}" data-content="{{contData.content}}" bindtap="tap"></rich-text>
   <block wx:for="{{contData.attachList}}" wx:key="index">
     <view class="Enclosure">
       <view><text>附件：</text><text>{{item.name}}</text></view>

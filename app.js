@@ -55,9 +55,8 @@ App({
             "Authorization": "Bearer " + token
           },
           success: res => {
-            // 获取单位标示
+            // 获取单位标识
             this.globalData.orgCode = res.data.data.orgCode
-            console.log(res.data.data.orgCode)
           }
         })
       })

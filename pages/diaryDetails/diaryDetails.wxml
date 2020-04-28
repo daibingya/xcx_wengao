@@ -5,6 +5,6 @@
     </view>
     <view class="entryList">
       <text class="name">内容详情：</text>
-      <view class="content">{{content.content}}</view>
+      <view class="content" bindlongpress="longpressEvents" data-content="{{content.content}}">{{content.content}}</view>
     </view>
 </view>

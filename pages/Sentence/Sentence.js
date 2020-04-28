@@ -97,11 +97,11 @@ Page({
         "size": 10,
         "current": downPull ? ++that.data.page : that.data.page,
         "searchCondition": {
-          "orgId": parameter ? parameter.oid : null,
-          "categoryId": parameter ? parameter.cid.replace(/^NULL_\d+$/, "") : null,
+          "orgId": parameter ? parameter.orgId : null,
+          "categoryId": parameter ? (parameter.categoryId ? parameter.categoryId.replace(/^NULL_\d+$/, "") : null) : null,
           "startDate": parameter ? parameter.startDate : null,
           "endDate": parameter ? parameter.endDate : null,
-          "tags": parameter ? parameter.tags.replace(/undefined/ig,"") : null,
+          "tags": parameter ? (parameter.tags ? parameter.tags.replace(/undefined/ig,"") : null ) : null,
           "keyword": parameter ? parameter.keyword : null //关键字查询
         }
       },
@@ -173,11 +173,7 @@ Page({
     // 参数含义：是否下拉，是否上拉
     this.lodingData(false, true, this.data.searchData)
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  created: function () {
+    wx.hideShareMenu()
   }
 })

@@ -1,6 +1,7 @@
 // pages/fina-message/fina-message.js
 var app = getApp();
 var ip = app.globalData.ip;
+const util = require('../debounce/debounce.js');
 Page({
 
   /**
@@ -19,7 +20,7 @@ Page({
     eventChannel.on('sendId', function (data) {
       let id = data.id
       wx.request({
-        url: 'http://192.168.0.109:8080/api/docShare/detail/'+id,
+        url: ip + '/api/docShare/detail/'+id,
         method:"GET",
         header: {
           "content-type": "application/json",
@@ -34,7 +35,7 @@ Page({
       })
     })
   },
-
+  longpressEvents: util.longpressEvents,
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

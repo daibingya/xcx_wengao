@@ -34,19 +34,28 @@ Page({
   },
   // 查询
   search:function(){
+    let that = this;
+    let searchCondition= {
+      orgId: that.data.oid ? that.data.oid : "",
+      categoryId: that.data.cid ? that.data.cid.replace(/^NULL_\d+$/, "") : "",
+      startDate: that.data.startDate ? that.data.startDate : "",
+      endDate: that.data.endDate ? that.data.endDate : "",
+      tags: that.data.tags ? that.data.tags.replace(/undefined/ig, "") : "",
+      keyword: that.data.keyword ? that.data.keyword: ""
+    }
     var pages = getCurrentPages();
     var prevPage = pages[pages.length - 2];
 
     let tags = this.data.biaoData1Id + "," + this.data.biaoData2Id;
-    let t = "searchArry.tags";
+    // let t = "searchArry.tags";
     this.setData({
-      [t] : tags
+      tags : tags
     })
     prevPage.setData({
       page:1,
-      searchData: this.data.searchArry 
+      searchData: searchCondition
     })
-    prevPage.lodingData(false, false, this.data.searchArry);
+    prevPage.lodingData(false, false, searchCondition);
     
     wx.navigateBack()
   },
@@ -159,21 +168,19 @@ Page({
   //选择单位事件处理函数
   tapItem: function (e) {
     let d = e.detail;
-    let cid = "searchArry.cid";
-    let oid = "searchArry.oid";
     this.setData({
-      [cid]: d.itemid,
-      [oid]: d.orgid
+      cid: d.itemid,
+      oid: d.orgid
     })
   },
  
   // 时间日期
   bindtimeChange: function (e) {
-    let date = 'searchArry.startDate';
-    let endDate = 'searchArry.endDate';
+    // let date = 'searchArry.startDate';
+    // let endDate = 'searchArry.endDate';
     this.setData({
-      [date]: e.detail.value,
-      [endDate]: e.detail.value
+      startDate: e.detail.value,
+      endDate: e.detail.value
     })
   },
   // 文体类型
@@ -188,9 +195,9 @@ Page({
 
   // 关键词
   breakTosearch: util.debounce(function (e) {
-    let inputValue = 'searchArry.keyword';
+    // let inputValue = 'searchArry.keyword';
     this.setData({
-      [inputValue]: e.detail.value
+      keyword: e.detail.value
     });
   },500),
  

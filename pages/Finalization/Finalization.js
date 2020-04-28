@@ -16,7 +16,9 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
  
-  
+  created: function () {
+    wx.hideShareMenu()
+  },
   // 下拉刷新
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading();

@@ -1,4 +1,5 @@
 // pages/details/details.js
+const util = require('../debounce/debounce.js');
 Page({
   data: {},
   onLoad: function (options) {
@@ -10,4 +11,5 @@ Page({
       })
     })
   },
+  longpressEvents: util.longpressEvents,
 })

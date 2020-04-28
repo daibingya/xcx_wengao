@@ -2,6 +2,6 @@
 <view class="manDetailsBox" wx:if="{{showFlag}}">
   <view class="title">{{contData.title}}</view>
   
-  <rich-text class="content" nodes="{{setDataImage}}"></rich-text>
+  <rich-text class="content" bindlongpress="longpressEvents" data-content="{{setDataImage}}" nodes="{{setDataImage}}"></rich-text>
   <button open-type="share" class="shera" data-title="{{contData.title}}" data-sid="{{contData.id}}">分享</button>
 </view>

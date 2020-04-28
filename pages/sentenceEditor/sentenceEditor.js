@@ -138,7 +138,6 @@ Page({
       },
       method: "GET",
       success: function (res) {
-        console.log(res)
         that.data.treeData.children = res.data.data;
         that.setData({
           treeData: that.data.treeData
@@ -149,7 +148,6 @@ Page({
   
   // 跳转选择单位界面
   selectCompany: function () {
-    console.log('entry')
     let that = this;
     wx.navigateTo({
       url: '../treePage/treePage',
@@ -341,7 +339,6 @@ Page({
       },
       method: 'GET',
       success: function (res) {
-        console.log(res)
         if (res.data.code == 200) {
           that.setData({
             Fenlei: res.data.data
@@ -360,6 +357,7 @@ Page({
         "Authorization": "Bearer " + app.globalData.token
       },
       success: function (res) {
+        console.log(res)
         if (res.data.code == 200) {
           that.setData({
             clAss: res.data.data

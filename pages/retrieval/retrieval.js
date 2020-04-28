@@ -185,11 +185,11 @@ Page({
   //查询;
   searchManuscript:function(){
     let searchCondition={
-      title:this.data.keywords,          // 标题
-      categoryId: this.data.categoryId.replace(/^NULL_\d+$/,"") ,  // 选中的单位
-      orgid: this.data.orgid,            // orgid
-      type: this.data.classId,           // 类型
-      pubTime: this.data.sendTime,       // 发布时间
+      title: this.data.keywords ? this.data.keywords : "",          // 标题
+      categoryId: this.data.categoryId ? this.data.categoryId.replace(/^NULL_\d+$/,""): "" ,  // 选中的单位
+      orgid: this.data.orgid ? this.data.orgid: "",            // orgid
+      type: this.data.classId ? this.data.classId : "",           // 类型
+      pubTime: this.data.sendTime ? this.data.sendTime : "",       // 发布时间
       tags: (this.data.levelId ? this.data.levelId : "" ) + "," + (this.data.levelId2 ? this.data.levelId2 : "")
     }
     //获取页面栈

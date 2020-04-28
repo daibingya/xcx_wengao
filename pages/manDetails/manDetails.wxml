@@ -1,5 +1,5 @@
 <view class="manDetailsBox">
-  <view class="title">{{contData.title}}</view>
+  <view class="title" selectable="true">{{contData.title}}</view>
   <view class="information">
       <view class="left">
         <view>发布时间：{{contData.pubTime?contData.pubTime:'---'}}</view>
@@ -13,7 +13,7 @@
         <view>素材标签：{{contData.tagName?contData.tagName:'---'}}</view>
       </view>
   </view>
-  <rich-text nodes="{{setDataImage}}" bindtap="tap"></rich-text>
+  <rich-text bindlongpress="longpressEvents" nodes="{{setDataImage}}" data-content ="{{setDataImage}}" bindtap="tap"></rich-text>
   <block wx:for="{{contData.attachList}}" wx:key="index">
     <view class="Enclosure">
       <view><text>附件：</text><text>{{item.name}}</text></view>

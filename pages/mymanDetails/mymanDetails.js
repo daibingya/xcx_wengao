@@ -1,6 +1,8 @@
 // pages/manDetails/manDetails.js
 var app = getApp();
 var ip = app.globalData.ip;
+const util = require('../debounce/debounce.js');
+
 Page({
   data: {
     showFlag:false
@@ -53,8 +55,7 @@ Page({
       }catch(e){console.log(e)}
     }
   },
-  onShow: function(options){
-  },
+  longpressEvents: util.longpressEvents,
   // 手动分享
   onShareAppMessage: function (res) {
     console.log(res);

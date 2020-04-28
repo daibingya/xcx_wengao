@@ -138,6 +138,8 @@ Page({
         that.loadingData();
       },
     })
-    
+  },
+  created: function(){
+    wx.hideShareMenu()
   }
 })

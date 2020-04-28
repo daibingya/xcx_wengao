@@ -29,6 +29,6 @@
     </view>
     <view class="list">
       <text>常用语句：</text>
-      <view class="cotentBox">{{ detailsData.content}}</view>
+      <view class="cotentBox" bindlongpress="longpressEvents" data-content="{{detailsData.content}}">{{ detailsData.content}}</view>
     </view>
 </view>

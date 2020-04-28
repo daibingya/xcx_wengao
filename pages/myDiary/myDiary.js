@@ -138,7 +138,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.data.flag = true;
+    this.setData({
+      flag: true,
+      index: 1
+    }) 
     this.loadingData(false,false);
   },
   /**
